@@ -1,0 +1,43 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "the-another/blocks-for-dokan-vendor-store-hours",
+	"title": "Vendor Store Hours",
+	"category": "dokan",
+	"ancestor": [ "the-another/blocks-for-dokan-vendor-query-loop", "the-another/blocks-for-dokan-vendor-card", "the-another/blocks-for-dokan-vendor-store-banner" ],
+	"icon": "clock",
+	"description": "Display store opening hours.",
+	"keywords": [ "dokan", "vendor", "store", "hours", "time" ],
+	"textdomain": "dokan-blocks",
+	"usesContext": [ "dokan/vendor" ],
+	"supports": {
+		"html": false,
+		"align": true,
+		"spacing": {
+			"margin": true,
+			"padding": true
+		}
+	},
+	"attributes": {
+		"vendorId": {
+			"type": "number",
+			"default": 0
+		},
+		"layout": {
+			"type": "string",
+			"default": "compact",
+			"enum": [ "compact", "detailed" ]
+		},
+		"showCurrentStatus": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"example": {
+		"attributes": {
+			"vendorId": 0,
+			"layout": "compact"
+		}
+	},
+	"render": "theabd_render_vendor_store_hours_block"
+}

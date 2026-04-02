@@ -24,7 +24,7 @@
 		"source": "https://github.com/theanother/blocks-for-dokan"
 	},
 	"require": {
-		"php": ">=8.3"
+		"php": ">=7.4"
 	},
 	"require-dev": {
 		"automattic/vipwpcs": "^3.0",
@@ -58,12 +58,12 @@
 	"scripts": {
 		"phpcs": "phpcs",
 		"phpcbf": "phpcbf",
-		"lint": "phpcs --standard=.phpcs.xml.dist",
+		"lint": "./scripts/run-isolated.sh ./vendor/bin/phpcs --standard=.phpcs.xml.dist",
 		"lint-fix": "phpcbf --standard=.phpcs.xml.dist",
-		"test": "phpunit",
-		"test:unit": "phpunit --testsuite=Unit",
-		"test:integration": "phpunit --testsuite=Integration",
-		"test:coverage": "phpunit --coverage-html coverage",
+		"test": "./scripts/run-isolated.sh php ./vendor/bin/phpunit",
+		"test:unit": "./scripts/run-isolated.sh php ./vendor/bin/phpunit --testsuite=Unit",
+		"test:integration": "./scripts/run-isolated.sh php ./vendor/bin/phpunit --testsuite=Integration",
+		"test:coverage": "./scripts/run-isolated.sh php ./vendor/bin/phpunit --coverage-html coverage",
 		"mozart": "mozart compose && node scripts/move-production-vendor.js",
 		"build": [
 			"composer install -q --no-suggest",

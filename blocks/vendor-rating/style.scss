@@ -1,0 +1,68 @@
+/**
+ * Store rating block styles.
+ *
+ * @package DokanBlocks
+ * @since 1.0.0
+ */
+
+.theabd--vendor-rating {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-size: 1rem;
+
+	.theabd--vendor-rating-stars {
+		display: inline-flex;
+		gap: 0.1rem;
+
+		.theabd--star {
+			font-size: 1.2em;
+			line-height: 1;
+		}
+
+		.theabd--star-full {
+			color: #f1c40f;
+		}
+
+		.theabd--star-half {
+			color: #f1c40f;
+			position: relative;
+
+			&::before {
+				content: '★';
+				position: absolute;
+				left: 0;
+				width: 50%;
+				overflow: hidden;
+				color: #f1c40f;
+			}
+		}
+
+		.theabd--star-empty {
+			color: #ddd;
+		}
+	}
+
+	.theabd--vendor-rating-count {
+		font-size: 0.85em;
+		color: #666;
+	}
+}
+
+// When inside store banner (light text on dark background)
+.theabd--vendor-store-banner .theabd--vendor-rating {
+	.theabd--vendor-rating-stars {
+		.theabd--star-empty {
+			color: rgba(255, 255, 255, 0.3);
+		}
+
+		.theabd--star-full,
+		.theabd--star-half {
+			text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+		}
+	}
+
+	.theabd--vendor-rating-count {
+		color: rgba(255, 255, 255, 0.8);
+	}
+}

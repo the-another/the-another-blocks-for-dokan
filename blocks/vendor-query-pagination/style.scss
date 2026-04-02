@@ -1,0 +1,74 @@
+/**
+ * Store Query Pagination block styles.
+ *
+ * @package DokanBlocks
+ * @since 1.0.0
+ */
+
+.wp-block-the-another-blocks-for-dokan-vendor-query-pagination {
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+}
+
+.theabd--vendor-query-pagination,
+.theabd--vendor-query-pagination-preview {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.theabd--vendor-query-pagination .theabd--page-numbers,
+.theabd--vendor-query-pagination-preview .theabd--page-numbers {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0.5rem 1rem;
+	min-width: 2.5rem;
+	text-decoration: none;
+	color: inherit;
+	border: 1px solid currentColor;
+	border-radius: 4px;
+	transition: all 0.2s ease;
+	cursor: pointer;
+}
+
+.theabd--vendor-query-pagination .theabd--page-numbers:hover,
+.theabd--vendor-query-pagination-preview .theabd--page-numbers:hover {
+	opacity: 0.8;
+}
+
+.theabd--vendor-query-pagination .theabd--page-numbers.theabd--current,
+.theabd--vendor-query-pagination-preview .theabd--page-numbers.theabd--current {
+	background-color: #1e1e1e;
+	color: #fff;
+	border-color: #1e1e1e;
+	font-weight: 600;
+}
+
+.theabd--vendor-query-pagination .theabd--page-numbers.theabd--dots,
+.theabd--vendor-query-pagination-preview .theabd--page-numbers.theabd--dots {
+	border: none;
+	cursor: default;
+	min-width: auto;
+	padding: 0.5rem;
+}
+
+// Editor-specific styles
+.block-editor-block-list__block {
+	.theabd--vendor-query-pagination-preview {
+		padding: 1rem;
+		background-color: #f8f9fa;
+		border: 1px dashed #c0c0c1;
+		border-radius: 4px;
+	}
+
+	.theabd--vendor-query-pagination-preview .theabd--page-numbers {
+		pointer-events: none;
+		opacity: 0.9;
+	}
+}

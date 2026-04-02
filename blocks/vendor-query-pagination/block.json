@@ -1,0 +1,35 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "the-another/blocks-for-dokan-vendor-query-pagination",
+	"title": "Vendor Query Pagination",
+	"category": "dokan",
+	"ancestor": [ "the-another/blocks-for-dokan-vendor-query-loop" ],
+	"icon": "arrow-left-alt2",
+	"description": "Displays pagination for store query loop.",
+	"keywords": [ "dokan", "vendor", "store", "pagination", "query" ],
+	"textdomain": "dokan-blocks",
+	"usesContext": [ "dokan/queryId", "dokan/query" ],
+	"supports": {
+		"html": false,
+		"align": true,
+		"spacing": {
+			"margin": true,
+			"padding": true
+		}
+	},
+	"attributes": {
+		"paginationArrow": {
+			"type": "string",
+			"default": "none"
+		},
+		"showLabel": {
+			"type": "boolean",
+			"default": true
+		},
+		"midSize": {
+			"type": "number",
+			"default": 2
+		}
+	}
+}

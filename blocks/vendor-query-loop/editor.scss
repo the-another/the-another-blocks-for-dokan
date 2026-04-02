@@ -1,0 +1,215 @@
+/**
+ * Store Query Loop block editor styles.
+ *
+ * @package DokanBlocks
+ * @since 1.0.0
+ */
+
+.wp-block-the-another-blocks-for-dokan-vendor-query-loop,
+.theabd--vendor-query-loop {
+	// Display inner blocks in a clean layout
+	> .block-editor-inner-blocks > .block-editor-block-list__layout {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	// Remove bullets from list items in editor
+	.theabd--vendor-wrap,
+	.theabd--vendor-query-loop-wrap {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+
+		li {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+	}
+
+	.theabd--vendor-query-loop-placeholder {
+		padding: 2rem;
+		text-align: center;
+		background: #f0f0f0;
+		border: 2px dashed #ccc;
+		border-radius: 4px;
+
+		h2 {
+			margin: 0 0 0.5rem;
+		}
+
+		p {
+			margin: 0;
+			color: #666;
+		}
+	}
+
+	// Placeholder component styles
+	.components-placeholder {
+		min-height: 100px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		color: #666;
+	}
+}
+
+// Vendor card inside query loop in editor
+.wp-block-the-another-blocks-for-dokan-vendor-query-loop {
+	// Style the vendor card block within the query loop
+	> .block-editor-inner-blocks .wp-block-the-another-blocks-for-dokan-vendor-card {
+		border: 1px solid #e0e0e0;
+		border-radius: 8px;
+		padding: 1rem;
+		background: #fff;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+		&.is-selected,
+		&:focus-within {
+			border-color: #007cba;
+			box-shadow: 0 0 0 1px #007cba;
+		}
+	}
+
+	// Style the pagination block within the query loop
+	> .block-editor-inner-blocks .wp-block-the-another-blocks-for-dokan-vendor-query-pagination {
+		margin-top: 1rem;
+		padding-top: 1rem;
+		border-top: 1px dashed #e0e0e0;
+	}
+}
+
+// Style inner blocks in the template
+.theabd--vendor-query-loop-item {
+	// Store name block
+	.theabd--vendor-store-name {
+		margin: 0.5rem 0;
+
+		a {
+			text-decoration: none;
+			color: inherit;
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+
+	// Store avatar block
+	.theabd--vendor-avatar {
+		display: inline-block;
+
+		img {
+			display: block;
+		}
+
+		a {
+			display: block;
+		}
+	}
+
+	// Store rating block
+	.theabd--vendor-rating {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		margin: 0.5rem 0;
+
+		.theabd--vendor-rating-stars {
+			.theabd--star {
+				color: #ffb900;
+				font-size: 1rem;
+			}
+
+			.theabd--star-empty {
+				color: #ddd;
+			}
+
+			.theabd--star-half {
+				background: linear-gradient(90deg, #ffb900 50%, #ddd 50%);
+				-webkit-background-clip: text;
+				background-clip: text;
+				-webkit-text-fill-color: transparent;
+			}
+		}
+
+		.theabd--vendor-rating-count {
+			color: #666;
+			font-size: 0.9em;
+		}
+	}
+
+	// Store address block
+	.theabd--vendor-store-address {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.5rem;
+		margin: 0.5rem 0;
+		color: #666;
+
+		.theabd--vendor-store-address-icon {
+			flex-shrink: 0;
+		}
+	}
+
+	// Store phone block
+	.theabd--vendor-store-phone {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		margin: 0.5rem 0;
+
+		a {
+			text-decoration: none;
+			color: #0073aa;
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+
+	// Store status block
+	.theabd--vendor-store-status {
+		display: inline-block;
+		padding: 0.25rem 0.75rem;
+		border-radius: 4px;
+		font-size: 0.85em;
+		font-weight: 500;
+
+		&.theabd--vendor-store-status-open,
+		&.theabd--store-open {
+			background: #d4edda;
+			color: #155724;
+		}
+
+		&.theabd--vendor-store-status-closed,
+		&.theabd--store-closed {
+			background: #f8d7da;
+			color: #721c24;
+		}
+
+		&.theabd--vendor-store-status-disabled {
+			background: #f0f0f0;
+			color: #666;
+			font-style: italic;
+		}
+	}
+
+	// Store banner block
+	.theabd--vendor-store-banner {
+		margin: 0.5rem 0;
+		border-radius: 4px;
+		overflow: hidden;
+
+		img {
+			display: block;
+		}
+
+		a {
+			display: block;
+		}
+	}
+}

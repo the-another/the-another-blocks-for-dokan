@@ -45,16 +45,6 @@ class Context_Detector {
 			}
 		}
 
-		// Try to get from URL path for /store/vendor-name/ URLs.
-		$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
-		if ( preg_match( '#/store/([^/]+)/?#', $request_uri, $matches ) ) {
-			$store_slug = $matches[1];
-			$store_user = get_user_by( 'slug', $store_slug );
-			if ( $store_user && function_exists( 'dokan_is_user_seller' ) && dokan_is_user_seller( $store_user->ID ) ) {
-				return absint( $store_user->ID );
-			}
-		}
-
 		// Try to get from product context.
 		global $post;
 		if ( isset( $post ) && 'product' === get_post_type( $post ) ) {
@@ -108,12 +98,6 @@ class Context_Detector {
 		// Check query vars.
 		$store_name = get_query_var( 'store', '' );
 		if ( ! empty( $store_name ) ) {
-			return true;
-		}
-
-		// Check URL path.
-		$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
-		if ( preg_match( '#/store/([^/]+)/?#', $request_uri ) ) {
 			return true;
 		}
 

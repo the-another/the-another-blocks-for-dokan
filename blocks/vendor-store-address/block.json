@@ -1,0 +1,34 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "the-another/blocks-for-dokan-vendor-store-address",
+	"title": "Vendor Store Address",
+	"category": "dokan",
+	"ancestor": [ "the-another/blocks-for-dokan-vendor-query-loop", "the-another/blocks-for-dokan-vendor-card", "the-another/blocks-for-dokan-vendor-store-banner", "the-another/dokan-product-vendor-info" ],
+	"icon": "location",
+	"description": "Display the vendor store address.",
+	"keywords": [ "dokan", "vendor", "store", "address", "location" ],
+	"textdomain": "dokan-blocks",
+	"usesContext": [ "dokan/vendor" ],
+	"supports": {
+		"html": false,
+		"color": {
+			"text": true,
+			"background": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		}
+	},
+	"attributes": {
+		"showIcon": {
+			"type": "boolean",
+			"default": true
+		}
+	}
+}

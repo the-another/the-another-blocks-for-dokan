@@ -1,0 +1,47 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "the-another/blocks-for-dokan-vendor-avatar",
+	"title": "Vendor Logo",
+	"category": "dokan",
+	"ancestor": [ "the-another/blocks-for-dokan-vendor-query-loop", "the-another/blocks-for-dokan-vendor-card", "the-another/blocks-for-dokan-vendor-store-banner", "the-another/blocks-for-dokan-product-vendor-info" ],
+	"icon": "admin-users",
+	"description": "Display the vendor store logo.",
+	"keywords": [ "dokan", "vendor", "store", "avatar", "logo", "image" ],
+	"textdomain": "dokan-blocks",
+	"usesContext": [ "dokan/vendor" ],
+	"supports": {
+		"html": false,
+		"align": [ "left", "center", "right", "wide", "full" ],
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"width": true,
+			"style": true,
+			"__experimentalDefaultControls": {
+				"radius": true
+			}
+		}
+	},
+	"attributes": {
+		"width": {
+			"type": "string",
+			"default": "80px"
+		},
+		"height": {
+			"type": "string",
+			"default": "80px"
+		},
+		"isLink": {
+			"type": "boolean",
+			"default": true
+		},
+		"align": {
+			"type": "string"
+		}
+	}
+}

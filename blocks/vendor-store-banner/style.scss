@@ -1,0 +1,100 @@
+/**
+ * Store banner block styles (frontend and editor).
+ *
+ * @package DokanBlocks
+ * @since 1.0.0
+ */
+
+.theabd--vendor-store-banner {
+	position: relative;
+	width: 100%;
+	display: flex;
+	overflow: hidden;
+
+	// Ensure content is above the background
+	> * {
+		position: relative;
+		z-index: 1;
+	}
+
+	// Default text color for better readability on background images
+	color: #ffffff;
+
+	// Ensure links are visible
+	a {
+		color: inherit;
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	// Support for nested groups and columns
+	.wp-block-group,
+	.wp-block-columns {
+		width: 100%;
+	}
+
+	// Ensure avatar and images display properly
+	.theabd--vendor-avatar,
+	img {
+		border-radius: 50%;
+		border: 3px solid rgba(255, 255, 255, 0.8);
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+	}
+
+	// Store name styling
+	.theabd--vendor-store-name {
+		text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+		margin: 0;
+	}
+
+	// Store hours styling
+	.theabd--vendor-store-hours {
+		background: rgba(255, 255, 255, 0.1);
+		backdrop-filter: blur(10px);
+		padding: 0.5rem 1rem;
+		border-radius: 4px;
+	}
+
+	// Store rating styling
+	.theabd--vendor-rating {
+		.theabd--star-rating {
+			color: #ffc107;
+			text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+		}
+	}
+
+	// Buttons styling
+	.wp-block-button {
+		.wp-block-button__link {
+			background: rgba(255, 255, 255, 0.2);
+			backdrop-filter: blur(10px);
+			border: 1px solid rgba(255, 255, 255, 0.3);
+			color: #ffffff;
+
+			&:hover {
+				background: rgba(255, 255, 255, 0.3);
+			}
+		}
+	}
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+	.theabd--vendor-store-banner {
+		min-height: 200px !important;
+
+		// Stack content vertically on mobile
+		.wp-block-group {
+			flex-direction: column !important;
+			align-items: center !important;
+			text-align: center;
+		}
+
+		.theabd--vendor-avatar {
+			margin: 0 0 1rem 0 !important;
+		}
+	}
+}

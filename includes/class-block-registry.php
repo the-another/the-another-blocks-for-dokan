@@ -41,7 +41,7 @@ class Block_Registry {
 	/**
 	 * Register a single block.
 	 *
-	 * @param string $block_name Block name (e.g., 'the-another/dokan-store-header').
+	 * @param string $block_name Block name (e.g., 'the-another/blocks-for-dokan-store-header').
 	 * @param string $block_dir  Block directory path.
 	 * @return void
 	 */
@@ -62,27 +62,27 @@ class Block_Registry {
 			// Map block name to render function.
 			// Use the expected block name from our registry.
 			$render_function_map = array(
-				'the-another/dokan-store-header'           => 'dokan_render_store_header_block',
-				'the-another/dokan-store-sidebar'          => 'dokan_render_store_sidebar_block',
-				'the-another/dokan-store-tabs'             => 'dokan_render_store_tabs_block',
-				'the-another/dokan-store-terms-conditions' => 'dokan_render_store_terms_conditions_block',
-				'the-another/dokan-store-list'                 => 'dokan_render_store_list_block',
-				'the-another/dokan-store-query-pagination'     => 'dokan_render_store_query_pagination_block',
-				'the-another/dokan-store-card'                 => 'dokan_render_store_card_block',
-				'the-another/dokan-store-search'               => 'dokan_render_store_search_block',
-				'the-another/dokan-store-name'          => 'dokan_render_store_name_block',
-				'the-another/dokan-store-avatar'        => 'dokan_render_store_avatar_block',
-				'the-another/dokan-store-rating'        => 'dokan_render_store_rating_block',
-				'the-another/dokan-store-address'       => 'dokan_render_store_address_block',
-				'the-another/dokan-store-phone'         => 'dokan_render_store_phone_block',
-				'the-another/dokan-store-status'        => 'dokan_render_store_status_block',
-				'the-another/dokan-store-banner'        => 'dokan_render_store_banner_block',
-				'the-another/dokan-product-vendor-info' => 'dokan_render_product_vendor_info_block',
-				'the-another/dokan-more-from-seller'    => 'dokan_render_more_from_seller_block',
-				'the-another/dokan-store-contact-form'  => 'dokan_render_store_contact_form_block',
-				'the-another/dokan-store-location'      => 'dokan_render_store_location_block',
-				'the-another/dokan-store-hours'         => 'dokan_render_store_hours_block',
-				'the-another/dokan-become-vendor-cta'   => 'dokan_render_become_vendor_cta_block',
+				'the-another/blocks-for-dokan-vendor-store-header'           => 'theabd_render_vendor_store_header_block',
+				'the-another/blocks-for-dokan-vendor-store-sidebar'          => 'theabd_render_vendor_store_sidebar_block',
+				'the-another/blocks-for-dokan-vendor-store-tabs'             => 'theabd_render_vendor_store_tabs_block',
+				'the-another/blocks-for-dokan-vendor-store-terms-conditions' => 'theabd_render_vendor_store_terms_conditions_block',
+				'the-another/blocks-for-dokan-vendor-query-loop'              => 'theabd_render_vendor_query_loop_block',
+				'the-another/blocks-for-dokan-vendor-query-pagination'        => 'theabd_render_vendor_query_pagination_block',
+				'the-another/blocks-for-dokan-vendor-card'                    => 'theabd_render_vendor_card_block',
+				'the-another/blocks-for-dokan-vendor-search'                  => 'theabd_render_vendor_search_block',
+				'the-another/blocks-for-dokan-vendor-store-name'              => 'theabd_render_vendor_store_name_block',
+				'the-another/blocks-for-dokan-vendor-avatar'                  => 'theabd_render_vendor_avatar_block',
+				'the-another/blocks-for-dokan-vendor-rating'                  => 'theabd_render_vendor_rating_block',
+				'the-another/blocks-for-dokan-vendor-store-address'           => 'theabd_render_vendor_store_address_block',
+				'the-another/blocks-for-dokan-vendor-store-phone'             => 'theabd_render_vendor_store_phone_block',
+				'the-another/blocks-for-dokan-vendor-store-status'            => 'theabd_render_vendor_store_status_block',
+				'the-another/blocks-for-dokan-vendor-store-banner'            => 'theabd_render_vendor_store_banner_block',
+				'the-another/blocks-for-dokan-product-vendor-info'            => 'theabd_render_product_vendor_info_block',
+				'the-another/blocks-for-dokan-more-from-seller'               => 'theabd_render_more_from_seller_block',
+				'the-another/blocks-for-dokan-vendor-contact-form'            => 'theabd_render_vendor_contact_form_block',
+				'the-another/blocks-for-dokan-vendor-store-location'          => 'theabd_render_vendor_store_location_block',
+				'the-another/blocks-for-dokan-vendor-store-hours'             => 'theabd_render_vendor_store_hours_block',
+				'the-another/blocks-for-dokan-become-vendor-cta'              => 'theabd_render_become_vendor_cta_block',
 			);
 
 			if ( isset( $render_function_map[ $block_name ] ) && function_exists( $render_function_map[ $block_name ] ) ) {
@@ -98,10 +98,11 @@ class Block_Registry {
 		}
 
 		// Use register_block_type_from_metadata for better compatibility.
+		// Pass the directory path, not the block.json file path.
 		if ( function_exists( 'register_block_type_from_metadata' ) ) {
-			register_block_type_from_metadata( $block_json_path, $args );
+			register_block_type_from_metadata( $block_dir, $args );
 		} else {
-			register_block_type( $block_json_path, $args );
+			register_block_type( $block_dir, $args );
 		}
 	}
 
@@ -113,38 +114,38 @@ class Block_Registry {
 	private function register_block_paths(): void {
 		$blocks_dir = \ANOTHER_BLOCKS_DOKAN_PLUGIN_DIR . 'blocks/';
 
-		// Store profile blocks.
-		$this->blocks['the-another/dokan-store-header']           = $blocks_dir . 'store-header';
-		$this->blocks['the-another/dokan-store-sidebar']          = $blocks_dir . 'store-sidebar';
-		$this->blocks['the-another/dokan-store-tabs']             = $blocks_dir . 'store-tabs';
-		$this->blocks['the-another/dokan-store-terms-conditions'] = $blocks_dir . 'store-terms-conditions';
+		// Vendor store profile blocks.
+		$this->blocks['the-another/blocks-for-dokan-vendor-store-header']           = $blocks_dir . 'vendor-store-header';
+		$this->blocks['the-another/blocks-for-dokan-vendor-store-sidebar']          = $blocks_dir . 'vendor-store-sidebar';
+		$this->blocks['the-another/blocks-for-dokan-vendor-store-tabs']             = $blocks_dir . 'vendor-store-tabs';
+		$this->blocks['the-another/blocks-for-dokan-vendor-store-terms-conditions'] = $blocks_dir . 'vendor-store-terms-conditions';
 
 		// Vendor listing blocks.
-		$this->blocks['the-another/dokan-store-list']          = $blocks_dir . 'store-query-loop';
-		$this->blocks['the-another/dokan-store-query-pagination'] = $blocks_dir . 'store-query-pagination';
-		$this->blocks['the-another/dokan-store-card']          = $blocks_dir . 'store-card';
-		$this->blocks['the-another/dokan-store-search']        = $blocks_dir . 'store-search';
+		$this->blocks['the-another/blocks-for-dokan-vendor-query-loop']       = $blocks_dir . 'vendor-query-loop';
+		$this->blocks['the-another/blocks-for-dokan-vendor-query-pagination'] = $blocks_dir . 'vendor-query-pagination';
+		$this->blocks['the-another/blocks-for-dokan-vendor-card']             = $blocks_dir . 'vendor-card';
+		$this->blocks['the-another/blocks-for-dokan-vendor-search']           = $blocks_dir . 'vendor-search';
 
-		// Store field blocks (for use inside store query loop).
-		$this->blocks['the-another/dokan-store-name']    = $blocks_dir . 'store-name';
-		$this->blocks['the-another/dokan-store-avatar']  = $blocks_dir . 'store-avatar';
-		$this->blocks['the-another/dokan-store-rating']  = $blocks_dir . 'store-rating';
-		$this->blocks['the-another/dokan-store-address'] = $blocks_dir . 'store-address';
-		$this->blocks['the-another/dokan-store-phone']   = $blocks_dir . 'store-phone';
-		$this->blocks['the-another/dokan-store-status']  = $blocks_dir . 'store-status';
-		$this->blocks['the-another/dokan-store-banner']  = $blocks_dir . 'store-banner';
+		// Vendor field blocks (for use inside vendor query loop).
+		$this->blocks['the-another/blocks-for-dokan-vendor-store-name']    = $blocks_dir . 'vendor-store-name';
+		$this->blocks['the-another/blocks-for-dokan-vendor-avatar']        = $blocks_dir . 'vendor-avatar';
+		$this->blocks['the-another/blocks-for-dokan-vendor-rating']        = $blocks_dir . 'vendor-rating';
+		$this->blocks['the-another/blocks-for-dokan-vendor-store-address'] = $blocks_dir . 'vendor-store-address';
+		$this->blocks['the-another/blocks-for-dokan-vendor-store-phone']   = $blocks_dir . 'vendor-store-phone';
+		$this->blocks['the-another/blocks-for-dokan-vendor-store-status']  = $blocks_dir . 'vendor-store-status';
+		$this->blocks['the-another/blocks-for-dokan-vendor-store-banner']  = $blocks_dir . 'vendor-store-banner';
 
 		// Product integration blocks.
-		$this->blocks['the-another/dokan-product-vendor-info'] = $blocks_dir . 'product-vendor-info';
-		$this->blocks['the-another/dokan-more-from-seller']    = $blocks_dir . 'more-from-seller';
+		$this->blocks['the-another/blocks-for-dokan-product-vendor-info'] = $blocks_dir . 'product-vendor-info';
+		$this->blocks['the-another/blocks-for-dokan-more-from-seller']    = $blocks_dir . 'more-from-seller';
 
 		// Account/registration blocks.
-		$this->blocks['the-another/dokan-become-vendor-cta'] = $blocks_dir . 'become-vendor-cta';
+		$this->blocks['the-another/blocks-for-dokan-become-vendor-cta'] = $blocks_dir . 'become-vendor-cta';
 
 		// Widget blocks.
-		$this->blocks['the-another/dokan-store-contact-form'] = $blocks_dir . 'store-contact-form';
-		$this->blocks['the-another/dokan-store-location']     = $blocks_dir . 'store-location';
-		$this->blocks['the-another/dokan-store-hours']        = $blocks_dir . 'store-hours';
+		$this->blocks['the-another/blocks-for-dokan-vendor-contact-form']   = $blocks_dir . 'vendor-contact-form';
+		$this->blocks['the-another/blocks-for-dokan-vendor-store-location'] = $blocks_dir . 'vendor-store-location';
+		$this->blocks['the-another/blocks-for-dokan-vendor-store-hours']    = $blocks_dir . 'vendor-store-hours';
 
 		/**
 		 * Filter registered block paths.

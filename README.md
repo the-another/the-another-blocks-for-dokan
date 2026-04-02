@@ -7,7 +7,7 @@ FSE-compatible Gutenberg blocks for Dokan multi-vendor marketplace. Convert Doka
 - WordPress 6.0+
 - WooCommerce 7.0+
 - Dokan (latest stable version)
-- PHP 8.3+
+- PHP 7.4+
 
 ## Installation
 
@@ -59,27 +59,27 @@ composer lint-fix
 ## Available Blocks
 
 ### Store Profile Blocks
-- **Store Header** (`the-another/dokan-store-header`) - Display vendor store header
-- **Store Products** (`the-another/dokan-store-products`) - Display vendor products
-- **Store Sidebar** (`the-another/dokan-store-sidebar`) - Store sidebar with widgets
-- **Store Tabs** (`the-another/dokan-store-tabs`) - Store navigation tabs
+- **Vendor Store Header** (`the-another/blocks-for-dokan-vendor-store-header`) - Display vendor store header
+- **Store Products** (`the-another/blocks-for-dokan-store-products`) - Display vendor products
+- **Vendor Store Sidebar** (`the-another/blocks-for-dokan-vendor-store-sidebar`) - Store sidebar with widgets
+- **Vendor Store Tabs** (`the-another/blocks-for-dokan-vendor-store-tabs`) - Store navigation tabs
 
 ### Vendor Listing Blocks
-- **Store List** (`the-another/dokan-store-list`) - Grid/list of vendor stores
-- **Store Card** (`the-another/dokan-store-card`) - Individual vendor store card
-- **Store Search** (`the-another/dokan-store-search`) - Search and filter stores
+- **Vendor Query Loop** (`the-another/blocks-for-dokan-vendor-query-loop`) - Grid/list of vendor stores
+- **Vendor Card** (`the-another/blocks-for-dokan-vendor-card`) - Individual vendor store card
+- **Vendor Search** (`the-another/blocks-for-dokan-vendor-search`) - Search and filter stores
 
 ### Product Integration Blocks
-- **Product Vendor Info** (`the-another/dokan-product-vendor-info`) - Vendor info on product pages
-- **More from Seller** (`the-another/dokan-more-from-seller`) - More products from same vendor
+- **Product Vendor Info** (`the-another/blocks-for-dokan-product-vendor-info`) - Vendor info on product pages
+- **More from Seller** (`the-another/blocks-for-dokan-more-from-seller`) - More products from same vendor
 
 ### Account/Registration Blocks
-- **Become Vendor CTA** (`the-another/dokan-become-vendor-cta`) - Call-to-action to become a vendor
+- **Become Vendor CTA** (`the-another/blocks-for-dokan-become-vendor-cta`) - Call-to-action to become a vendor
 
 ### Widget Blocks
-- **Store Contact Form** (`the-another/dokan-store-contact-form`) - Contact vendor form
-- **Store Location** (`the-another/dokan-store-location`) - Store location map
-- **Store Hours** (`the-another/dokan-store-hours`) - Store opening hours
+- **Vendor Contact Form** (`the-another/blocks-for-dokan-vendor-contact-form`) - Contact vendor form
+- **Vendor Store Location** (`the-another/blocks-for-dokan-vendor-store-location`) - Store location map
+- **Vendor Store Hours** (`the-another/blocks-for-dokan-vendor-store-hours`) - Store opening hours
 
 ## FSE Templates
 

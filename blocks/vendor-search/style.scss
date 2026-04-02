@@ -1,0 +1,304 @@
+/**
+ * Store search block frontend styles.
+ *
+ * @package DokanBlocks
+ * @since 1.0.0
+ */
+
+.wp-block-the-another-blocks-for-dokan-vendor-search,
+.theabd--vendor-search {
+	margin-bottom: 2rem;
+
+	// Top filter row - always visible.
+	.theabd--vendor-query-looping-filter-wrap {
+		margin-bottom: 1rem;
+		padding: 1rem;
+		background: #fff;
+		border: 1px solid #e0e0e0;
+		border-radius: 8px;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+		.theabd--store-filter-row {
+			// Desktop: all in one row
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 1rem;
+			flex-wrap: nowrap;
+
+			.theabd--store-filter-row-inner {
+				display: flex;
+				align-items: center;
+				gap: 1rem;
+
+				&.theabd--store-filter-row-sort {
+					flex: 0 0 auto;
+				}
+
+				.theabd--store-filter-left {
+					flex: 0 0 auto;
+
+					.item.store-count {
+						margin: 0;
+						font-size: 1rem;
+						line-height: 1.5;
+						color: #666;
+						font-weight: 500;
+					}
+				}
+
+				.theabd--store-filter-right-item {
+					flex: 0 0 auto;
+
+					.item {
+						display: flex;
+						align-items: center;
+						gap: 0.5rem;
+
+						.theabd--icons {
+							display: flex;
+							gap: 3px;
+							margin-right: 0.5rem;
+
+							.theabd--icon-div {
+								width: 4px;
+								height: 4px;
+								background: #666;
+								border-radius: 50%;
+							}
+						}
+
+						.theabd--vendor-query-loop-filter-button {
+							display: flex;
+							align-items: center;
+							gap: 0.5rem;
+						}
+					}
+				}
+			}
+
+			.theabd--store-filter-row-inner.theabd--store-filter-row-sort {
+				.item.sort-by {
+					display: flex;
+					align-items: center;
+					gap: 0.5rem;
+
+					label {
+						margin: 0;
+						white-space: nowrap;
+						font-size: 0.875rem;
+						line-height: 1.5;
+						color: #666;
+						font-weight: 500;
+					}
+
+					select {
+						padding: 0.5rem 0.75rem;
+						border: 1px solid #e0e0e0;
+						border-radius: 6px;
+						font-size: 0.875rem;
+						min-width: 150px;
+						background: #fff;
+						color: #333;
+						cursor: pointer;
+						transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+						&:hover {
+							border-color: #0073aa;
+						}
+
+						&:focus {
+							outline: none;
+							border-color: #0073aa;
+							box-shadow: 0 0 0 3px rgba(0, 115, 170, 0.1);
+						}
+					}
+				}
+			}
+		}
+
+		// Mobile: two rows
+		@media (max-width: 768px) {
+			.theabd--store-filter-row {
+				flex-direction: column;
+				align-items: stretch;
+				gap: 0.75rem;
+
+				.theabd--store-filter-row-inner {
+					justify-content: space-between;
+
+					&.theabd--store-filter-row-sort {
+						justify-content: flex-start;
+					}
+				}
+			}
+		}
+	}
+
+	// Collapsible filter form.
+	.theabd--vendor-search-filter-form {
+		margin-top: 0.5rem;
+		padding: 1.5rem;
+		background: #fff;
+		border: 1px solid #e0e0e0;
+		border-radius: 8px;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+		position: relative;
+
+		&::before {
+			content: '';
+			position: absolute;
+			top: -8px;
+			right: 20px;
+			width: 0;
+			height: 0;
+			border-left: 8px solid transparent;
+			border-right: 8px solid transparent;
+			border-bottom: 8px solid #fff;
+		}
+
+		.theabd--vendor-search-filter-row {
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+			flex-wrap: wrap;
+
+			.theabd--vendor-search {
+				flex: 1 1 300px;
+				min-width: 200px;
+
+				.theabd--vendor-search-input {
+					width: 100%;
+					padding: 0.75rem 1rem;
+					border: 1px solid #e0e0e0;
+					border-radius: 6px;
+					font-size: 1rem;
+					line-height: 1.5;
+					transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+					&:focus {
+						outline: none;
+						border-color: #0073aa;
+						box-shadow: 0 0 0 3px rgba(0, 115, 170, 0.1);
+					}
+
+					&::placeholder {
+						color: #999;
+					}
+				}
+			}
+
+			.theabd--apply-filter {
+				display: flex;
+				gap: 0.75rem;
+				flex: 0 0 auto;
+			}
+		}
+
+		.theabd--store-advanced-filters {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 1.5rem;
+			margin-top: 1.5rem;
+			padding-top: 1.5rem;
+			border-top: 1px solid #e0e0e0;
+
+			.theabd--store-filter-field {
+				flex: 0 1 auto;
+				min-width: 180px;
+
+				label {
+					display: block;
+					margin-bottom: 0.5rem;
+					font-weight: 500;
+					font-size: 0.875rem;
+					color: #333;
+				}
+
+				.theabd--store-filter-select {
+					width: 100%;
+					padding: 0.625rem 0.75rem;
+					border: 1px solid #e0e0e0;
+					border-radius: 6px;
+					font-size: 0.875rem;
+					background: #fff;
+					color: #333;
+					cursor: pointer;
+					transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+					&:hover {
+						border-color: #0073aa;
+					}
+
+					&:focus {
+						outline: none;
+						border-color: #0073aa;
+						box-shadow: 0 0 0 3px rgba(0, 115, 170, 0.1);
+					}
+				}
+			}
+		}
+	}
+
+	// Button styles - applied to all buttons consistently.
+	.theabd--btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		border: none;
+		border-radius: 6px;
+		font-size: 0.875rem;
+		font-weight: 500;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		white-space: nowrap;
+		text-decoration: none;
+		line-height: 1.5;
+
+		&.theabd--btn-theme {
+			background-color: #0073aa;
+			color: #fff;
+
+			&:hover:not(:disabled) {
+				background-color: #005a87;
+				transform: translateY(-1px);
+				box-shadow: 0 2px 4px rgba(0, 115, 170, 0.2);
+			}
+
+			&:active:not(:disabled) {
+				transform: translateY(0);
+			}
+		}
+
+		.theabd--btn-text {
+			display: inline-block;
+			line-height: 1;
+		}
+
+		&.theabd--btn-small {
+			padding: 0.375rem 1rem;
+			font-size: 0.8125rem;
+		}
+
+		&.theabd--btn-medium {
+			padding: 0.625rem 1.25rem;
+			font-size: 0.875rem;
+		}
+
+		&.theabd--btn-large {
+			padding: 0.75rem 1.75rem;
+			font-size: 1rem;
+		}
+
+		&:disabled {
+			opacity: 0.6;
+			cursor: not-allowed;
+		}
+	}
+
+	// Ensure filter button gets same styling.
+	.theabd--vendor-query-loop-filter-button {
+		// Inherits .theabd--btn styles above.
+	}
+}

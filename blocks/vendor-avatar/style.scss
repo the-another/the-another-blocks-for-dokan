@@ -1,0 +1,74 @@
+/**
+ * Vendor Logo block frontend and editor styles.
+ *
+ * @package DokanBlocks
+ * @since 1.0.0
+ */
+
+.wp-block-the-another-blocks-for-dokan-vendor-avatar,
+.theabd--vendor-avatar {
+	display: inline-block;
+	position: relative;
+
+	// Alignment support
+	&.has-text-align-left {
+		text-align: left;
+	}
+
+	&.has-text-align-center {
+		text-align: center;
+	}
+
+	&.has-text-align-right {
+		text-align: right;
+	}
+
+	// Link wrapper
+	.theabd--vendor-avatar-link {
+		display: block;
+		line-height: 0;
+		overflow: hidden;
+	}
+
+	// Image styles
+	.theabd--vendor-avatar-image {
+		display: block;
+		max-width: 100%;
+		height: auto;
+		object-fit: cover;
+	}
+
+	// Support for border radius (round logos) - cascade to all images
+	img,
+	img.theabd--vendor-avatar-image {
+		display: block;
+	}
+
+	// Ensure ServerSideRender content inherits border radius in editor
+	.components-placeholder,
+	> div {
+		overflow: hidden;
+
+		img {
+			display: block;
+		}
+	}
+}
+
+// Wide and full alignment
+.wp-block-the-another-blocks-for-dokan-vendor-avatar {
+	&.alignwide,
+	&.alignfull {
+		display: block;
+		text-align: center;
+
+		.theabd--vendor-avatar-link {
+			display: block;
+		}
+
+		.theabd--vendor-avatar-image {
+			display: block;
+			margin: 0 auto;
+		}
+	}
+}

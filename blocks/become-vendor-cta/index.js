@@ -19,12 +19,12 @@ function Edit() {
 	const blockProps = useBlockProps();
 
 	return (
-		< div { ...blockProps } >
-			< div className = "dokan-become-vendor-cta-placeholder" >
-				< h2 > { __( 'Become Vendor CTA', 'dokan-blocks' ) } < / h2 >
-				< p > { __( 'This block will display a call-to-action to become a vendor on the frontend.', 'dokan-blocks' ) } < / p >
-			< / div >
-		< / div >
+		<div { ...blockProps } >
+			<div className = "dokan-become-vendor-cta-placeholder" >
+				<h2 > { __( 'Become Vendor CTA', 'dokan-blocks' ) } </h2>
+				<p > { __( 'This block will display a call-to-action to become a vendor on the frontend.', 'dokan-blocks' ) } </p>
+			</div>
+		</div>
 	);
 }
 

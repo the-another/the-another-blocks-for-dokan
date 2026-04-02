@@ -1,0 +1,40 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "the-another/blocks-for-dokan-vendor-store-name",
+	"title": "Vendor Store Name",
+	"category": "dokan",
+	"ancestor": [ "the-another/blocks-for-dokan-vendor-query-loop", "the-another/blocks-for-dokan-vendor-card", "the-another/blocks-for-dokan-vendor-store-banner", "the-another/dokan-product-vendor-info" ],
+	"icon": "store",
+	"description": "Display the vendor store name.",
+	"keywords": [ "dokan", "vendor", "store", "name", "title" ],
+	"textdomain": "dokan-blocks",
+	"usesContext": [ "dokan/vendor" ],
+	"supports": {
+		"html": false,
+		"align": [ "left", "center", "right", "wide", "full" ],
+		"color": {
+			"text": true,
+			"background": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"fontWeight": true
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		}
+	},
+	"attributes": {
+		"tagName": {
+			"type": "string",
+			"default": "h2"
+		},
+		"isLink": {
+			"type": "boolean",
+			"default": true
+		}
+	}
+}

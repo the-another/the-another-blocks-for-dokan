@@ -8,6 +8,9 @@
 
 namespace The_Another\Plugin\Blocks_Dokan;
 
+use The_Another\Plugin\Blocks_Dokan\Container\Container;
+use The_Another\Plugin\Blocks_Dokan\Container\Hook_Manager;
+use The_Another\Plugin\Blocks_Dokan\Exceptions\Container_Exception;
 use The_Another\Plugin\Blocks_Dokan\Templates\Block_Templates_Controller;
 
 // Exit if accessed directly.
@@ -18,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Main plugin class.
  */
-class Blocks {
+final class Blocks {
 
 	/**
 	 * Plugin instance.
@@ -26,6 +29,20 @@ class Blocks {
 	 * @var Blocks|null
 	 */
 	private static ?Blocks $instance = null;
+
+	/**
+	 * Dependency injection container.
+	 *
+	 * @var Container
+	 */
+	private Container $container;
+
+	/**
+	 * Hook manager.
+	 *
+	 * @var Hook_Manager
+	 */
+	private Hook_Manager $hook_manager;
 
 	/**
 	 * Block templates controller.
@@ -56,10 +73,33 @@ class Blocks {
 
 	/**
 	 * Constructor.
-	 */
+     *
+     * @throws Container_Exception
+     */
 	private function __construct() {
-		$this->templates_controller = new Block_Templates_Controller();
-		$this->block_registry       = new Block_Registry();
+		$this->container    = Container::get_instance();
+		$this->hook_manager = $this->container->get_hook_manager();
+
+		$this->setup_container();
+
+		$this->templates_controller = $this->container->get( Block_Templates_Controller::class );
+		$this->block_registry       = $this->container->get( Block_Registry::class );
+	}
+
+	/**
+	 * Setup container bindings.
+	 *
+	 * @return void
+	 */
+	private function setup_container(): void {
+		$this->container->register(
+			Block_Registry::class,
+			fn( Container $c ) => new Block_Registry()
+		);
+		$this->container->register(
+			Block_Templates_Controller::class,
+			fn( Container $c ) => new Block_Templates_Controller()
+		);
 	}
 
 	/**
@@ -71,22 +111,40 @@ class Blocks {
 		// Initialize block templates system.
 		$this->templates_controller->init();
 
-		// Register all blocks.
-		$this->block_registry->register_all_blocks();
-
-		// Initialize other components.
-		$this->init_hooks();
+		// Register hooks.
+		$this->register_hooks();
 	}
 
 	/**
-	 * Initialize hooks.
+	 * Register all hooks.
 	 *
 	 * @return void
 	 */
-	private function init_hooks(): void {
+	private function register_hooks(): void {
+		// Register blocks on init hook at early priority (required for block registration).
+		$this->hook_manager->register_action( 'init', array( $this->block_registry, 'register_all_blocks' ), 5 );
+
 		// Enqueue block assets.
-		add_action( 'enqueue_block_assets', array( $this, 'enqueue_block_assets' ) );
-		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
+		$this->hook_manager->register_action( 'enqueue_block_assets', array( $this, 'enqueue_block_assets' ) );
+		$this->hook_manager->register_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
+	}
+
+	/**
+	 * Get the container instance.
+	 *
+	 * @return Container
+	 */
+	public function get_container(): Container {
+		return $this->container;
+	}
+
+	/**
+	 * Get the hook manager instance.
+	 *
+	 * @return Hook_Manager
+	 */
+	public function get_hook_manager(): Hook_Manager {
+		return $this->hook_manager;
 	}
 
 	/**

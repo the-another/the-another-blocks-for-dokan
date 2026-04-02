@@ -7,7 +7,8 @@
  * Author: The Another
  * Author URI: https://theanother.org
  * Requires at least: 6.0
- * Requires PHP: 8.3
+ * Requires PHP: 7.4
+ * Requires Plugins: woocommerce, dokan-lite
  * Text Domain: another-blocks-for-dokan
  * Domain Path: /languages
  * License: GPL v2 or later
@@ -20,6 +21,7 @@
 // Exit if accessed directly.
 
 use The_Another\Plugin\Blocks_Dokan\Blocks;
+use The_Another\Plugin\Blocks_Dokan\Install;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -32,43 +34,28 @@ define( 'ANOTHER_BLOCKS_DOKAN_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'ANOTHER_BLOCKS_DOKAN_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'ANOTHER_BLOCKS_DOKAN_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
-// Minimum PHP version check.
-if ( version_compare( PHP_VERSION, '8.3', '<' ) ) {
-	add_action(
-		'admin_notices',
-		function () {
-			?>
-			<div class="notice notice-error">
-				<p><?php echo esc_html( 'Dokan Blocks requires PHP 8.3 or higher. Please upgrade your PHP version.' ); ?></p>
-			</div>
-			<?php
-		}
-	);
-	return;
-}
-
-// Minimum WordPress version check.
-if ( version_compare( get_bloginfo( 'version' ), '6.0', '<' ) ) {
-	add_action(
-		'admin_notices',
-		function () {
-			?>
-			<div class="notice notice-error">
-				<p><?php echo esc_html( 'Dokan Blocks requires WordPress 6.0 or higher for FSE support. Please upgrade WordPress.' ); ?></p>
-			</div>
-			<?php
-		}
-	);
-	return;
-}
+// Required plugin versions.
+define( 'ANOTHER_BLOCKS_DOKAN_MIN_WOOCOMMERCE_VERSION', '10.0.0' );
+define( 'ANOTHER_BLOCKS_DOKAN_MIN_DOKAN_VERSION', '4.0.0' );
 
 // Load Composer autoloader.
-$another_blocks_autoload_file = ANOTHER_BLOCKS_DOKAN_PLUGIN_DIR . 'vendor/autoload.php';
-require_once $another_blocks_autoload_file;
+$another_blocks_for_dokan_autoload_file = ANOTHER_BLOCKS_DOKAN_PLUGIN_DIR . 'vendor/autoload.php';
+require_once $another_blocks_for_dokan_autoload_file;
+
+// Load helper functions.
+require_once ANOTHER_BLOCKS_DOKAN_PLUGIN_DIR . 'functions/functions.php';
+
+// Register activation hook.
+register_activation_hook( __FILE__, array( Install::class, 'activation_check' ) );
+
+// Runtime check to prevent loading if dependencies are not met.
+if ( ! Install::runtime_check() ) {
+	return;
+}
 
 // Initialize plugin.
 add_action(
-	'init',
+	'plugins_loaded',
 	function () {
 		try {
 			Blocks::get_instance()->init();

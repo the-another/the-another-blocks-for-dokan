@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param WP_Block             $block      Block instance.
  * @return string Rendered HTML.
  */
-function dokan_render_become_vendor_cta_block( array $attributes, string $content, WP_Block $block ): string {
+function theabd_render_become_vendor_cta_block( array $attributes, string $content, WP_Block $block ): string {
 	// Only show to non-vendors.
 	if ( dokan_is_user_seller( get_current_user_id() ) ) {
 		return '';
@@ -43,25 +43,25 @@ function dokan_render_become_vendor_cta_block( array $attributes, string $conten
 	// Get wrapper attributes.
 	$wrapper_attributes = get_block_wrapper_attributes(
 		array(
-			'class' => 'dokan-become-vendor-cta',
+			'class' => 'theabd--become-vendor-cta',
 		)
 	);
 
 	ob_start();
 	?>
 	<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-		<ul class="dokan-account-migration-lists">
+		<ul class="theabd--account-migration-lists">
 			<li>
-				<div class="dokan-w8 left-content">
+				<div class="theabd--w8 theabd--left-content">
 					<p><strong><?php echo esc_html( $heading ); ?></strong></p>
 					<p><?php echo esc_html( $description ); ?></p>
 				</div>
-				<div class="dokan-w4 right-content">
-					<a href="<?php echo esc_url( $button_link ); ?>" class="btn btn-primary">
+				<div class="theabd--w4 theabd--right-content">
+					<a href="<?php echo esc_url( $button_link ); ?>" class="theabd--btn theabd--btn-primary">
 						<?php echo esc_html( $button_text ); ?>
 					</a>
 				</div>
-				<div class="dokan-clearfix"></div>
+				<div class="theabd--clearfix"></div>
 			</li>
 		</ul>
 	</div>

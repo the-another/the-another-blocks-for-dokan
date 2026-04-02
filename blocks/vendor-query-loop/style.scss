@@ -1,0 +1,145 @@
+/**
+ * Store Query Loop block frontend styles.
+ *
+ * @package DokanBlocks
+ * @since 1.0.0
+ */
+
+.wp-block-the-another-blocks-for-dokan-vendor-query-loop,
+.theabd--vendor-query-loop {
+	// Remove bullets from list items
+	.theabd--vendor-wrap,
+	.theabd--vendor-query-loop-wrap {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+
+		li {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+	}
+
+	// Store list wrapper
+	.theabd--vendor-wrap.theabd--vendor-query-loop-wrap {
+		display: grid;
+		gap: 1.5rem;
+		width: 100%;
+
+		// Grid layout - responsive columns
+		&.theabd--vendor-query-loop-grid {
+			display: grid;
+			// Mobile: 1 column (default)
+			grid-template-columns: 1fr;
+
+			// Tablet: 2 columns
+			@media (min-width: 600px) {
+				&.theabd--vendor-query-loop-columns-2,
+				&.theabd--vendor-query-loop-columns-3,
+				&.theabd--vendor-query-loop-columns-4,
+				&.theabd--vendor-query-loop-columns-5,
+				&.theabd--vendor-query-loop-columns-6 {
+					grid-template-columns: repeat(2, 1fr);
+				}
+			}
+
+			// Desktop: use configured columns
+			@media (min-width: 782px) {
+				&.theabd--vendor-query-loop-columns-1 {
+					grid-template-columns: repeat(1, 1fr);
+				}
+
+				&.theabd--vendor-query-loop-columns-2 {
+					grid-template-columns: repeat(2, 1fr);
+				}
+
+				&.theabd--vendor-query-loop-columns-3 {
+					grid-template-columns: repeat(3, 1fr);
+				}
+
+				&.theabd--vendor-query-loop-columns-4 {
+					grid-template-columns: repeat(4, 1fr);
+				}
+
+				&.theabd--vendor-query-loop-columns-5 {
+					grid-template-columns: repeat(5, 1fr);
+				}
+
+				&.theabd--vendor-query-loop-columns-6 {
+					grid-template-columns: repeat(6, 1fr);
+				}
+			}
+		}
+
+		&.theabd--vendor-query-loop-list {
+			display: flex;
+			flex-direction: column;
+		}
+	}
+
+	// Pagination styles
+	.theabd--vendor-query-loop-pagination {
+		margin-top: 2rem;
+		padding-top: 2rem;
+		border-top: 1px solid #e0e0e0;
+		text-align: center;
+
+		.theabd--page-numbers {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.5rem;
+			list-style: none;
+			margin: 0;
+			padding: 0;
+
+			li {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+			}
+
+			a,
+			span {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				min-width: 2.5rem;
+				height: 2.5rem;
+				padding: 0.5rem 0.75rem;
+				border: 1px solid #e0e0e0;
+				border-radius: 4px;
+				text-decoration: none;
+				color: #333;
+				background: #fff;
+				transition: all 0.2s ease;
+
+				&:hover {
+					border-color: #0073aa;
+					color: #0073aa;
+					background: #f0f7fa;
+				}
+			}
+
+			.theabd--current {
+				border-color: #0073aa;
+				color: #fff;
+				background: #0073aa;
+
+				&:hover {
+					background: #005a87;
+					border-color: #005a87;
+				}
+			}
+		}
+	}
+
+	// Empty state
+	.theabd--vendor-query-loop-empty {
+		padding: 2rem;
+		text-align: center;
+		color: #666;
+		font-size: 1rem;
+		margin: 0;
+	}
+}

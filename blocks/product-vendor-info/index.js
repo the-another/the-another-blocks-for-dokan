@@ -22,12 +22,12 @@ import metadata from './block.json';
  * Allowed blocks inside product vendor info.
  */
 const ALLOWED_BLOCKS = [
-	'the-another/dokan-store-name',
-	'the-another/dokan-store-avatar',
-	'the-another/dokan-store-rating',
-	'the-another/dokan-store-address',
-	'the-another/dokan-store-phone',
-	'the-another/dokan-store-status',
+	'the-another/blocks-for-dokan-vendor-store-name',
+	'the-another/blocks-for-dokan-vendor-avatar',
+	'the-another/blocks-for-dokan-vendor-rating',
+	'the-another/blocks-for-dokan-vendor-store-address',
+	'the-another/blocks-for-dokan-vendor-store-phone',
+	'the-another/blocks-for-dokan-vendor-store-status',
 	'core/group',
 	'core/columns',
 	'core/column',
@@ -47,8 +47,8 @@ const TEMPLATE = [
 		layout: { type: 'flex', orientation: 'horizontal' },
 		style: { spacing: { blockGap: '1rem' } },
 	}, [
-		[ 'the-another/dokan-store-avatar', { width: '80px', height: '80px' } ],
-		[ 'the-another/dokan-store-name', { tagName: 'h3', isLink: true } ],
+		[ 'the-another/blocks-for-dokan-vendor-avatar', { width: '80px', height: '80px' } ],
+		[ 'the-another/blocks-for-dokan-vendor-store-name', { tagName: 'h3', isLink: true } ],
 	] ],
 ];
 

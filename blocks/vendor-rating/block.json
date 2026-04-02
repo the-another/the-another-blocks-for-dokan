@@ -1,0 +1,30 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "the-another/blocks-for-dokan-vendor-rating",
+	"title": "Vendor Rating",
+	"category": "dokan",
+	"ancestor": [ "the-another/blocks-for-dokan-vendor-query-loop", "the-another/blocks-for-dokan-vendor-card", "the-another/blocks-for-dokan-vendor-store-banner", "the-another/dokan-product-vendor-info" ],
+	"icon": "star-filled",
+	"description": "Display the vendor store rating and review count.",
+	"keywords": [ "dokan", "vendor", "store", "rating", "reviews", "stars" ],
+	"textdomain": "dokan-blocks",
+	"usesContext": [ "dokan/vendor" ],
+	"supports": {
+		"html": false,
+		"color": {
+			"text": true,
+			"background": true
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		}
+	},
+	"attributes": {
+		"showCount": {
+			"type": "boolean",
+			"default": true
+		}
+	}
+}

@@ -1,0 +1,38 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "the-another/blocks-for-dokan-vendor-store-phone",
+	"title": "Vendor Store Phone",
+	"category": "dokan",
+	"ancestor": [ "the-another/blocks-for-dokan-vendor-query-loop", "the-another/blocks-for-dokan-vendor-card", "the-another/blocks-for-dokan-vendor-store-banner", "the-another/dokan-product-vendor-info" ],
+	"icon": "phone",
+	"description": "Display the vendor store phone number.",
+	"keywords": [ "dokan", "vendor", "store", "phone", "contact", "telephone" ],
+	"textdomain": "dokan-blocks",
+	"usesContext": [ "dokan/vendor" ],
+	"supports": {
+		"html": false,
+		"color": {
+			"text": true,
+			"background": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		}
+	},
+	"attributes": {
+		"showIcon": {
+			"type": "boolean",
+			"default": true
+		},
+		"isLink": {
+			"type": "boolean",
+			"default": true
+		}
+	}
+}

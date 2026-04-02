@@ -1,0 +1,22 @@
+/**
+ * Store header block editor styles.
+ */
+
+.wp-block-dokan-store-header {
+	.theabd--vendor-store-header-placeholder {
+		padding: 2rem;
+		text-align: center;
+		background: #f0f0f0;
+		border: 2px dashed #ccc;
+		border-radius: 4px;
+
+		h2 {
+			margin: 0 0 0.5rem;
+		}
+
+		p {
+			margin: 0;
+			color: #666;
+		}
+	}
+}

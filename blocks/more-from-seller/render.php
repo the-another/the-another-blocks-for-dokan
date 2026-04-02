@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param WP_Block             $block      Block instance.
  * @return string Rendered HTML.
  */
-function dokan_render_more_from_seller_block( array $attributes, string $content, WP_Block $block ): string {
+function theabd_render_more_from_seller_block( array $attributes, string $content, WP_Block $block ): string {
 	// Get product ID from attributes or context.
 	$product_id = ! empty( $attributes['productId'] ) ? absint( $attributes['productId'] ) : 0;
 
@@ -105,7 +105,7 @@ function dokan_render_more_from_seller_block( array $attributes, string $content
 	// Get wrapper attributes.
 	$wrapper_attributes = get_block_wrapper_attributes(
 		array(
-			'class' => "dokan-more-from-seller dokan-more-from-seller-columns-{$columns}",
+			'class' => "theabd--more-from-vendor theabd--more-from-vendor-columns-{$columns}",
 		)
 	);
 
@@ -114,11 +114,11 @@ function dokan_render_more_from_seller_block( array $attributes, string $content
 	if ( $products_query->have_posts() ) {
 		?>
 		<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-			<h2 class="dokan-more-from-seller-title">
+			<h2 class="theabd--more-from-vendor-title">
 				<?php echo esc_html__( 'More from this seller', 'another-dokan-blocks' ); ?>
 			</h2>
 
-			<div class="woocommerce dokan-more-from-seller-grid">
+			<div class="woocommerce theabd--more-from-vendor-grid">
 				<ul class="products columns-<?php echo esc_attr( $columns ); ?>">
 					<?php
 					while ( $products_query->have_posts() ) {
@@ -131,8 +131,8 @@ function dokan_render_more_from_seller_block( array $attributes, string $content
 			</div>
 
 			<?php if ( ! empty( $vendor_data['shop_url'] ) ) : ?>
-				<div class="dokan-more-from-seller-footer">
-					<a href="<?php echo esc_url( $vendor_data['shop_url'] ); ?>" class="dokan-btn dokan-btn-theme">
+				<div class="theabd--more-from-vendor-footer">
+					<a href="<?php echo esc_url( $vendor_data['shop_url'] ); ?>" class="theabd--btn theabd--btn-theme">
 						<?php
 						echo esc_html(
 							sprintf(
@@ -150,7 +150,7 @@ function dokan_render_more_from_seller_block( array $attributes, string $content
 	} else {
 		?>
 		<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-			<p class="dokan-more-from-seller-empty">
+			<p class="theabd--more-from-vendor-empty">
 				<?php echo esc_html__( 'No other products found from this seller.', 'another-dokan-blocks' ); ?>
 			</p>
 		</div>

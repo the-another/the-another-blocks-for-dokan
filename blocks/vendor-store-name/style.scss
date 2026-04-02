@@ -1,0 +1,26 @@
+/**
+ * Store name block styles.
+ *
+ * @package DokanBlocks
+ * @since 1.0.0
+ */
+
+.theabd--vendor-store-name {
+	margin: 0;
+	line-height: 1.3;
+
+	a {
+		color: inherit;
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
+// When inside store banner
+.theabd--vendor-store-banner .theabd--vendor-store-name {
+	color: #ffffff;
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}

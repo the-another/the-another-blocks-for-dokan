@@ -32,7 +32,7 @@ The latest stable version of Dokan is recommended.
 
 = What version of PHP is required? =
 
-PHP 8.3 or higher is required.
+PHP 7.4 or higher is required.
 
 == Changelog ==
 

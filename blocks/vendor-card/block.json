@@ -1,0 +1,49 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "the-another/blocks-for-dokan-vendor-card",
+	"title": "Vendor Card",
+	"category": "dokan",
+	"parent": [ "the-another/blocks-for-dokan-vendor-query-loop" ],
+	"icon": "store",
+	"description": "Display individual vendor card with customizable layout.",
+	"keywords": [ "dokan", "vendor", "store", "card", "group" ],
+	"textdomain": "dokan-blocks",
+	"usesContext": [ "dokan/vendor" ],
+	"supports": {
+		"html": false,
+		"align": true,
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"layout": {
+			"allowSwitching": true,
+			"allowInheriting": false,
+			"default": {
+				"type": "flex",
+				"orientation": "vertical"
+			}
+		}
+	},
+	"attributes": {
+		"vendorId": {
+			"type": "number",
+			"default": 0
+		},
+		"useBannerAsBackground": {
+			"type": "boolean",
+			"default": false
+		},
+		"backgroundOverlay": {
+			"type": "number",
+			"default": 0.5
+		}
+	},
+	"example": {
+		"attributes": {
+			"vendorId": 0,
+			"useBannerAsBackground": false
+		}
+	}
+}

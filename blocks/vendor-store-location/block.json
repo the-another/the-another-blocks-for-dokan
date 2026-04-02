@@ -1,0 +1,49 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "the-another/blocks-for-dokan-vendor-store-location",
+	"title": "Vendor Store Location",
+	"category": "dokan",
+	"ancestor": [ "the-another/blocks-for-dokan-vendor-query-loop", "the-another/blocks-for-dokan-vendor-card", "the-another/blocks-for-dokan-vendor-store-banner" ],
+	"icon": "location",
+	"description": "Display store location on map.",
+	"keywords": [ "dokan", "vendor", "store", "location", "map" ],
+	"textdomain": "dokan-blocks",
+	"usesContext": [ "dokan/vendor" ],
+	"supports": {
+		"html": false,
+		"align": [ "wide", "full" ],
+		"spacing": {
+			"margin": true,
+			"padding": true
+		}
+	},
+	"attributes": {
+		"vendorId": {
+			"type": "number",
+			"default": 0
+		},
+		"mapProvider": {
+			"type": "string",
+			"default": "google",
+			"enum": [ "google", "mapbox" ]
+		},
+		"height": {
+			"type": "number",
+			"default": 400
+		},
+		"zoom": {
+			"type": "number",
+			"default": 10
+		}
+	},
+	"example": {
+		"attributes": {
+			"vendorId": 0,
+			"mapProvider": "google",
+			"height": 400,
+			"zoom": 10
+		}
+	},
+	"render": "theabd_render_vendor_store_location_block"
+}
