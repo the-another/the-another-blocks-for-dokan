@@ -2,7 +2,7 @@
 /**
  * Vendor Logo block render function.
  *
- * @package AnotherBlocksDokan
+ * @package AnotherBlocksForDokan
  * @since 1.0.0
  */
 
@@ -67,7 +67,7 @@ function theabd_render_vendor_avatar_block( array $attributes, string $content, 
 	// Check if border radius is set in style attribute and apply it.
 	$border_radius = null;
 	if ( ! empty( $attributes['style']['border']['radius'] ) ) {
-		$border_radius = $attributes['style']['border']['radius'];
+		$border_radius    = $attributes['style']['border']['radius'];
 		$wrapper_styles[] = 'border-radius: ' . esc_attr( $border_radius );
 		$wrapper_styles[] = 'overflow: hidden';
 	}

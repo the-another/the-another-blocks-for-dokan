@@ -2,7 +2,7 @@
 /**
  * Product vendor info block render function.
  *
- * @package AnotherBlocksDokan
+ * @package AnotherBlocksForDokan
  * @since 1.0.0
  */
 
@@ -44,7 +44,7 @@ function theabd_render_product_vendor_info_block( array $attributes, string $con
 			<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 				<div class="theabd--product-vendor-info-placeholder">
 					<p style="padding: 1rem; background: #f0f0f0; border-radius: 4px; font-size: 0.875rem; color: #666;">
-						<?php echo esc_html__( 'Product Vendor Info: Add this block to a product page or specify a product ID in the block settings.', 'another-dokan-blocks' ); ?>
+						<?php echo esc_html__( 'Product Vendor Info: Add this block to a product page or specify a product ID in the block settings.', 'another-blocks-for-dokan' ); ?>
 					</p>
 				</div>
 			</div>
@@ -126,7 +126,7 @@ function theabd_render_product_vendor_info_block( array $attributes, string $con
 	// Manually add layout classes if WordPress didn't add them.
 	// This ensures flex layout works properly on frontend.
 	if ( ! empty( $attributes['layout']['type'] ) && strpos( $wrapper_attributes, 'is-layout-' ) === false ) {
-		$layout_type = $attributes['layout']['type'];
+		$layout_type  = $attributes['layout']['type'];
 		$layout_class = 'is-layout-' . $layout_type;
 
 		// Add orientation class for flex layouts.

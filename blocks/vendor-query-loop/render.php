@@ -2,7 +2,7 @@
 /**
  * Store Query Loop block render function.
  *
- * @package AnotherBlocksDokan
+ * @package AnotherBlocksForDokan
  * @since 1.0.0
  */
 
@@ -93,17 +93,17 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 	 * @param array<string, mixed> $user_args User query arguments.
 	 * @param array<string, mixed> $attributes Block attributes.
 	 */
-	$user_args = apply_filters( 'dokan_blocks_store_list_query_args', $user_args, $attributes );
+	$user_args = apply_filters( 'theabd_store_list_query_args', $user_args, $attributes );
 
 	// Hook into pre_user_query to handle custom sorting (most_recent, total_orders, random).
 	$query_filter_callback = null;
 	if ( in_array( $wp_orderby, array( 'most_recent', 'total_orders', 'random' ), true ) ) {
-		$query_filter_callback = function( $query ) use ( $wp_orderby ) {
+		$query_filter_callback = function ( $query ) use ( $wp_orderby ) {
 			global $wpdb;
 
 			if ( 'total_orders' === $wp_orderby ) {
 				// Add JOIN for order count.
-				$query->query_from .= " LEFT JOIN (
+				$query->query_from   .= " LEFT JOIN (
 					SELECT seller_id,
 					COUNT(*) AS orders_count
 					FROM {$wpdb->prefix}dokan_orders
@@ -148,18 +148,18 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 	$total_pages = ceil( $total_users / $per_page );
 
 	// Hook the count into the filter for store-search block to use.
-	$count_filter_callback = function( $count ) use ( $total_users ) {
+	$count_filter_callback = function ( $count ) use ( $total_users ) {
 		return $total_users;
 	};
-	add_filter( 'dokan_store_search_block_count', $count_filter_callback, 10, 1 );
+	add_filter( 'theabd_store_search_block_count', $count_filter_callback, 10, 1 );
 
 	// Generate unique query ID for this block instance.
 	$query_id = 'store-query-' . ( isset( $block->parsed_block['attrs']['queryId'] ) ? $block->parsed_block['attrs']['queryId'] : wp_unique_id() );
 
 	// Provide pagination context for child blocks (pagination block).
 	$query_context = array(
-		'queryId'     => $query_id,
-		'query'       => array(
+		'queryId' => $query_id,
+		'query'   => array(
 			'totalPages'  => $total_pages,
 			'currentPage' => $paged,
 			'total'       => $total_users,
@@ -206,7 +206,7 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 	ob_start();
 
 	if ( ! empty( $sellers ) ) {
-		// Generate class for grid layout (columns handled via CSS media queries)
+		// Generate class for grid layout (columns handled via CSS media queries).
 		$grid_classes = 'theabd--vendor-query-loop-wrap';
 		if ( 'grid' === $display_layout ) {
 			$grid_classes .= ' theabd--vendor-query-loop-grid theabd--vendor-query-loop-columns-' . absint( $columns );
@@ -215,8 +215,8 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 		}
 
 		// Separate template blocks (vendor-card) from query-level blocks (search, pagination).
-		$template_blocks = array();
-		$search_blocks   = array();
+		$template_blocks   = array();
+		$search_blocks     = array();
 		$pagination_blocks = array();
 
 		if ( ! empty( $block->inner_blocks ) ) {
@@ -280,7 +280,10 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 									$avatar_block = new WP_Block(
 										array(
 											'blockName' => 'the-another/dokan-store-avatar',
-											'attrs'     => array( 'width' => '80px', 'height' => '80px' ),
+											'attrs'     => array(
+												'width'  => '80px',
+												'height' => '80px',
+											),
 										),
 										array( 'dokan/vendor' => $vendor_data )
 									);
@@ -333,8 +336,8 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 							array(
 								'total'     => $total_pages,
 								'current'   => $paged,
-								'prev_text' => __( '&larr; Previous', 'another-dokan-blocks' ),
-								'next_text' => __( 'Next &rarr;', 'another-dokan-blocks' ),
+								'prev_text' => __( '&larr; Previous', 'another-blocks-for-dokan' ),
+								'next_text' => __( 'Next &rarr;', 'another-blocks-for-dokan' ),
 							)
 						)
 					);
@@ -345,8 +348,8 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 		<?php
 	} else {
 		// Separate blocks for empty state as well.
-		$template_blocks = array();
-		$search_blocks   = array();
+		$template_blocks   = array();
+		$search_blocks     = array();
 		$pagination_blocks = array();
 
 		if ( ! empty( $block->inner_blocks ) ) {
@@ -375,7 +378,7 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 			}
 			?>
 			<p class="theabd--vendor-query-loop-empty">
-				<?php echo esc_html__( 'No vendors found.', 'another-dokan-blocks' ); ?>
+				<?php echo esc_html__( 'No vendors found.', 'another-blocks-for-dokan' ); ?>
 			</p>
 		</div>
 		<?php
@@ -385,7 +388,7 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 
 	// Remove the filter after rendering is complete.
 	if ( isset( $count_filter_callback ) ) {
-		remove_filter( 'dokan_store_search_block_count', $count_filter_callback, 10 );
+		remove_filter( 'theabd_store_search_block_count', $count_filter_callback, 10 );
 	}
 
 	return $output;

@@ -2,7 +2,7 @@
 /**
  * Abstract base class for Dokan block templates.
  *
- * @package AnotherBlocksDokan
+ * @package AnotherBlocksForDokan
  * @since 1.0.0
  */
 
@@ -77,7 +77,7 @@ abstract class Abstract_Dokan_Template {
 			return '';
 		}
 
-		$content = file_get_contents( $template_path );
+		$content = file_get_contents( $template_path ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Reading local template file.
 
 		return false !== $content ? $content : '';
 	}
@@ -98,7 +98,7 @@ abstract class Abstract_Dokan_Template {
 			? $template_file_map[ static::SLUG ]
 			: static::SLUG . '.html';
 
-		return \ANOTHER_BLOCKS_DOKAN_PLUGIN_DIR . 'templates/' . $template_file;
+		return ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'templates/' . $template_file;
 	}
 
 	/**

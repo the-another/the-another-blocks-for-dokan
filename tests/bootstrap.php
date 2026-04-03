@@ -2,7 +2,7 @@
 /**
  * PHPUnit bootstrap file for Another Blocks for Dokan plugin tests.
  *
- * @package AnotherBlocksDokan
+ * @package AnotherBlocksForDokan
  * @since 1.0.0
  */
 
@@ -153,14 +153,14 @@ if ( file_exists( dirname( __DIR__ ) . '/vendor/autoload.php' ) ) {
 }
 
 // Define plugin constants for tests
-if ( ! defined( 'ANOTHER_BLOCKS_DOKAN_PLUGIN_FILE' ) ) {
-	define( 'ANOTHER_BLOCKS_DOKAN_PLUGIN_FILE', dirname( __DIR__ ) . '/another-blocks-for-dokan.php' );
+if ( ! defined( 'ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_FILE' ) ) {
+	define( 'ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_FILE', dirname( __DIR__ ) . '/another-blocks-for-dokan.php' );
 }
 
-if ( ! defined( 'ANOTHER_BLOCKS_DOKAN_PLUGIN_DIR' ) ) {
-	define( 'ANOTHER_BLOCKS_DOKAN_PLUGIN_DIR', dirname( __DIR__ ) . '/' );
+if ( ! defined( 'ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR' ) ) {
+	define( 'ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR', dirname( __DIR__ ) . '/' );
 }
 
-if ( ! defined( 'ANOTHER_BLOCKS_DOKAN_VERSION' ) ) {
-	define( 'ANOTHER_BLOCKS_DOKAN_VERSION', '1.0.3' );
+if ( ! defined( 'ANOTHER_BLOCKS_FOR_DOKAN_VERSION' ) ) {
+	define( 'ANOTHER_BLOCKS_FOR_DOKAN_VERSION', '1.0.3' );
 }

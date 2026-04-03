@@ -2,7 +2,7 @@
 /**
  * Main plugin class.
  *
- * @package AnotherBlocksDokan
+ * @package AnotherBlocksForDokan
  * @since 1.0.0
  */
 
@@ -73,9 +73,9 @@ final class Blocks {
 
 	/**
 	 * Constructor.
-     *
-     * @throws Container_Exception
-     */
+	 *
+	 * @throws Container_Exception If container service resolution fails.
+	 */
 	private function __construct() {
 		$this->container    = Container::get_instance();
 		$this->hook_manager = $this->container->get_hook_manager();
@@ -94,11 +94,11 @@ final class Blocks {
 	private function setup_container(): void {
 		$this->container->register(
 			Block_Registry::class,
-			fn( Container $c ) => new Block_Registry()
+			static fn() => new Block_Registry()
 		);
 		$this->container->register(
 			Block_Templates_Controller::class,
-			fn( Container $c ) => new Block_Templates_Controller()
+			static fn() => new Block_Templates_Controller()
 		);
 	}
 
@@ -155,24 +155,24 @@ final class Blocks {
 	public function enqueue_block_assets(): void {
 		// Always enqueue frontend/shared styles (both frontend and editor need them).
 		$frontend_style = 'dist/style-blocks.css';
-		if ( file_exists( \ANOTHER_BLOCKS_DOKAN_PLUGIN_DIR . $frontend_style ) ) {
+		if ( file_exists( ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . $frontend_style ) ) {
 			wp_enqueue_style(
 				'dokan-blocks-frontend',
-				\ANOTHER_BLOCKS_DOKAN_PLUGIN_URL . $frontend_style,
+				ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_URL . $frontend_style,
 				array(),
-				\ANOTHER_BLOCKS_DOKAN_VERSION
+				ANOTHER_BLOCKS_FOR_DOKAN_VERSION
 			);
 		}
 
 		// Enqueue editor-specific styles when in admin/editor context.
 		if ( is_admin() ) {
 			$editor_style = 'dist/blocks.css';
-			if ( file_exists( \ANOTHER_BLOCKS_DOKAN_PLUGIN_DIR . $editor_style ) ) {
+			if ( file_exists( ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . $editor_style ) ) {
 				wp_enqueue_style(
 					'dokan-blocks-editor',
-					\ANOTHER_BLOCKS_DOKAN_PLUGIN_URL . $editor_style,
+					ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_URL . $editor_style,
 					array( 'dokan-blocks-frontend' ),
-					\ANOTHER_BLOCKS_DOKAN_VERSION
+					ANOTHER_BLOCKS_FOR_DOKAN_VERSION
 				);
 			}
 		}
@@ -186,19 +186,19 @@ final class Blocks {
 	public function enqueue_block_editor_assets(): void {
 		// Check if build file exists.
 		$editor_script      = 'dist/blocks.js';
-		$editor_script_path = \ANOTHER_BLOCKS_DOKAN_PLUGIN_DIR . $editor_script;
+		$editor_script_path = ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . $editor_script;
 
 		if ( file_exists( $editor_script_path ) ) {
 			// Load asset file for dependencies and version.
-			$asset_file = \ANOTHER_BLOCKS_DOKAN_PLUGIN_DIR . 'dist/blocks.asset.php';
+			$asset_file = ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'dist/blocks.asset.php';
 			$asset      = file_exists( $asset_file ) ? require $asset_file : array(
 				'dependencies' => array( 'wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-i18n' ),
-				'version'      => \ANOTHER_BLOCKS_DOKAN_VERSION,
+				'version'      => ANOTHER_BLOCKS_FOR_DOKAN_VERSION,
 			);
 
 			wp_enqueue_script(
 				'dokan-blocks-editor',
-				\ANOTHER_BLOCKS_DOKAN_PLUGIN_URL . $editor_script,
+				ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_URL . $editor_script,
 				$asset['dependencies'],
 				$asset['version'],
 				true

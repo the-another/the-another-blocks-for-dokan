@@ -2,7 +2,7 @@
 /**
  * Store header block unit tests.
  *
- * @package AnotherBlocksDokan
+ * @package AnotherBlocksForDokan
  * @since 1.0.0
  */
 
@@ -96,7 +96,7 @@ class StoreHeaderBlockTest extends TestCase {
 		$block_mock = Mockery::mock( 'WP_Block' );
 
 		// Load render function.
-		require_once ANOTHER_BLOCKS_DOKAN_PLUGIN_DIR . 'blocks/vendor-store-header/render.php';
+		require_once ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'blocks/vendor-store-header/render.php';
 
 		$output = theabd_render_vendor_store_header_block( $attributes, '', $block_mock );
 
@@ -155,7 +155,7 @@ class StoreHeaderBlockTest extends TestCase {
 		Functions\when( 'esc_html' )->alias( $escape_fn );
 		Functions\when( 'esc_attr' )->alias( $escape_fn );
 
-		require_once ANOTHER_BLOCKS_DOKAN_PLUGIN_DIR . 'blocks/vendor-store-header/render.php';
+		require_once ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'blocks/vendor-store-header/render.php';
 
 		$attributes = array( 'vendorId' => $vendor_id );
 		$block_mock = Mockery::mock( 'WP_Block' );
@@ -184,7 +184,7 @@ class StoreHeaderBlockTest extends TestCase {
 			}
 		);
 
-		require_once ANOTHER_BLOCKS_DOKAN_PLUGIN_DIR . 'blocks/vendor-store-header/render.php';
+		require_once ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'blocks/vendor-store-header/render.php';
 
 		$attributes = array( 'vendorId' => 0 );
 		$block_mock = Mockery::mock( 'WP_Block' );

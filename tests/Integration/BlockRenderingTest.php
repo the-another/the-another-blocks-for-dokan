@@ -2,7 +2,7 @@
 /**
  * Block rendering integration tests.
  *
- * @package AnotherBlocksDokan
+ * @package AnotherBlocksForDokan
  * @since 1.0.0
  */
 
@@ -95,7 +95,7 @@ class BlockRenderingTest extends TestCase {
 		);
 
 		// Load render function.
-		require_once ANOTHER_BLOCKS_DOKAN_PLUGIN_DIR . 'blocks/vendor-store-header/render.php';
+		require_once ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'blocks/vendor-store-header/render.php';
 
 		$block_mock = Mockery::mock( 'WP_Block' );
 		$attributes = array(

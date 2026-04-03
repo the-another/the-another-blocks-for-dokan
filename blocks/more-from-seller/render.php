@@ -2,7 +2,7 @@
 /**
  * More from seller block render function.
  *
- * @package AnotherBlocksDokan
+ * @package AnotherBlocksForDokan
  * @since 1.0.0
  */
 
@@ -66,13 +66,13 @@ function theabd_render_more_from_seller_block( array $attributes, string $conten
 			$query_args['order']   = 'ASC';
 			break;
 		case 'price':
-			$query_args['orderby']  = 'meta_value_num';
+			$query_args['orderby'] = 'meta_value_num';
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 			$query_args['meta_key'] = '_price';
 			$query_args['order']    = 'ASC';
 			break;
 		case 'popularity':
-			$query_args['orderby']  = 'meta_value_num';
+			$query_args['orderby'] = 'meta_value_num';
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 			$query_args['meta_key'] = 'total_sales';
 			$query_args['order']    = 'DESC';
@@ -81,7 +81,7 @@ function theabd_render_more_from_seller_block( array $attributes, string $conten
 			$query_args['orderby'] = 'date';
 			$query_args['order']   = 'DESC';
 			break;
-		default: // rand
+		default: // Random order.
 			$query_args['orderby'] = 'rand';
 	}
 
@@ -95,7 +95,7 @@ function theabd_render_more_from_seller_block( array $attributes, string $conten
 	 * @param int                  $vendor_id  Vendor ID.
 	 * @param int                  $product_id Product ID.
 	 */
-	$query_args = apply_filters( 'dokan_blocks_more_from_seller_query_args', $query_args, $attributes, $vendor_id, $product_id );
+	$query_args = apply_filters( 'theabd_more_from_seller_query_args', $query_args, $attributes, $vendor_id, $product_id );
 
 	$products_query = new WP_Query( $query_args );
 
@@ -115,7 +115,7 @@ function theabd_render_more_from_seller_block( array $attributes, string $conten
 		?>
 		<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<h2 class="theabd--more-from-vendor-title">
-				<?php echo esc_html__( 'More from this seller', 'another-dokan-blocks' ); ?>
+				<?php echo esc_html__( 'More from this seller', 'another-blocks-for-dokan' ); ?>
 			</h2>
 
 			<div class="woocommerce theabd--more-from-vendor-grid">
@@ -137,8 +137,8 @@ function theabd_render_more_from_seller_block( array $attributes, string $conten
 						echo esc_html(
 							sprintf(
 								// translators: %s is the vendor store name.
-								__( 'View all products from %s', 'another-dokan-blocks' ),
-								$vendor_data['shop_name'] ?? __( 'this vendor', 'another-dokan-blocks' )
+								__( 'View all products from %s', 'another-blocks-for-dokan' ),
+								$vendor_data['shop_name'] ?? __( 'this vendor', 'another-blocks-for-dokan' )
 							)
 						);
 						?>
@@ -151,7 +151,7 @@ function theabd_render_more_from_seller_block( array $attributes, string $conten
 		?>
 		<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<p class="theabd--more-from-vendor-empty">
-				<?php echo esc_html__( 'No other products found from this seller.', 'another-dokan-blocks' ); ?>
+				<?php echo esc_html__( 'No other products found from this seller.', 'another-blocks-for-dokan' ); ?>
 			</p>
 		</div>
 		<?php

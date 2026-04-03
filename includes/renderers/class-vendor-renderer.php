@@ -2,7 +2,7 @@
 /**
  * Vendor data renderer.
  *
- * @package AnotherBlocksDokan
+ * @package AnotherBlocksForDokan
  * @since 1.0.0
  */
 
@@ -102,5 +102,49 @@ class Vendor_Renderer {
 		}
 
 		return dokan_is_store_open( $vendor_id );
+	}
+
+	/**
+	 * Compute store open/closed status from context data without a DB query.
+	 *
+	 * Replicates the logic of dokan_is_store_open() using pre-fetched
+	 * store_open_close data from $vendor->to_array().
+	 *
+	 * @param array<string, mixed> $store_open_close Store open/close data from vendor context.
+	 * @param int                  $vendor_id        Vendor ID for filter compatibility.
+	 * @return bool True if store is open.
+	 */
+	public static function is_store_open_from_context( array $store_open_close, int $vendor_id ): bool {
+		if ( empty( $store_open_close['enabled'] ) || empty( $store_open_close['time'] ) ) {
+			return false;
+		}
+
+		$dokan_store_times = $store_open_close['time'];
+
+		$current_time = dokan_current_datetime();
+		$today        = strtolower( $current_time->format( 'l' ) );
+
+		// Check if status is closed.
+		if ( empty( $dokan_store_times[ $today ] ) || ( isset( $dokan_store_times[ $today ]['status'] ) && 'close' === $dokan_store_times[ $today ]['status'] ) ) {
+			return apply_filters( 'dokan_is_store_open', false, $today, $dokan_store_times, $vendor_id ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Dokan core filter for compatibility.
+		}
+
+		// Get store opening time.
+		$opening_times = ! empty( $dokan_store_times[ $today ]['opening_time'] ) ? $dokan_store_times[ $today ]['opening_time'] : '';
+		$opening_time  = ! empty( $opening_times ) && is_array( $opening_times ) ? $opening_times[0] : $opening_times;
+		$opening_time  = ! empty( $opening_time ) ? $current_time->modify( $opening_time ) : false;
+
+		// Get closing time.
+		$closing_times = ! empty( $dokan_store_times[ $today ]['closing_time'] ) ? $dokan_store_times[ $today ]['closing_time'] : '';
+		$closing_time  = ! empty( $closing_times ) && is_array( $closing_times ) ? $closing_times[0] : $closing_times;
+		$closing_time  = ! empty( $closing_time ) ? $current_time->modify( $closing_time ) : false;
+
+		if ( empty( $opening_time ) || empty( $closing_time ) ) {
+			return apply_filters( 'dokan_is_store_open', false, $today, $dokan_store_times, $vendor_id ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Dokan core filter for compatibility.
+		}
+
+		$store_open = $opening_time <= $current_time && $closing_time >= $current_time;
+
+		return apply_filters( 'dokan_is_store_open', $store_open, $today, $dokan_store_times, $vendor_id ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Dokan core filter for compatibility.
 	}
 }

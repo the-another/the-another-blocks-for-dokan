@@ -148,7 +148,7 @@ All PHP files must include proper headers:
 /**
  * Brief description of the file.
  *
- * @package AnotherBlocksDokan
+ * @package AnotherBlocksForDokan
  * @since 1.0.0
  */
 ```
@@ -385,7 +385,7 @@ These templates automatically replace PHP templates when using block themes.
 /**
  * New block render function.
  *
- * @package AnotherBlocksDokan
+ * @package AnotherBlocksForDokan
  * @since 1.0.0
  */
 

@@ -2,7 +2,7 @@
 /**
  * Store tabs block render function.
  *
- * @package AnotherBlocksDokan
+ * @package AnotherBlocksForDokan
  * @since 1.0.0
  */
 
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @return string Current tab key.
  */
-function dokan_blocks_get_current_store_tab(): string {
+function theabd_get_current_store_tab(): string {
 	// Check for Terms & Conditions tab.
 	if ( get_query_var( 'toc' ) ) {
 		return 'terms_and_conditions';
@@ -38,8 +38,8 @@ function dokan_blocks_get_current_store_tab(): string {
  * @param string $tab_url Tab URL.
  * @return bool Whether the tab is currently active.
  */
-function dokan_blocks_is_tab_active( string $tab_key, string $tab_url ): bool {
-	$current_tab = dokan_blocks_get_current_store_tab();
+function theabd_is_tab_active( string $tab_key, string $tab_url ): bool {
+	$current_tab = theabd_get_current_store_tab();
 
 	// Direct key match.
 	if ( $current_tab === $tab_key ) {
@@ -99,7 +99,7 @@ function theabd_render_vendor_store_tabs_block( array $attributes, string $conte
 			<?php foreach ( $store_tabs as $key => $tab ) : ?>
 				<?php if ( ! empty( $tab['url'] ) ) : ?>
 					<?php
-					$is_active  = dokan_blocks_is_tab_active( $key, $tab['url'] );
+					$is_active  = theabd_is_tab_active( $key, $tab['url'] );
 					$tab_class  = $is_active ? 'theabd--store-tab-item theabd--active' : 'theabd--store-tab-item';
 					$aria_attrs = $is_active ? 'aria-selected="true" aria-current="page"' : 'aria-selected="false"';
 					?>

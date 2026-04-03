@@ -2,7 +2,7 @@
 /**
  * Template registration integration tests.
  *
- * @package AnotherBlocksDokan
+ * @package AnotherBlocksForDokan
  * @since 1.0.0
  */
 

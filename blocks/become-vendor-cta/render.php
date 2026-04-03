@@ -2,7 +2,7 @@
 /**
  * Become vendor CTA block render function.
  *
- * @package AnotherBlocksDokan
+ * @package AnotherBlocksForDokan
  * @since 1.0.0
  */
 
@@ -26,9 +26,9 @@ function theabd_render_become_vendor_cta_block( array $attributes, string $conte
 	}
 
 	// Extract attributes with defaults.
-	$heading     = isset( $attributes['heading'] ) ? sanitize_text_field( $attributes['heading'] ) : __( 'Become a Vendor', 'another-dokan-blocks' );
-	$description = isset( $attributes['description'] ) ? sanitize_textarea_field( $attributes['description'] ) : __( 'Vendors can sell products and manage a store with a vendor dashboard.', 'another-dokan-blocks' );
-	$button_text = isset( $attributes['buttonText'] ) ? sanitize_text_field( $attributes['buttonText'] ) : __( 'Become a Vendor', 'another-dokan-blocks' );
+	$heading     = isset( $attributes['heading'] ) ? sanitize_text_field( $attributes['heading'] ) : __( 'Become a Vendor', 'another-blocks-for-dokan' );
+	$description = isset( $attributes['description'] ) ? sanitize_textarea_field( $attributes['description'] ) : __( 'Vendors can sell products and manage a store with a vendor dashboard.', 'another-blocks-for-dokan' );
+	$button_text = isset( $attributes['buttonText'] ) ? sanitize_text_field( $attributes['buttonText'] ) : __( 'Become a Vendor', 'another-blocks-for-dokan' );
 	$button_link = isset( $attributes['buttonLink'] ) ? esc_url_raw( $attributes['buttonLink'] ) : '';
 
 	// Get default link if not provided.

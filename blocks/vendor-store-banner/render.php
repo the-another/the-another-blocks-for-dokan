@@ -2,7 +2,7 @@
 /**
  * Store banner block render function.
  *
- * @package AnotherBlocksDokan
+ * @package AnotherBlocksForDokan
  * @since 1.0.0
  */
 
@@ -78,10 +78,10 @@ function theabd_render_vendor_store_banner_block( array $attributes, string $con
 	// Convert hex color to RGB for overlay.
 	$overlay_rgba = 'rgba(0, 0, 0, ' . $background_overlay . ')';
 	if ( preg_match( '/^#([A-Fa-f0-9]{6})$/', $overlay_color, $matches ) ) {
-		$hex = $matches[1];
-		$r   = hexdec( substr( $hex, 0, 2 ) );
-		$g   = hexdec( substr( $hex, 2, 2 ) );
-		$b   = hexdec( substr( $hex, 4, 2 ) );
+		$hex          = $matches[1];
+		$r            = hexdec( substr( $hex, 0, 2 ) );
+		$g            = hexdec( substr( $hex, 2, 2 ) );
+		$b            = hexdec( substr( $hex, 4, 2 ) );
 		$overlay_rgba = sprintf( 'rgba(%d, %d, %d, %s)', $r, $g, $b, $background_overlay );
 	}
 

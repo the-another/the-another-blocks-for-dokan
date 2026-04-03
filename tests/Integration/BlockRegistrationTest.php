@@ -2,7 +2,7 @@
 /**
  * Block registration integration tests.
  *
- * @package AnotherBlocksDokan
+ * @package AnotherBlocksForDokan
  * @since 1.0.0
  */
 
@@ -99,7 +99,7 @@ class BlockRegistrationTest extends TestCase {
 		Functions\when( 'register_block_type_from_metadata' )->justReturn( true );
 		Functions\when( 'apply_filters' )->alias(
 			function ( $filter, $value ) {
-				if ( 'dokan_blocks_registered_blocks' === $filter ) {
+				if ( 'theabd_registered_blocks' === $filter ) {
 					$value['the-another/blocks-for-dokan-custom-block'] = '/path/to/custom-block';
 				}
 				return $value;

@@ -2,7 +2,7 @@
 /**
  * Store status block render function.
  *
- * @package AnotherBlocksDokan
+ * @package AnotherBlocksForDokan
  * @since 1.0.0
  */
 
@@ -39,18 +39,22 @@ function theabd_render_vendor_store_status_block( array $attributes, string $con
 	}
 
 	if ( empty( $vendor ) || empty( $vendor['id'] ) ) {
-		return '<span class="theabd--vendor-store-status theabd--store-open">' . esc_html__( 'Open Now', 'another-dokan-blocks' ) . '</span>';
+		return '<span class="theabd--vendor-store-status theabd--store-open">' . esc_html__( 'Open Now', 'another-blocks-for-dokan' ) . '</span>';
 	}
 
 	$vendor_id = absint( $vendor['id'] );
 
-	// Check if store is open (this needs to be calculated in real-time).
-	$is_store_open = function_exists( 'dokan_is_store_open' ) ? dokan_is_store_open( $vendor_id ) : true;
+	// Check if store is open using context data when available, avoiding a DB query.
+	if ( ! empty( $vendor['store_open_close'] ) ) {
+		$is_store_open = \The_Another\Plugin\Blocks_Dokan\Renderers\Vendor_Renderer::is_store_open_from_context( $vendor['store_open_close'], $vendor_id );
+	} else {
+		$is_store_open = function_exists( 'dokan_is_store_open' ) ? dokan_is_store_open( $vendor_id ) : true;
+	}
 
 	// Get custom notices from vendor data.
 	$store_open_close = $vendor['store_open_close'] ?? array();
-	$open_notice      = $store_open_close['open_notice'] ?? __( 'Open Now', 'another-dokan-blocks' );
-	$close_notice     = $store_open_close['close_notice'] ?? __( 'Closed', 'another-dokan-blocks' );
+	$open_notice      = $store_open_close['open_notice'] ?? __( 'Open Now', 'another-blocks-for-dokan' );
+	$close_notice     = $store_open_close['close_notice'] ?? __( 'Closed', 'another-blocks-for-dokan' );
 
 	// Get wrapper attributes.
 	$status_class       = $is_store_open ? 'theabd--store-open' : 'theabd--store-closed';

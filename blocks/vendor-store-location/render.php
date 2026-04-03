@@ -2,7 +2,7 @@
 /**
  * Store location block render function.
  *
- * @package AnotherBlocksDokan
+ * @package AnotherBlocksForDokan
  * @since 1.0.0
  */
 
@@ -94,28 +94,10 @@ function theabd_render_vendor_store_location_block( array $attributes, string $c
 			<?php dokan_get_template_part( 'widgets/store-map', $map_provider, $template_args ); ?>
 		</div>
 		<?php
-	} else {
-		// Fallback: simple map embed (address, lat, lng already extracted above)
-
-		if ( 'mapbox' === $map_provider && ! empty( $lat ) && ! empty( $lng ) ) {
-			$mapbox_token = get_option( 'dokan_mapbox_token', '' );
-			if ( ! empty( $mapbox_token ) ) {
-				?>
-				<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-					<iframe
-						width="100%"
-						height="<?php echo esc_attr( $height ); ?>"
-						frameborder="0"
-						style="border:0"
-						src="https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s+ff0000(<?php echo esc_attr( $lng ); ?>,<?php echo esc_attr( $lat ); ?>)/<?php echo esc_attr( $lng ); ?>,<?php echo esc_attr( $lat ); ?>,<?php echo esc_attr( $zoom ); ?>/600x<?php echo esc_attr( $height ); ?>?access_token=<?php echo esc_attr( $mapbox_token ); ?>"
-						allowfullscreen>
-					</iframe>
-				</div>
-				<?php
-			}
-		} elseif ( 'google' === $map_provider ) {
-			$google_api_key  = get_option( 'dokan_google_api_key', '' );
-			$address_encoded = rawurlencode( $address );
+	} elseif ( 'mapbox' === $map_provider && ! empty( $lat ) && ! empty( $lng ) ) {
+		// Fallback: Mapbox embed.
+		$mapbox_token = get_option( 'dokan_mapbox_token', '' );
+		if ( ! empty( $mapbox_token ) ) {
 			?>
 			<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 				<iframe
@@ -123,12 +105,28 @@ function theabd_render_vendor_store_location_block( array $attributes, string $c
 					height="<?php echo esc_attr( $height ); ?>"
 					frameborder="0"
 					style="border:0"
-					src="https://www.google.com/maps/embed/v1/place?key=<?php echo esc_attr( $google_api_key ); ?>&q=<?php echo esc_attr( $address_encoded ); ?>&zoom=<?php echo esc_attr( $zoom ); ?>"
+					src="https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s+ff0000(<?php echo esc_attr( $lng ); ?>,<?php echo esc_attr( $lat ); ?>)/<?php echo esc_attr( $lng ); ?>,<?php echo esc_attr( $lat ); ?>,<?php echo esc_attr( $zoom ); ?>/600x<?php echo esc_attr( $height ); ?>?access_token=<?php echo esc_attr( $mapbox_token ); ?>"
 					allowfullscreen>
 				</iframe>
 			</div>
 			<?php
 		}
+	} elseif ( 'google' === $map_provider ) {
+		// Fallback: Google Maps embed.
+		$google_api_key  = get_option( 'dokan_google_api_key', '' );
+		$address_encoded = rawurlencode( $address );
+		?>
+		<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+			<iframe
+				width="100%"
+				height="<?php echo esc_attr( $height ); ?>"
+				frameborder="0"
+				style="border:0"
+				src="https://www.google.com/maps/embed/v1/place?key=<?php echo esc_attr( $google_api_key ); ?>&q=<?php echo esc_attr( $address_encoded ); ?>&zoom=<?php echo esc_attr( $zoom ); ?>"
+				allowfullscreen>
+			</iframe>
+		</div>
+		<?php
 	}
 
 	return ob_get_clean();

@@ -2,7 +2,7 @@
 /**
  * Store rating block render function.
  *
- * @package AnotherBlocksDokan
+ * @package AnotherBlocksForDokan
  * @since 1.0.0
  */
 
@@ -32,7 +32,10 @@ function theabd_render_vendor_rating_block( array $attributes, string $content, 
 			if ( $vendor_data ) {
 				$vendor = array(
 					'id'     => $vendor_data['id'],
-					'rating' => $vendor_data['rating'] ?? array( 'rating' => 0, 'count' => 0 ),
+					'rating' => $vendor_data['rating'] ?? array(
+						'rating' => 0,
+						'count'  => 0,
+					),
 				);
 			}
 		}
@@ -42,9 +45,9 @@ function theabd_render_vendor_rating_block( array $attributes, string $content, 
 		return '<div class="theabd--vendor-rating">★★★★★ (0)</div>';
 	}
 
-	$rating      = $vendor['rating']['rating'] ?? 0;
-	$count       = $vendor['rating']['count'] ?? 0;
-	$show_count  = $attributes['showCount'] ?? true;
+	$rating     = $vendor['rating']['rating'] ?? 0;
+	$count      = $vendor['rating']['count'] ?? 0;
+	$show_count = $attributes['showCount'] ?? true;
 
 	// Get wrapper attributes.
 	$wrapper_attributes = get_block_wrapper_attributes(
@@ -64,10 +67,10 @@ function theabd_render_vendor_rating_block( array $attributes, string $content, 
 			$percentage = ( $rating / 5 ) * 100;
 			?>
 			<?php /* translators: %s: rating value (e.g., 4.5) */ ?>
-			<div class="theabd--star-rating" role="img" aria-label="<?php echo esc_attr( sprintf( __( 'Rated %s out of 5', 'another-dokan-blocks' ), $rating ) ); ?>">
+			<div class="theabd--star-rating" role="img" aria-label="<?php echo esc_attr( sprintf( __( 'Rated %s out of 5', 'another-blocks-for-dokan' ), $rating ) ); ?>">
 				<span style="width:<?php echo esc_attr( $percentage ); ?>%">
 					<?php /* translators: %s: rating value (e.g., 4.5) */ ?>
-					<?php echo esc_html( sprintf( __( 'Rated %s out of 5', 'another-dokan-blocks' ), $rating ) ); ?>
+					<?php echo esc_html( sprintf( __( 'Rated %s out of 5', 'another-blocks-for-dokan' ), $rating ) ); ?>
 				</span>
 			</div>
 			<?php if ( $show_count ) : ?>

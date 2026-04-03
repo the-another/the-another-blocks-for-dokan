@@ -2,7 +2,7 @@
 /**
  * Store address block render function.
  *
- * @package AnotherBlocksDokan
+ * @package AnotherBlocksForDokan
  * @since 1.0.0
  */
 
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param array $address Address array.
  * @return string Formatted address.
  */
-function dokan_blocks_format_address( array $address ): string {
+function theabd_format_address( array $address ): string {
 	$parts = array();
 
 	if ( ! empty( $address['street_1'] ) ) {
@@ -86,7 +86,7 @@ function theabd_render_vendor_store_address_block( array $attributes, string $co
 	// Format the address.
 	$formatted_address = '';
 	if ( is_array( $address ) ) {
-		$formatted_address = dokan_blocks_format_address( $address );
+		$formatted_address = theabd_format_address( $address );
 	} elseif ( is_string( $address ) ) {
 		$formatted_address = $address;
 	}

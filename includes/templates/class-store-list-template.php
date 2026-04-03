@@ -2,7 +2,7 @@
 /**
  * Vendor listing page template.
  *
- * @package AnotherBlocksDokan
+ * @package AnotherBlocksForDokan
  * @since 1.0.0
  */
 
@@ -70,7 +70,7 @@ class Store_List_Template extends Abstract_Dokan_Template {
 	 * @return string
 	 */
 	public function get_template_title(): string {
-		return __( 'Vendor Listing', 'another-dokan-blocks' );
+		return __( 'Vendor Listing', 'another-blocks-for-dokan' );
 	}
 
 	/**
@@ -79,6 +79,6 @@ class Store_List_Template extends Abstract_Dokan_Template {
 	 * @return string
 	 */
 	public function get_template_description(): string {
-		return __( 'Displays a listing of all vendor stores.', 'another-dokan-blocks' );
+		return __( 'Displays a listing of all vendor stores.', 'another-blocks-for-dokan' );
 	}
 }

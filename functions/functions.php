@@ -1,4 +1,10 @@
 <?php
+/**
+ * Global helper functions.
+ *
+ * @package AnotherBlocksForDokan
+ * @since 1.0.0
+ */
 
 use The_Another\Plugin\Blocks_Dokan\Blocks;
 use The_Another\Plugin\Blocks_Dokan\Container\Container;

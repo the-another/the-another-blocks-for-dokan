@@ -2,7 +2,7 @@
 /**
  * Store name block render function.
  *
- * @package AnotherBlocksDokan
+ * @package AnotherBlocksForDokan
  * @since 1.0.0
  */
 
@@ -40,7 +40,7 @@ function theabd_render_vendor_store_name_block( array $attributes, string $conte
 	}
 
 	if ( empty( $vendor ) || empty( $vendor['id'] ) ) {
-		return '<p>' . esc_html__( 'Store Name', 'another-dokan-blocks' ) . '</p>';
+		return '<p>' . esc_html__( 'Store Name', 'another-blocks-for-dokan' ) . '</p>';
 	}
 
 	$shop_name = $vendor['store_name'] ?? $vendor['shop_name'] ?? '';

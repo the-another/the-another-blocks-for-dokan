@@ -2,7 +2,7 @@
 /**
  * Dependency Injection Container.
  *
- * @package AnotherBlocksDokan
+ * @package AnotherBlocksForDokan
  * @since 1.0.0
  */
 
@@ -21,157 +21,159 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Container {
 
-    /**
-     * Container instance.
-     */
-    private static ?Container $instance = null;
+	/**
+	 * Container instance.
+	 *
+	 * @var ?Container
+	 */
+	private static ?Container $instance = null;
 
-    /**
-     * Registered services (factories or instances).
-     *
-     * @var array<string, mixed>
-     */
-    private array $services = array();
+	/**
+	 * Registered services (factories or instances).
+	 *
+	 * @var array<string, mixed>
+	 */
+	private array $services = array();
 
-    /**
-     * Service factories for lazy instantiation.
-     *
-     * @var array<string, callable>
-     */
-    private array $factories = array();
+	/**
+	 * Service factories for lazy instantiation.
+	 *
+	 * @var array<string, callable>
+	 */
+	private array $factories = array();
 
-    /**
-     * Instantiated singleton services.
-     *
-     * @var array<string, object>
-     */
-    private array $singletons = array();
+	/**
+	 * Instantiated singleton services.
+	 *
+	 * @var array<string, object>
+	 */
+	private array $singletons = array();
 
-    /**
-     * Hook manager instance.
-     *
-     * @var Hook_Manager
-     */
-    private Hook_Manager $hook_manager;
+	/**
+	 * Hook manager instance.
+	 *
+	 * @var Hook_Manager
+	 */
+	private Hook_Manager $hook_manager;
 
-    /**
-     * Private constructor to prevent direct instantiation.
-     */
-    private function __construct() {
-        $this->hook_manager = new Hook_Manager();
-    }
+	/**
+	 * Private constructor to prevent direct instantiation.
+	 */
+	private function __construct() {
+		$this->hook_manager = new Hook_Manager();
+	}
 
-    /**
-     * Get the container instance.
-     *
-     * @return Container Container instance.
-     */
-    public static function get_instance(): Container {
-        if ( null === self::$instance ) {
-            self::$instance = new self();
-        }
-        return self::$instance;
-    }
+	/**
+	 * Get the container instance.
+	 *
+	 * @return Container Container instance.
+	 */
+	public static function get_instance(): Container {
+		if ( null === self::$instance ) {
+			self::$instance = new self();
+		}
+		return self::$instance;
+	}
 
-    /**
-     * Get a service from the container.
-     *
-     * @param string $key Service key.
-     * @return mixed Service instance.
-     *
-     * @throws Container_Exception If service not found.
-     */
-    public function get( string $key ): mixed {
-        // Return singleton if already instantiated.
-        if ( isset( $this->singletons[ $key ] ) ) {
-            return $this->singletons[ $key ];
-        }
+	/**
+	 * Get a service from the container.
+	 *
+	 * @param string $key Service key.
+	 * @return mixed Service instance.
+	 *
+	 * @throws Container_Exception If service not found.
+	 */
+	public function get( string $key ): mixed {
+		// Return singleton if already instantiated.
+		if ( isset( $this->singletons[ $key ] ) ) {
+			return $this->singletons[ $key ];
+		}
 
-        // Create from factory if exists.
-        if ( isset( $this->factories[ $key ] ) ) {
-            $instance = call_user_func( $this->factories[ $key ], $this );
+		// Create from factory if exists.
+		if ( isset( $this->factories[ $key ] ) ) {
+			$instance = call_user_func( $this->factories[ $key ], $this );
 
-            // Store as singleton if marked.
-            if ( isset( $this->services[ $key ]['singleton'] ) && $this->services[ $key ]['singleton'] ) {
-                $this->singletons[ $key ] = $instance;
-            }
+			// Store as singleton if marked.
+			if ( isset( $this->services[ $key ]['singleton'] ) && $this->services[ $key ]['singleton'] ) {
+				$this->singletons[ $key ] = $instance;
+			}
 
-            return $instance;
-        }
+			return $instance;
+		}
 
-        // Return direct service if exists.
-        if ( isset( $this->services[ $key ] ) ) {
-            return $this->services[ $key ];
-        }
+		// Return direct service if exists.
+		if ( isset( $this->services[ $key ] ) ) {
+			return $this->services[ $key ];
+		}
 
-        throw new Container_Exception( sprintf( 'Service %s not found in container', $key ) );
-    }
+		throw new Container_Exception( sprintf( 'Service %s not found in container', esc_html( $key ) ) );
+	}
 
-    /**
-     * Check if a service exists in the container.
-     *
-     * @param string $key Service key.
-     * @return bool True if service exists, false otherwise.
-     */
-    public function has( string $key ): bool {
-        return isset( $this->services[ $key ] ) || isset( $this->factories[ $key ] );
-    }
+	/**
+	 * Check if a service exists in the container.
+	 *
+	 * @param string $key Service key.
+	 * @return bool True if service exists, false otherwise.
+	 */
+	public function has( string $key ): bool {
+		return isset( $this->services[ $key ] ) || isset( $this->factories[ $key ] );
+	}
 
-    /**
-     * Register a service factory.
-     *
-     * @param string   $key       Service key.
-     * @param callable $factory   Factory function that receives Container as parameter.
-     * @param bool     $singleton Whether to treat as singleton (default: true).
-     * @return void
-     */
-    public function register( string $key, callable $factory, bool $singleton = true ): void {
-        $this->factories[ $key ] = $factory;
-        $this->services[ $key ]  = array( 'singleton' => $singleton );
-    }
+	/**
+	 * Register a service factory.
+	 *
+	 * @param string   $key       Service key.
+	 * @param callable $factory   Factory function that receives Container as parameter.
+	 * @param bool     $singleton Whether to treat as singleton (default: true).
+	 * @return void
+	 */
+	public function register( string $key, callable $factory, bool $singleton = true ): void {
+		$this->factories[ $key ] = $factory;
+		$this->services[ $key ]  = array( 'singleton' => $singleton );
+	}
 
-    /**
-     * Register a direct service instance.
-     *
-     * @param string $key      Service key.
-     * @param mixed  $instance Service instance.
-     * @return void
-     */
-    public function set( string $key, mixed $instance ): void {
-        $this->services[ $key ] = $instance;
-    }
+	/**
+	 * Register a direct service instance.
+	 *
+	 * @param string $key      Service key.
+	 * @param mixed  $instance Service instance.
+	 * @return void
+	 */
+	public function set( string $key, mixed $instance ): void {
+		$this->services[ $key ] = $instance;
+	}
 
-    /**
-     * Get the hook manager instance.
-     *
-     * @return Hook_Manager Hook manager instance.
-     */
-    public function get_hook_manager(): Hook_Manager {
-        return $this->hook_manager;
-    }
+	/**
+	 * Get the hook manager instance.
+	 *
+	 * @return Hook_Manager Hook manager instance.
+	 */
+	public function get_hook_manager(): Hook_Manager {
+		return $this->hook_manager;
+	}
 
-    /**
-     * Deregister all hooks managed by the container.
-     *
-     * @return void
-     */
-    public function deregister_all_hooks(): void {
-        $this->hook_manager->deregister_all();
-    }
+	/**
+	 * Deregister all hooks managed by the container.
+	 *
+	 * @return void
+	 */
+	public function deregister_all_hooks(): void {
+		$this->hook_manager->deregister_all();
+	}
 
-    /**
-     * Prevent cloning of the instance.
-     */
-    private function __clone() {
-        // Prevent cloning.
-    }
+	/**
+	 * Prevent cloning of the instance.
+	 */
+	private function __clone() {
+		// Prevent cloning.
+	}
 
-    /**
-     * Prevent unserialization of the instance.
-     *
-     * @throws Container_Exception
-     */
-    public function __wakeup() {
-        throw new Container_Exception( 'Cannot unserialize singleton' );
-    }
+	/**
+	 * Prevent unserialization of the instance.
+	 *
+	 * @throws Container_Exception Always thrown to prevent unserialization.
+	 */
+	public function __wakeup() {
+		throw new Container_Exception( 'Cannot unserialize singleton' );
+	}
 }

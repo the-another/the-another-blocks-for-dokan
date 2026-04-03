@@ -2,7 +2,7 @@
 /**
  * Store Query Pagination block render function.
  *
- * @package AnotherBlocksDokan
+ * @package AnotherBlocksForDokan
  * @since 1.0.0
  */
 
@@ -30,7 +30,7 @@ function theabd_render_vendor_query_pagination_block( array $attributes, string 
 	}
 
 	// Extract pagination data from query context.
-	$total_pages = $query['totalPages'] ?? 0;
+	$total_pages  = $query['totalPages'] ?? 0;
 	$current_page = $query['currentPage'] ?? 1;
 
 	// If only one page or no pages, don't show pagination.
@@ -72,8 +72,8 @@ function theabd_render_vendor_query_pagination_block( array $attributes, string 
 					'current'   => $current_page,
 					'total'     => $total_pages,
 					'mid_size'  => $mid_size,
-					'prev_text' => ( 'arrow' === $pagination_arrow ? '&larr; ' : '' ) . ( $show_label ? __( 'Previous', 'another-dokan-blocks' ) : '' ),
-					'next_text' => ( $show_label ? __( 'Next', 'another-dokan-blocks' ) : '' ) . ( 'arrow' === $pagination_arrow ? ' &rarr;' : '' ),
+					'prev_text' => ( 'arrow' === $pagination_arrow ? '&larr; ' : '' ) . ( $show_label ? __( 'Previous', 'another-blocks-for-dokan' ) : '' ),
+					'next_text' => ( $show_label ? __( 'Next', 'another-blocks-for-dokan' ) : '' ) . ( 'arrow' === $pagination_arrow ? ' &rarr;' : '' ),
 					'type'      => 'plain',
 				)
 			)

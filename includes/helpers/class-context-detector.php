@@ -2,7 +2,7 @@
 /**
  * Context detection helper.
  *
- * @package AnotherBlocksDokan
+ * @package AnotherBlocksForDokan
  * @since 1.0.0
  */
 

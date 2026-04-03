@@ -2,7 +2,7 @@
 /**
  * Block templates controller.
  *
- * @package AnotherBlocksDokan
+ * @package AnotherBlocksForDokan
  * @since 1.0.0
  */
 
@@ -54,7 +54,7 @@ class Block_Templates_Controller {
 		 *
 		 * @param array<Abstract_Dokan_Template> $templates Template instances.
 		 */
-		$this->templates = apply_filters( 'another_blocks_dokan_registered_templates', $this->templates );
+		$this->templates = apply_filters( 'another_blocks_for_dokan_registered_templates', $this->templates );
 	}
 
 	/**
