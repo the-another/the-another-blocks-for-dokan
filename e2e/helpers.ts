@@ -50,8 +50,8 @@ export async function deleteVendor(
 			method: 'DELETE',
 			path: `/theabd-test/v1/delete-vendor/${ userId }`,
 		} );
-	} catch {
-		// Best-effort cleanup.
+	} catch ( error ) {
+		console.warn( `[cleanup] Failed to delete vendor ${ userId }:`, error );
 	}
 }
 
@@ -78,8 +78,8 @@ export async function deletePage(
 			method: 'DELETE',
 			path: `/wp/v2/pages/${ pageId }?force=true`,
 		} );
-	} catch {
-		// Best-effort cleanup.
+	} catch ( error ) {
+		console.warn( `[cleanup] Failed to delete page ${ pageId }:`, error );
 	}
 }
 
@@ -106,8 +106,8 @@ export async function deleteProduct(
 			method: 'DELETE',
 			path: `/theabd-test/v1/delete-product/${ productId }`,
 		} );
-	} catch {
-		// Best-effort cleanup.
+	} catch ( error ) {
+		console.warn( `[cleanup] Failed to delete product ${ productId }:`, error );
 	}
 }
 
