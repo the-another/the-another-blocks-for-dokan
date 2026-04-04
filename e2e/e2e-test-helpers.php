@@ -58,6 +58,32 @@ add_action(
 					if ( ! empty( $address ) ) {
 						$profile_settings['address'] = $address;
 					}
+
+					$phone = $request->get_param( 'phone' );
+					if ( ! empty( $phone ) ) {
+						$profile_settings['phone'] = sanitize_text_field( $phone );
+					}
+
+					$store_tnc = $request->get_param( 'store_tnc' );
+					if ( ! empty( $store_tnc ) ) {
+						$profile_settings['store_tnc'] = wp_kses_post( $store_tnc );
+					}
+
+					$store_open_close = $request->get_param( 'store_open_close' );
+					if ( ! empty( $store_open_close ) ) {
+						$profile_settings['store_open_close'] = $store_open_close;
+					}
+
+					$dokan_store_time = $request->get_param( 'dokan_store_time' );
+					if ( ! empty( $dokan_store_time ) ) {
+						$profile_settings['dokan_store_time'] = $dokan_store_time;
+					}
+
+					$dokan_store_time_enabled = $request->get_param( 'dokan_store_time_enabled' );
+					if ( ! empty( $dokan_store_time_enabled ) ) {
+						$profile_settings['dokan_store_time_enabled'] = sanitize_text_field( $dokan_store_time_enabled );
+					}
+
 					update_user_meta( $user_id, 'dokan_profile_settings', $profile_settings );
 
 					return array(
@@ -82,6 +108,57 @@ add_action(
 				},
 				'permission_callback' => function () {
 					return current_user_can( 'delete_users' );
+				},
+			)
+		);
+
+		register_rest_route(
+			'theabd-test/v1',
+			'/create-product',
+			array(
+				'methods'             => 'POST',
+				'callback'            => function ( WP_REST_Request $request ) {
+					$vendor_id = (int) $request->get_param( 'vendor_id' );
+					$title     = $request->get_param( 'title' ) ?? 'Test Product';
+					$price     = $request->get_param( 'price' ) ?? 19.99;
+					$status    = $request->get_param( 'status' ) ?? 'publish';
+
+					$post_id = wp_insert_post(
+						array(
+							'post_title'  => sanitize_text_field( $title ),
+							'post_type'   => 'product',
+							'post_status' => sanitize_text_field( $status ),
+							'post_author' => $vendor_id,
+						)
+					);
+
+					if ( is_wp_error( $post_id ) ) {
+						return $post_id;
+					}
+
+					update_post_meta( $post_id, '_price', (float) $price );
+					update_post_meta( $post_id, '_regular_price', (float) $price );
+					update_post_meta( $post_id, '_visibility', 'visible' );
+					wp_set_object_terms( $post_id, 'simple', 'product_type' );
+
+					return array( 'id' => $post_id );
+				},
+				'permission_callback' => function () {
+					return current_user_can( 'edit_posts' );
+				},
+			)
+		);
+
+		register_rest_route(
+			'theabd-test/v1',
+			'/delete-product/(?P<id>[\d]+)',
+			array(
+				'methods'             => 'DELETE',
+				'callback'            => function ( WP_REST_Request $request ) {
+					return array( 'deleted' => wp_delete_post( (int) $request['id'], true ) );
+				},
+				'permission_callback' => function () {
+					return current_user_can( 'delete_posts' );
 				},
 			)
 		);

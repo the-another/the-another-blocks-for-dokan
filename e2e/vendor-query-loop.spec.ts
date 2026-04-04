@@ -8,7 +8,7 @@
  */
 
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
-import type { RequestUtils } from '@wordpress/e2e-test-utils-playwright';
+import { createVendor, deleteVendor } from './helpers';
 
 const VENDOR_COUNT = 10;
 const PER_PAGE = 3;
@@ -16,36 +16,6 @@ const TOTAL_PAGES = Math.ceil( VENDOR_COUNT / PER_PAGE );
 
 /** Vendor user IDs created during the test, cleaned up afterwards. */
 const vendorIds: number[] = [];
-
-/**
- * Create a single vendor via the custom REST endpoint.
- */
-async function createVendor(
-	requestUtils: RequestUtils,
-	index: number
-): Promise< number > {
-	const result = await requestUtils.rest< { id: number } >( {
-		method: 'POST',
-		path: '/theabd-test/v1/create-vendor',
-		data: { index },
-	} );
-	return result.id;
-}
-
-/** Delete a vendor via the custom REST endpoint. */
-async function deleteVendor(
-	requestUtils: RequestUtils,
-	userId: number
-): Promise< void > {
-	try {
-		await requestUtils.rest( {
-			method: 'DELETE',
-			path: `/theabd-test/v1/delete-vendor/${ userId }`,
-		} );
-	} catch {
-		// Best-effort cleanup.
-	}
-}
 
 /**
  * Build block markup for the query loop page.

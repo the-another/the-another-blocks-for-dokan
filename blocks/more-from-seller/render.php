@@ -39,7 +39,7 @@ function theabd_render_more_from_seller_block( array $attributes, string $conten
 	}
 
 	// Get vendor ID from product author.
-	$vendor_id = absint( $product->get_author_id() );
+	$vendor_id = absint( get_post_field( 'post_author', $product->get_id() ) );
 	if ( ! $vendor_id || ! dokan_is_user_seller( $vendor_id ) ) {
 		return '';
 	}

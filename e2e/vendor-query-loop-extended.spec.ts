@@ -11,80 +11,16 @@
  */
 
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
-import type { RequestUtils } from '@wordpress/e2e-test-utils-playwright';
+import {
+	createVendor,
+	deleteVendor,
+	createPage,
+	deletePage,
+	queryLoopMarkup,
+} from './helpers';
 
 /** Vendor user IDs created during each suite, cleaned up afterwards. */
 let vendorIds: number[] = [];
-
-interface CreateVendorOptions {
-	index: number;
-	store_name?: string;
-	featured?: boolean;
-	address?: Record< string, string >;
-}
-
-async function createVendor(
-	requestUtils: RequestUtils,
-	options: CreateVendorOptions
-): Promise< number > {
-	const result = await requestUtils.rest< { id: number } >( {
-		method: 'POST',
-		path: '/theabd-test/v1/create-vendor',
-		data: options,
-	} );
-	return result.id;
-}
-
-async function deleteVendor(
-	requestUtils: RequestUtils,
-	userId: number
-): Promise< void > {
-	try {
-		await requestUtils.rest( {
-			method: 'DELETE',
-			path: `/theabd-test/v1/delete-vendor/${ userId }`,
-		} );
-	} catch {
-		// Best-effort cleanup.
-	}
-}
-
-async function createPage(
-	requestUtils: RequestUtils,
-	title: string,
-	content: string
-): Promise< { id: number; link: string } > {
-	return requestUtils.rest< { id: number; link: string } >( {
-		method: 'POST',
-		path: '/wp/v2/pages',
-		data: { title, content, status: 'publish' },
-	} );
-}
-
-async function deletePage(
-	requestUtils: RequestUtils,
-	pageId: number
-): Promise< void > {
-	try {
-		await requestUtils.rest( {
-			method: 'DELETE',
-			path: `/wp/v2/pages/${ pageId }?force=true`,
-		} );
-	} catch {
-		// Best-effort cleanup.
-	}
-}
-
-/** Block markup builder for common query loop patterns. */
-function queryLoopMarkup(
-	attrs: Record< string, unknown >,
-	innerBlocks: string
-): string {
-	const attrStr = JSON.stringify( attrs );
-	return `<!-- wp:the-another/blocks-for-dokan-vendor-query-loop ${ attrStr } -->
-${ innerBlocks }
-<!-- /wp:the-another/blocks-for-dokan-vendor-query-loop -->`;
-}
 
 const CARD_WITH_NAME = `<!-- wp:the-another/blocks-for-dokan-vendor-card -->
 <!-- wp:the-another/blocks-for-dokan-vendor-store-name {"tagName":"h3","isLink":false} /-->
