@@ -148,27 +148,36 @@ async function restRequest( method, restPath, cookies, nonce, data ) {
 	return json;
 }
 
-/** Install a plugin from wordpress.org and activate it. */
-async function installRemotePlugin( slug, cookies, nonce ) {
-	try {
-		await restRequest( 'POST', '/wp/v2/plugins', cookies, nonce, {
-			slug,
-			status: 'active',
-		} );
-		console.log( `  ✓ ${ slug } installed and activated` );
-	} catch {
-		// Already installed — try activating.
+/** Install a plugin from wordpress.org and activate it, with retries. */
+async function installRemotePlugin( slug, cookies, nonce, retries = 3 ) {
+	for ( let attempt = 1; attempt <= retries; attempt++ ) {
 		try {
-			await restRequest(
-				'POST',
-				`/wp/v2/plugins/${ slug }/${ slug }`,
-				cookies,
-				nonce,
-				{ status: 'active' }
-			);
-			console.log( `  ✓ ${ slug } activated` );
-		} catch ( e2 ) {
-			console.warn( `  ⚠ Could not install or activate ${ slug }: ${ e2.message }` );
+			await restRequest( 'POST', '/wp/v2/plugins', cookies, nonce, {
+				slug,
+				status: 'active',
+			} );
+			console.log( `  ✓ ${ slug } installed and activated` );
+			return;
+		} catch {
+			// Already installed — try activating.
+			try {
+				await restRequest(
+					'POST',
+					`/wp/v2/plugins/${ slug }/${ slug }`,
+					cookies,
+					nonce,
+					{ status: 'active' }
+				);
+				console.log( `  ✓ ${ slug } activated` );
+				return;
+			} catch ( e2 ) {
+				if ( attempt < retries ) {
+					console.log( `  ⏳ ${ slug } install attempt ${ attempt } failed, retrying in 5s…` );
+					await new Promise( ( r ) => setTimeout( r, 5_000 ) );
+				} else {
+					console.warn( `  ⚠ Could not install or activate ${ slug }: ${ e2.message }` );
+				}
+			}
 		}
 	}
 }
