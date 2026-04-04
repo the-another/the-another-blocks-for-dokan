@@ -8,7 +8,7 @@
 	"icon": "store",
 	"description": "Display individual vendor card with customizable layout.",
 	"keywords": [ "dokan", "vendor", "store", "card", "group" ],
-	"textdomain": "dokan-blocks",
+	"textdomain": "another-blocks-for-dokan",
 	"usesContext": [ "dokan/vendor" ],
 	"supports": {
 		"html": false,
