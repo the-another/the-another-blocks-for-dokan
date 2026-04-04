@@ -253,7 +253,8 @@ test.describe( 'Vendor Store Tabs – standalone rendering', () => {
 		vendorIds = [];
 	} );
 
-	test( 'renders tab items or page loads without error', async ( {
+	// Store tabs require Dokan's rewrite rules which aren't active in wp-now.
+	test.fixme( 'renders tab items when Dokan rewrite rules are active', async ( {
 		page,
 		requestUtils,
 	} ) => {
@@ -268,24 +269,14 @@ test.describe( 'Vendor Store Tabs – standalone rendering', () => {
 
 		await page.goto( newPage.link );
 
-		// Page should load without crashing.
-		await expect( page.locator( 'body' ) ).toBeVisible();
-
-		// Tabs may or may not render depending on dokan_get_store_tabs().
-		// If they do render, verify structure.
 		const tabsBlock = page.locator( '.theabd--vendor-store-tabs' );
-		const tabsCount = await tabsBlock.count();
-		if ( tabsCount > 0 ) {
-			await expect( tabsBlock ).toBeVisible();
-			const tabItems = tabsBlock.locator(
-				'.theabd--store-tab-item'
-			);
-			expect( await tabItems.count() ).toBeGreaterThan( 0 );
+		await expect( tabsBlock ).toBeVisible();
 
-			// Each tab should contain a link.
-			const firstTab = tabItems.first();
-			await expect( firstTab.locator( 'a' ) ).toBeVisible();
-		}
+		const tabItems = tabsBlock.locator( '.theabd--store-tab-item' );
+		expect( await tabItems.count() ).toBeGreaterThan( 0 );
+
+		const firstTab = tabItems.first();
+		await expect( firstTab.locator( 'a' ) ).toBeVisible();
 
 		await deletePage( requestUtils, newPage.id );
 	} );
@@ -318,7 +309,9 @@ test.describe( 'Vendor Store Sidebar – standalone rendering', () => {
 		vendorIds = [];
 	} );
 
-	test( 'renders sidebar wrapper or page loads without error', async ( {
+	// Sidebar rendering requires Dokan widget areas which aren't
+	// registered in wp-now.
+	test.fixme( 'renders sidebar with widget areas when Dokan is fully active', async ( {
 		page,
 		requestUtils,
 	} ) => {
@@ -333,20 +326,9 @@ test.describe( 'Vendor Store Sidebar – standalone rendering', () => {
 
 		await page.goto( newPage.link );
 
-		// Page should load without crashing.
-		await expect( page.locator( 'body' ) ).toBeVisible();
-
-		// Sidebar renders but may be visually empty (hidden) if no widget
-		// areas or Dokan widget functions are available in wp-now.
 		const sidebar = page.locator( '.theabd--vendor-store-sidebar' );
-		const sidebarCount = await sidebar.count();
-		if ( sidebarCount > 0 ) {
-			// Verify it has the correct role attribute even if hidden.
-			await expect( sidebar ).toHaveAttribute(
-				'role',
-				'complementary'
-			);
-		}
+		await expect( sidebar ).toBeVisible();
+		await expect( sidebar ).toHaveAttribute( 'role', 'complementary' );
 
 		await deletePage( requestUtils, newPage.id );
 	} );

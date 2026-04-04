@@ -79,10 +79,8 @@ test.describe( 'Product Vendor Info – context provider rendering', () => {
 		// Inner blocks should render with vendor context.
 		const nameBlock = infoBlock.locator( '.theabd--vendor-store-name' );
 		await expect( nameBlock ).toBeVisible();
-		const nameText = await nameBlock.textContent();
-		if ( nameText && nameText.trim().length > 0 ) {
-			await expect( nameBlock.locator( 'a' ) ).toBeVisible();
-		}
+		await expect( nameBlock ).not.toBeEmpty();
+		await expect( nameBlock.locator( 'a' ) ).toBeVisible();
 
 		const avatar = infoBlock.locator( '.theabd--vendor-avatar' );
 		await expect( avatar ).toBeVisible();
