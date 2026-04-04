@@ -13,6 +13,7 @@
     "lint:css": "wp-scripts lint-style blocks/*/editor.scss blocks/*/style.scss",
     "test:e2e": "WP_BASE_URL=http://localhost:8881 npx playwright test --config playwright.config.ts",
     "test:e2e:ui": "WP_BASE_URL=http://localhost:8881 npx playwright test --config playwright.config.ts --ui",
+    "playground": "node scripts/playground-setup.js",
     "plugin-zip": "composer build && npm run build && wp-scripts plugin-zip > /dev/null 2>&1 && node scripts/version-zip.js",
     "version": "node scripts/version-bump.js",
     "version:patch": "node scripts/version-bump.js patch",
