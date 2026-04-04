@@ -23,20 +23,24 @@ CommonJS to match the existing convention in `scripts/` (e.g., `version-bump.js`
 
 Responsibilities:
 
-1. **Install playground mu-plugin** — copies `scripts/playground-helpers.php` to `~/.wp-now/mu-plugins/` (see below)
-2. **Start wp-now** via `child_process.spawn('npx', ['wp-now', 'start', ...])` on port 8882, PHP 8.3, without `--reset`. Pipe stdout/stderr to the parent process so the user sees wp-now output.
-3. **Wait for readiness** — poll `http://localhost:8882/` with `fetch()` in a retry loop (1s interval, 60s timeout) until a 200 response
-4. **Authenticate** — POST to `/wp-login.php` with admin credentials (wp-now default: `admin`/`password`) to obtain auth cookies, then use those cookies for subsequent REST API calls via plain `fetch()`
-5. **Install and activate plugins** via `POST /wp/v2/plugins` with `{ slug, status: 'active' }`, catching "already installed" errors and falling back to activation (same try/catch pattern as `e2e/global-setup.ts`, but implemented with plain `fetch`)
+1. **Run initial build** — spawn `npx wp-scripts build src/blocks.js --output-path=dist` and wait for it to complete. This ensures `dist/` exists before wp-now starts serving. Skipped if `dist/` already exists and `--no-build` flag is passed.
+2. **Install playground mu-plugin** — copies `scripts/playground-helpers.php` to `~/.wp-now/mu-plugins/` (see below)
+3. **Start wp-now and block watcher concurrently** — spawn both as child processes:
+   - `npx wp-now start --port=8882 --php=8.3` (no `--reset`, no `--skip-browser`)
+   - `npx wp-scripts start src/blocks.js --output-path=dist` (file watcher for live rebuilds)
+   - Both pipe stdout/stderr to the parent process (prefixed with `[wp-now]` and `[build]` for clarity)
+4. **Wait for readiness** — poll `http://localhost:8882/` with `fetch()` in a retry loop (1s interval, 60s timeout) until a 200 response
+5. **Authenticate** — POST to `/wp-login.php` with admin credentials (wp-now default: `admin`/`password`) to obtain auth cookies, then use those cookies for subsequent REST API calls via plain `fetch()`
+6. **Install and activate plugins** via `POST /wp/v2/plugins` with `{ slug, status: 'active' }`, catching "already installed" errors and falling back to activation (same try/catch pattern as `e2e/global-setup.ts`, but implemented with plain `fetch`)
    - WooCommerce (remote install from wordpress.org)
    - Dokan-lite (remote install from wordpress.org)
    - another-blocks-for-dokan — **activate only** (already on disk, wp-now mounts the project directory). Use `POST /wp/v2/plugins/another-blocks-for-dokan/another-blocks-for-dokan` with `{ status: 'active' }`
-6. **Create 10 vendor accounts** via the playground mu-plugin endpoint `POST /theabd-playground/v1/ensure-vendor` (see below) — inherently idempotent
-7. **Log useful URLs** to the console:
+7. **Create 10 vendor accounts** via the playground mu-plugin endpoint `POST /theabd-playground/v1/ensure-vendor` (see below) — inherently idempotent
+8. **Log useful URLs** to the console:
    - WP Admin: `http://localhost:8882/wp-admin/`
    - Store Listing: `http://localhost:8882/store-listing/`
    - Sample vendor store URLs
-8. **Keep wp-now running** in the foreground — the spawned process stays attached. Ctrl+C sends SIGINT to wp-now and exits.
+9. **Keep both processes running** in the foreground. Ctrl+C sends SIGINT to both wp-now and the watcher, then exits.
 
 ### 3. `scripts/playground-helpers.php` (mu-plugin)
 
@@ -83,19 +87,12 @@ Each vendor gets deterministic data based on index:
 
 ## Usage
 
-**Prerequisites:** Run `npm run build` at least once (or use `npm start` for watch mode) so the `dist/` folder exists.
-
-Terminal 1 (block rebuild watcher):
-```bash
-npm start
-```
-
-Terminal 2 (WordPress server):
+Single command, single terminal:
 ```bash
 npm run playground
 ```
 
-The browser opens automatically. Block changes rebuild via `npm start` and are served live by wp-now since it reads from the plugin directory.
+This builds the blocks, starts wp-now, starts the file watcher, installs plugins, seeds vendors, and opens the browser. Edit any block file and it rebuilds automatically — refresh the browser to see changes.
 
 **Subsequent runs:** Data persists across sessions (no `--reset`). Vendors, products, and settings you configure manually survive restarts. Re-running `npm run playground` skips vendor creation (idempotent) and picks up where you left off.
 
