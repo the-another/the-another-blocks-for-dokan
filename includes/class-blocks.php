@@ -35,28 +35,28 @@ final class Blocks {
 	 *
 	 * @var Container
 	 */
-	private Container $container;
+	private readonly Container $container;
 
 	/**
 	 * Hook manager.
 	 *
 	 * @var Hook_Manager
 	 */
-	private Hook_Manager $hook_manager;
+	private readonly Hook_Manager $hook_manager;
 
 	/**
 	 * Block templates controller.
 	 *
 	 * @var Block_Templates_Controller
 	 */
-	private Block_Templates_Controller $templates_controller;
+	private readonly Block_Templates_Controller $templates_controller;
 
 	/**
 	 * Block registry.
 	 *
 	 * @var Block_Registry
 	 */
-	private Block_Registry $block_registry;
+	private readonly Block_Registry $block_registry;
 
 	/**
 	 * Get plugin instance.

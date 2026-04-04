@@ -68,19 +68,11 @@ function theabd_render_vendor_search_block( array $attributes, string $content, 
 		$button_classes[] = 'dokan-btn-' . esc_attr( $button_size );
 	}
 
-	$button_style = '';
-	// Add button size padding.
-	switch ( $button_size ) {
-		case 'small':
-			$button_style .= 'padding: 0.375rem 1rem; font-size: 0.875rem;';
-			break;
-		case 'large':
-			$button_style .= 'padding: 0.75rem 2rem; font-size: 1.125rem;';
-			break;
-		default: // Medium size.
-			$button_style .= 'padding: 0.5rem 1.5rem; font-size: 1rem;';
-			break;
-	}
+	$button_style = match ( $button_size ) {
+		'small' => 'padding: 0.375rem 1rem; font-size: 0.875rem;',
+		'large' => 'padding: 0.75rem 2rem; font-size: 1.125rem;',
+		default => 'padding: 0.5rem 1.5rem; font-size: 1rem;',
+	};
 	// Add button colors.
 	if ( ! empty( $button_bg_color ) ) {
 		$button_style .= ' background-color: ' . esc_attr( $button_bg_color ) . ';';

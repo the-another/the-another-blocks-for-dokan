@@ -54,7 +54,7 @@ class Container {
 	 *
 	 * @var Hook_Manager
 	 */
-	private Hook_Manager $hook_manager;
+	private readonly Hook_Manager $hook_manager;
 
 	/**
 	 * Private constructor to prevent direct instantiation.

@@ -40,7 +40,7 @@ class VendorRendererTest extends TestCase {
 		// but returns nothing useful (so Context_Detector won't find a vendor).
 		$vendor_manager = Mockery::mock();
 		$vendor_manager->shouldReceive( 'get' )->andReturn( null );
-		$dokan = Mockery::mock();
+		$dokan         = Mockery::mock();
 		$dokan->vendor = $vendor_manager;
 		Functions\when( 'dokan' )->justReturn( $dokan );
 	}
