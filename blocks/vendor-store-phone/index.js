@@ -1,7 +1,7 @@
 /**
  * Store phone block editor component.
  *
- * @package DokanBlocks
+ * @package
  * @since 1.0.0
  */
 
@@ -14,15 +14,15 @@ import metadata from './block.json';
 /**
  * Store phone block edit component.
  *
- * @param {Object} props Block props.
- * @param {Object} props.attributes Block attributes.
+ * @param {Object}   props               Block props.
+ * @param {Object}   props.attributes    Block attributes.
  * @param {Function} props.setAttributes Function to update attributes.
- * @param {Object} props.context Block context.
+ * @param {Object}   props.context       Block context.
  * @return {JSX.Element} Block edit component.
  */
 function Edit( { attributes, setAttributes, context } ) {
 	const { showIcon = true, isLink = true } = attributes;
-	const vendor = context['dokan/vendor'] || {};
+	const vendor = context[ 'dokan/vendor' ] || {};
 
 	const phone = vendor.phone || __( 'No phone number', 'dokan-blocks' );
 	const hasPhone = Boolean( vendor.phone );
@@ -34,38 +34,55 @@ function Edit( { attributes, setAttributes, context } ) {
 	const phoneContent = (
 		<>
 			{ showIcon && (
-				<span className="dokan-vendor-store-phone-icon" aria-hidden="true">
+				<span
+					className="dokan-vendor-store-phone-icon"
+					aria-hidden="true"
+				>
 					📞
 				</span>
 			) }
-			<span className="dokan-vendor-store-phone-number">
-				{ phone }
-			</span>
+			<span className="dokan-vendor-store-phone-number">{ phone }</span>
 		</>
 	);
 
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={ __( 'Settings', 'dokan-blocks' ) } initialOpen={ true }>
+				<PanelBody
+					title={ __( 'Settings', 'dokan-blocks' ) }
+					initialOpen={ true }
+				>
 					<ToggleControl
 						label={ __( 'Show Icon', 'dokan-blocks' ) }
-						help={ __( 'Display a phone icon before the number.', 'dokan-blocks' ) }
+						help={ __(
+							'Display a phone icon before the number.',
+							'dokan-blocks'
+						) }
 						checked={ showIcon }
-						onChange={ ( value ) => setAttributes( { showIcon: value } ) }
+						onChange={ ( value ) =>
+							setAttributes( { showIcon: value } )
+						}
 					/>
 					<ToggleControl
 						label={ __( 'Make Clickable', 'dokan-blocks' ) }
-						help={ __( 'Make the phone number a clickable tel: link.', 'dokan-blocks' ) }
+						help={ __(
+							'Make the phone number a clickable tel: link.',
+							'dokan-blocks'
+						) }
 						checked={ isLink }
-						onChange={ ( value ) => setAttributes( { isLink: value } ) }
+						onChange={ ( value ) =>
+							setAttributes( { isLink: value } )
+						}
 					/>
 				</PanelBody>
 			</InspectorControls>
 
 			<div { ...blockProps }>
 				{ isLink && hasPhone ? (
-					<a href={ `tel:${ phone }` } onClick={ ( e ) => e.preventDefault() }>
+					<a
+						href={ `tel:${ phone }` }
+						onClick={ ( e ) => e.preventDefault() }
+					>
 						{ phoneContent }
 					</a>
 				) : (
@@ -85,11 +102,8 @@ function Save() {
 	return null;
 }
 
-registerBlockType(
-	metadata.name,
-	{
-		...metadata,
-		edit: Edit,
-		save: Save,
-	}
-);
+registerBlockType( metadata.name, {
+	...metadata,
+	edit: Edit,
+	save: Save,
+} );

@@ -77,7 +77,9 @@
 				}
 			}
 
+			/* stylelint-disable-next-line no-duplicate-selectors */
 			.theabd--store-filter-row-inner.theabd--store-filter-row-sort {
+
 				.item.sort-by {
 					display: flex;
 					align-items: center;
@@ -119,6 +121,7 @@
 
 		// Mobile: two rows
 		@media (max-width: 768px) {
+
 			.theabd--store-filter-row {
 				flex-direction: column;
 				align-items: stretch;
@@ -146,7 +149,7 @@
 		position: relative;
 
 		&::before {
-			content: '';
+			content: "";
 			position: absolute;
 			top: -8px;
 			right: 20px;
@@ -207,6 +210,7 @@
 				flex: 0 1 auto;
 				min-width: 180px;
 
+				/* stylelint-disable-next-line no-descending-specificity */
 				label {
 					display: block;
 					margin-bottom: 0.5rem;

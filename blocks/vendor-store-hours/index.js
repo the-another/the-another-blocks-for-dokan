@@ -1,7 +1,7 @@
 /**
  * Store hours block editor component.
  *
- * @package DokanBlocks
+ * @package
  * @since 1.0.0
  */
 
@@ -30,12 +30,36 @@ const DAYS = {
  * Mock store hours for preview.
  */
 const MOCK_HOURS = {
-	monday: { status: 'open', opening_time: '9:00 AM', closing_time: '6:00 PM' },
-	tuesday: { status: 'open', opening_time: '9:00 AM', closing_time: '6:00 PM' },
-	wednesday: { status: 'open', opening_time: '9:00 AM', closing_time: '6:00 PM' },
-	thursday: { status: 'open', opening_time: '9:00 AM', closing_time: '6:00 PM' },
-	friday: { status: 'open', opening_time: '9:00 AM', closing_time: '8:00 PM' },
-	saturday: { status: 'open', opening_time: '10:00 AM', closing_time: '4:00 PM' },
+	monday: {
+		status: 'open',
+		opening_time: '9:00 AM',
+		closing_time: '6:00 PM',
+	},
+	tuesday: {
+		status: 'open',
+		opening_time: '9:00 AM',
+		closing_time: '6:00 PM',
+	},
+	wednesday: {
+		status: 'open',
+		opening_time: '9:00 AM',
+		closing_time: '6:00 PM',
+	},
+	thursday: {
+		status: 'open',
+		opening_time: '9:00 AM',
+		closing_time: '6:00 PM',
+	},
+	friday: {
+		status: 'open',
+		opening_time: '9:00 AM',
+		closing_time: '8:00 PM',
+	},
+	saturday: {
+		status: 'open',
+		opening_time: '10:00 AM',
+		closing_time: '4:00 PM',
+	},
 	sunday: { status: 'close', opening_time: '', closing_time: '' },
 };
 
@@ -43,23 +67,31 @@ const MOCK_HOURS = {
  * Get current day of the week.
  */
 function getCurrentDay() {
-	const days = [ 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday' ];
+	const days = [
+		'sunday',
+		'monday',
+		'tuesday',
+		'wednesday',
+		'thursday',
+		'friday',
+		'saturday',
+	];
 	return days[ new Date().getDay() ];
 }
 
 /**
  * Store hours block edit component.
  *
- * @param {Object} props Block props.
- * @param {Object} props.attributes Block attributes.
+ * @param {Object}   props               Block props.
+ * @param {Object}   props.attributes    Block attributes.
  * @param {Function} props.setAttributes Function to update attributes.
- * @param {Object} props.context Block context.
+ * @param {Object}   props.context       Block context.
  * @return {JSX.Element} Block edit component.
  */
 function Edit( { attributes, setAttributes, context } ) {
 	const { layout = 'compact', showCurrentStatus = true } = attributes;
-	const vendor = context['dokan/vendor'] || {};
-	
+	const vendor = context[ 'dokan/vendor' ] || {};
+
 	const blockProps = useBlockProps( {
 		className: `dokan-vendor-store-hours dokan-vendor-store-hours-${ layout }`,
 	} );
@@ -73,34 +105,64 @@ function Edit( { attributes, setAttributes, context } ) {
 	}, [ vendor.store_info ] );
 
 	// Check if store time is enabled (default to true for preview)
-	const storeTimeEnabled = vendor.store_info?.dokan_store_time_enabled !== 'no';
+	const storeTimeEnabled =
+		vendor.store_info?.dokan_store_time_enabled !== 'no';
 
 	const currentDay = getCurrentDay();
 	const todaySchedule = storeHours[ currentDay ] || {};
-	const isOpen = todaySchedule.status === 'open' && todaySchedule.opening_time && todaySchedule.closing_time;
+	const isOpen =
+		todaySchedule.status === 'open' &&
+		todaySchedule.opening_time &&
+		todaySchedule.closing_time;
 
 	// Get custom open/close notices
-	const openNotice = vendor.store_info?.dokan_store_open_notice || __( 'Store Open', 'dokan-blocks' );
-	const closedNotice = vendor.store_info?.dokan_store_close_notice || __( 'Store Closed', 'dokan-blocks' );
+	const openNotice =
+		vendor.store_info?.dokan_store_open_notice ||
+		__( 'Store Open', 'dokan-blocks' );
+	const closedNotice =
+		vendor.store_info?.dokan_store_close_notice ||
+		__( 'Store Closed', 'dokan-blocks' );
 
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={ __( 'Settings', 'dokan-blocks' ) } initialOpen={ true }>
+				<PanelBody
+					title={ __( 'Settings', 'dokan-blocks' ) }
+					initialOpen={ true }
+				>
 					<SelectControl
 						label={ __( 'Layout', 'dokan-blocks' ) }
 						value={ layout }
 						options={ [
-							{ label: __( 'Compact (Today only)', 'dokan-blocks' ), value: 'compact' },
-							{ label: __( 'Detailed (Full week)', 'dokan-blocks' ), value: 'detailed' },
+							{
+								label: __(
+									'Compact (Today only)',
+									'dokan-blocks'
+								),
+								value: 'compact',
+							},
+							{
+								label: __(
+									'Detailed (Full week)',
+									'dokan-blocks'
+								),
+								value: 'detailed',
+							},
 						] }
-						onChange={ ( value ) => setAttributes( { layout: value } ) }
+						onChange={ ( value ) =>
+							setAttributes( { layout: value } )
+						}
 					/>
 					<ToggleControl
 						label={ __( 'Show Current Status', 'dokan-blocks' ) }
-						help={ __( 'Display open/closed status indicator.', 'dokan-blocks' ) }
+						help={ __(
+							'Display open/closed status indicator.',
+							'dokan-blocks'
+						) }
 						checked={ showCurrentStatus }
-						onChange={ ( value ) => setAttributes( { showCurrentStatus: value } ) }
+						onChange={ ( value ) =>
+							setAttributes( { showCurrentStatus: value } )
+						}
 					/>
 				</PanelBody>
 			</InspectorControls>
@@ -131,34 +193,60 @@ function Edit( { attributes, setAttributes, context } ) {
 
 						{ layout === 'detailed' ? (
 							<div className="dokan-vendor-store-hours-details">
-								<h4>{ __( 'Weekly Store Timing', 'dokan-blocks' ) }</h4>
+								<h4>
+									{ __(
+										'Weekly Store Timing',
+										'dokan-blocks'
+									) }
+								</h4>
 								<ul className="dokan-vendor-store-hours-list">
-									{ Object.entries( DAYS ).map( ( [ dayKey, dayLabel ] ) => {
-										const schedule = storeHours[ dayKey ] || {};
-										const dayIsOpen = schedule.status === 'open';
-										const hasTime = schedule.opening_time && schedule.closing_time;
-										const isToday = currentDay === dayKey;
+									{ Object.entries( DAYS ).map(
+										( [ dayKey, dayLabel ] ) => {
+											const schedule =
+												storeHours[ dayKey ] || {};
+											const dayIsOpen =
+												schedule.status === 'open';
+											const hasTime =
+												schedule.opening_time &&
+												schedule.closing_time;
+											const isToday =
+												currentDay === dayKey;
 
-										return (
-											<li 
-												key={ dayKey } 
-												className={ `dokan-vendor-store-hours-day ${ isToday ? 'today' : '' }` }
-											>
-												<span className="day-name">{ dayLabel }</span>
-												<span className="day-hours">
-													{ dayIsOpen && hasTime ? (
-														<span className="open">
-															{ schedule.opening_time } - { schedule.closing_time }
-														</span>
-													) : (
-														<span className="closed">
-															{ __( 'CLOSED', 'dokan-blocks' ) }
-														</span>
-													) }
-												</span>
-											</li>
-										);
-									} ) }
+											return (
+												<li
+													key={ dayKey }
+													className={ `dokan-vendor-store-hours-day ${
+														isToday ? 'today' : ''
+													}` }
+												>
+													<span className="day-name">
+														{ dayLabel }
+													</span>
+													<span className="day-hours">
+														{ dayIsOpen &&
+														hasTime ? (
+															<span className="open">
+																{
+																	schedule.opening_time
+																}{ ' ' }
+																-{ ' ' }
+																{
+																	schedule.closing_time
+																}
+															</span>
+														) : (
+															<span className="closed">
+																{ __(
+																	'CLOSED',
+																	'dokan-blocks'
+																) }
+															</span>
+														) }
+													</span>
+												</li>
+											);
+										}
+									) }
 								</ul>
 							</div>
 						) : (
@@ -166,10 +254,14 @@ function Edit( { attributes, setAttributes, context } ) {
 								<span className="dashicons dashicons-clock"></span>
 								{ isOpen ? (
 									<span>
-										{ __( 'Today:', 'dokan-blocks' ) } { todaySchedule.opening_time } - { todaySchedule.closing_time }
+										{ __( 'Today:', 'dokan-blocks' ) }{ ' ' }
+										{ todaySchedule.opening_time } -{ ' ' }
+										{ todaySchedule.closing_time }
 									</span>
 								) : (
-									<span>{ __( 'Closed today', 'dokan-blocks' ) }</span>
+									<span>
+										{ __( 'Closed today', 'dokan-blocks' ) }
+									</span>
 								) }
 							</div>
 						) }
@@ -189,11 +281,8 @@ function Save() {
 	return null;
 }
 
-registerBlockType(
-	metadata.name,
-	{
-		...metadata,
-		edit: Edit,
-		save: Save,
-	}
-);
+registerBlockType( metadata.name, {
+	...metadata,
+	edit: Edit,
+	save: Save,
+} );

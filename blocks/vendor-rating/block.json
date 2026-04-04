@@ -8,7 +8,7 @@
 	"icon": "star-filled",
 	"description": "Display the vendor store rating and review count.",
 	"keywords": [ "dokan", "vendor", "store", "rating", "reviews", "stars" ],
-	"textdomain": "dokan-blocks",
+	"textdomain": "another-blocks-for-dokan",
 	"usesContext": [ "dokan/vendor" ],
 	"supports": {
 		"html": false,

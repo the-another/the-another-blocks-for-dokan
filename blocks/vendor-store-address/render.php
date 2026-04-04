@@ -58,23 +58,13 @@ function theabd_format_address( array $address ): string {
  * @return string Rendered HTML.
  */
 function theabd_render_vendor_store_address_block( array $attributes, string $content, WP_Block $block ): string {
-	// Get vendor data from context.
-	$vendor = $block->context['dokan/vendor'] ?? null;
-
-	// If no vendor in context, try to detect from current page.
-	if ( empty( $vendor ) || empty( $vendor['id'] ) ) {
-		$vendor_id = \The_Another\Plugin\Blocks_Dokan\Helpers\Context_Detector::get_vendor_id();
-
-		if ( $vendor_id > 0 ) {
-			$vendor_data = \The_Another\Plugin\Blocks_Dokan\Renderers\Vendor_Renderer::get_vendor_data( $vendor_id );
-			if ( $vendor_data ) {
-				$vendor = array(
-					'id'      => $vendor_data['id'],
-					'address' => $vendor_data['address'] ?? '',
-				);
-			}
-		}
-	}
+	// Get vendor data from context, falling back to page context detection.
+	$vendor = \The_Another\Plugin\Blocks_Dokan\Renderers\Vendor_Renderer::resolve_vendor_from_context(
+		$block->context['dokan/vendor'] ?? null,
+		array(
+			'address' => 'address',
+		)
+	);
 
 	if ( empty( $vendor ) || empty( $vendor['id'] ) ) {
 		return '<p class="theabd--vendor-store-address">123 Main St, City, Country</p>';

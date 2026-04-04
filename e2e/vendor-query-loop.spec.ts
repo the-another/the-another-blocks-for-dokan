@@ -81,7 +81,7 @@ test.describe( 'Vendor Query Loop – frontend rendering', () => {
 		await expect( cardsPage1 ).toHaveCount( PER_PAGE );
 
 		// Pagination: should be visible.
-		const pagination = page.locator( '.theabd--vendor-query-pagination' );
+		const pagination = page.locator( '[data-testid="vendor-pagination"]' );
 		await expect( pagination ).toBeVisible();
 
 		// Verify 4 page links exist (numbered links, excludes prev/next).
@@ -95,7 +95,8 @@ test.describe( 'Vendor Query Loop – frontend rendering', () => {
 			hasText: `${ TOTAL_PAGES }`,
 		} );
 		await lastPageLink.click();
-		await page.waitForLoadState( 'domcontentloaded' );
+		// Wait for the page URL to reflect the new page number.
+		await page.waitForURL( /paged=/ );
 
 		const cardsLastPage = page.locator( '.theabd--single-vendor' );
 		await expect( cardsLastPage ).toHaveCount(

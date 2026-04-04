@@ -4,7 +4,7 @@
  * This file imports all block editor JavaScript files for building.
  * Blocks are registered here for the editor, but rendered server-side via PHP.
  *
- * @package DokanBlocks
+ * @package
  * @since 1.0.0
  */
 

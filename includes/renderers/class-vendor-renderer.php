@@ -147,4 +147,42 @@ class Vendor_Renderer {
 
 		return apply_filters( 'dokan_is_store_open', $store_open, $today, $dokan_store_times, $vendor_id ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Dokan core filter for compatibility.
 	}
+
+	/**
+	 * Resolve vendor data from block context, falling back to page context detection.
+	 *
+	 * Use this in render callbacks to avoid repeating the context-then-detect pattern.
+	 *
+	 * @param array<string, mixed>|null $context_vendor The vendor from $block->context['dokan/vendor'], or null.
+	 * @param array<string, string>     $fields         Map of context keys to Vendor_Renderer data keys to include
+	 *                                                  when falling back to get_vendor_data(). Always includes 'id'.
+	 *                                                  Example: [ 'store_name' => 'shop_name', 'shop_url' => 'shop_url' ].
+	 * @return array<string, mixed>|null Vendor array with at least 'id', or null if no vendor found.
+	 */
+	public static function resolve_vendor_from_context( ?array $context_vendor, array $fields = array() ): ?array {
+		// If context already has valid vendor data, return it directly.
+		if ( ! empty( $context_vendor ) && ! empty( $context_vendor['id'] ) ) {
+			return $context_vendor;
+		}
+
+		// Fall back to detecting vendor from page context.
+		$vendor_id = \The_Another\Plugin\Blocks_Dokan\Helpers\Context_Detector::get_vendor_id();
+
+		if ( $vendor_id <= 0 ) {
+			return null;
+		}
+
+		$vendor_data = self::get_vendor_data( $vendor_id );
+		if ( ! $vendor_data ) {
+			return null;
+		}
+
+		// Build a minimal vendor array with requested fields.
+		$vendor = array( 'id' => $vendor_data['id'] );
+		foreach ( $fields as $context_key => $data_key ) {
+			$vendor[ $context_key ] = $vendor_data[ $data_key ] ?? null;
+		}
+
+		return $vendor;
+	}
 }

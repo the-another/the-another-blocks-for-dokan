@@ -1,13 +1,18 @@
 /**
  * Store terms and conditions block editor component.
  *
- * @package DokanBlocks
+ * @package
  * @since 1.0.0
  */
 
 import { registerBlockType } from '@wordpress/blocks';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, ToggleControl, SelectControl, Placeholder } from '@wordpress/components';
+import {
+	PanelBody,
+	ToggleControl,
+	SelectControl,
+	Placeholder,
+} from '@wordpress/components';
 import { RawHTML } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import metadata from './block.json';
@@ -15,16 +20,16 @@ import metadata from './block.json';
 /**
  * Store terms and conditions block edit component.
  *
- * @param {Object} props Block props.
- * @param {Object} props.attributes Block attributes.
+ * @param {Object}   props               Block props.
+ * @param {Object}   props.attributes    Block attributes.
  * @param {Function} props.setAttributes Function to update attributes.
- * @param {Object} props.context Block context.
+ * @param {Object}   props.context       Block context.
  * @return {JSX.Element} Block edit component.
  */
 function Edit( { attributes, setAttributes, context } ) {
 	const blockProps = useBlockProps();
 	const { showTitle, titleTag } = attributes;
-	const vendor = context['dokan/vendor'] || {};
+	const vendor = context[ 'dokan/vendor' ] || {};
 
 	const tocContent = vendor.store_info?.dokan_store_toc || '';
 	const TitleTag = titleTag || 'h2';
@@ -36,7 +41,9 @@ function Edit( { attributes, setAttributes, context } ) {
 					<ToggleControl
 						label={ __( 'Show Title', 'dokan-blocks' ) }
 						checked={ showTitle }
-						onChange={ ( value ) => setAttributes( { showTitle: value } ) }
+						onChange={ ( value ) =>
+							setAttributes( { showTitle: value } )
+						}
 					/>
 					{ showTitle && (
 						<SelectControl
@@ -48,7 +55,9 @@ function Edit( { attributes, setAttributes, context } ) {
 								{ label: 'H3', value: 'h3' },
 								{ label: 'H4', value: 'h4' },
 							] }
-							onChange={ ( value ) => setAttributes( { titleTag: value } ) }
+							onChange={ ( value ) =>
+								setAttributes( { titleTag: value } )
+							}
 						/>
 					) }
 				</PanelBody>
@@ -58,7 +67,9 @@ function Edit( { attributes, setAttributes, context } ) {
 				{ tocContent ? (
 					<div className="theabd--vendor-store-terms-conditions">
 						{ showTitle && (
-							<TitleTag>{ __( 'Terms and Conditions', 'dokan-blocks' ) }</TitleTag>
+							<TitleTag>
+								{ __( 'Terms and Conditions', 'dokan-blocks' ) }
+							</TitleTag>
 						) }
 						<RawHTML>{ tocContent }</RawHTML>
 					</div>
@@ -66,7 +77,10 @@ function Edit( { attributes, setAttributes, context } ) {
 					<Placeholder
 						icon="media-document"
 						label={ __( 'Terms & Conditions', 'dokan-blocks' ) }
-						instructions={ __( 'Displays vendor terms and conditions. Content will appear when vendor context is available.', 'dokan-blocks' ) }
+						instructions={ __(
+							'Displays vendor terms and conditions. Content will appear when vendor context is available.',
+							'dokan-blocks'
+						) }
 					/>
 				) }
 			</div>
@@ -83,11 +97,8 @@ function Save() {
 	return null;
 }
 
-registerBlockType(
-	metadata.name,
-	{
-		...metadata,
-		edit: Edit,
-		save: Save,
-	}
-);
+registerBlockType( metadata.name, {
+	...metadata,
+	edit: Edit,
+	save: Save,
+} );

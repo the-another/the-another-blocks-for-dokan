@@ -1,7 +1,7 @@
 /**
  * Store address block editor component.
  *
- * @package DokanBlocks
+ * @package
  * @since 1.0.0
  */
 
@@ -50,21 +50,23 @@ function formatAddress( address ) {
 		parts.push( address.country );
 	}
 
-	return parts.length > 0 ? parts.join( ', ' ) : __( 'No address available', 'dokan-blocks' );
+	return parts.length > 0
+		? parts.join( ', ' )
+		: __( 'No address available', 'dokan-blocks' );
 }
 
 /**
  * Store address block edit component.
  *
- * @param {Object} props Block props.
- * @param {Object} props.attributes Block attributes.
+ * @param {Object}   props               Block props.
+ * @param {Object}   props.attributes    Block attributes.
  * @param {Function} props.setAttributes Function to update attributes.
- * @param {Object} props.context Block context.
+ * @param {Object}   props.context       Block context.
  * @return {JSX.Element} Block edit component.
  */
 function Edit( { attributes, setAttributes, context } ) {
 	const { showIcon = true } = attributes;
-	const vendor = context['dokan/vendor'] || {};
+	const vendor = context[ 'dokan/vendor' ] || {};
 
 	const address = vendor.address || {};
 	const formattedAddress = formatAddress( address );
@@ -76,19 +78,30 @@ function Edit( { attributes, setAttributes, context } ) {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={ __( 'Settings', 'dokan-blocks' ) } initialOpen={ true }>
+				<PanelBody
+					title={ __( 'Settings', 'dokan-blocks' ) }
+					initialOpen={ true }
+				>
 					<ToggleControl
 						label={ __( 'Show Icon', 'dokan-blocks' ) }
-						help={ __( 'Display a location icon before the address.', 'dokan-blocks' ) }
+						help={ __(
+							'Display a location icon before the address.',
+							'dokan-blocks'
+						) }
 						checked={ showIcon }
-						onChange={ ( value ) => setAttributes( { showIcon: value } ) }
+						onChange={ ( value ) =>
+							setAttributes( { showIcon: value } )
+						}
 					/>
 				</PanelBody>
 			</InspectorControls>
 
 			<div { ...blockProps }>
 				{ showIcon && (
-					<span className="dokan-vendor-store-address-icon" aria-hidden="true">
+					<span
+						className="dokan-vendor-store-address-icon"
+						aria-hidden="true"
+					>
 						📍
 					</span>
 				) }
@@ -109,11 +122,8 @@ function Save() {
 	return null;
 }
 
-registerBlockType(
-	metadata.name,
-	{
-		...metadata,
-		edit: Edit,
-		save: Save,
-	}
-);
+registerBlockType( metadata.name, {
+	...metadata,
+	edit: Edit,
+	save: Save,
+} );

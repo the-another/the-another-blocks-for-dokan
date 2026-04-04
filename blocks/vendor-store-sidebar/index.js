@@ -1,7 +1,7 @@
 /**
  * Store sidebar block editor component.
  *
- * @package DokanBlocks
+ * @package
  * @since 1.0.0
  */
 
@@ -14,8 +14,8 @@ import metadata from './block.json';
 /**
  * Store sidebar block edit component.
  *
- * @param {Object} props Block props.
- * @param {Object} props.attributes Block attributes.
+ * @param {Object}   props               Block props.
+ * @param {Object}   props.attributes    Block attributes.
  * @param {Function} props.setAttributes Function to update attributes.
  * @return {JSX.Element} Block edit component.
  */
@@ -26,12 +26,20 @@ function Edit( { attributes, setAttributes } ) {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={ __( 'Settings', 'dokan-blocks' ) } initialOpen={ true }>
+				<PanelBody
+					title={ __( 'Settings', 'dokan-blocks' ) }
+					initialOpen={ true }
+				>
 					<ToggleControl
 						label={ __( 'Use Theme Sidebar', 'dokan-blocks' ) }
-						help={ __( 'Display the theme\'s sidebar instead of the Dokan store sidebar.', 'dokan-blocks' ) }
+						help={ __(
+							"Display the theme's sidebar instead of the Dokan store sidebar.",
+							'dokan-blocks'
+						) }
 						checked={ enableThemeSidebar }
-						onChange={ ( value ) => setAttributes( { enableThemeSidebar: value } ) }
+						onChange={ ( value ) =>
+							setAttributes( { enableThemeSidebar: value } )
+						}
 					/>
 				</PanelBody>
 			</InspectorControls>
@@ -42,8 +50,14 @@ function Edit( { attributes, setAttributes } ) {
 					label={ __( 'Vendor Store Sidebar', 'dokan-blocks' ) }
 					instructions={
 						enableThemeSidebar
-							? __( 'Displays the theme sidebar. Rendered on the frontend.', 'dokan-blocks' )
-							: __( 'Displays the Dokan store sidebar with widgets. Rendered on the frontend.', 'dokan-blocks' )
+							? __(
+									'Displays the theme sidebar. Rendered on the frontend.',
+									'dokan-blocks'
+							  )
+							: __(
+									'Displays the Dokan store sidebar with widgets. Rendered on the frontend.',
+									'dokan-blocks'
+							  )
 					}
 				/>
 			</div>
@@ -60,11 +74,8 @@ function Save() {
 	return null;
 }
 
-registerBlockType(
-	metadata.name,
-	{
-		...metadata,
-		edit: Edit,
-		save: Save,
-	}
-);
+registerBlockType( metadata.name, {
+	...metadata,
+	edit: Edit,
+	save: Save,
+} );

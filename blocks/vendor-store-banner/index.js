@@ -1,22 +1,22 @@
 /**
  * Store banner block editor component.
  *
- * @package DokanBlocks
+ * @package
  * @since 1.0.0
  */
 
 import { registerBlockType } from '@wordpress/blocks';
-import { 
-	useBlockProps, 
-	InspectorControls, 
+import {
+	useBlockProps,
+	InspectorControls,
 	InnerBlocks,
 	BlockContextProvider,
 	BlockControls,
 } from '@wordpress/block-editor';
-import { 
-	PanelBody, 
-	RangeControl, 
-	SelectControl, 
+import {
+	PanelBody,
+	RangeControl,
+	SelectControl,
 	ComboboxControl,
 	Spinner,
 	Notice,
@@ -60,30 +60,53 @@ const ALLOWED_BLOCKS = [
  * Default template for store banner (single vendor page).
  */
 const TEMPLATE = [
-	[ 'core/group', {
-		style: {
-			spacing: {
-				padding: { top: '2rem', bottom: '2rem', left: '2rem', right: '2rem' }
-			}
+	[
+		'core/group',
+		{
+			style: {
+				spacing: {
+					padding: {
+						top: '2rem',
+						bottom: '2rem',
+						left: '2rem',
+						right: '2rem',
+					},
+				},
+			},
+			layout: { type: 'flex', flexWrap: 'wrap', justifyContent: 'left' },
 		},
-		layout: { type: 'flex', flexWrap: 'wrap', justifyContent: 'left' },
-	}, [
-		[ 'the-another/blocks-for-dokan-vendor-avatar', { width: '8rem', height: '8rem' } ],
-		[ 'core/group', {
-			style: { spacing: { margin: { left: '2rem' } } },
-			layout: { type: 'flex', orientation: 'vertical' },
-		}, [
-			[ 'the-another/blocks-for-dokan-vendor-store-name', { tagName: 'h1' } ],
-			[ 'the-another/blocks-for-dokan-vendor-rating' ],
-			[ 'the-another/blocks-for-dokan-vendor-store-hours', { layout: 'compact', showCurrentStatus: true } ],
-		] ],
-	] ],
+		[
+			[
+				'the-another/blocks-for-dokan-vendor-avatar',
+				{ width: '8rem', height: '8rem' },
+			],
+			[
+				'core/group',
+				{
+					style: { spacing: { margin: { left: '2rem' } } },
+					layout: { type: 'flex', orientation: 'vertical' },
+				},
+				[
+					[
+						'the-another/blocks-for-dokan-vendor-store-name',
+						{ tagName: 'h1' },
+					],
+					[ 'the-another/blocks-for-dokan-vendor-rating' ],
+					[
+						'the-another/blocks-for-dokan-vendor-store-hours',
+						{ layout: 'compact', showCurrentStatus: true },
+					],
+				],
+			],
+		],
+	],
 ];
 
 /**
  * Default placeholder banner SVG.
  */
-const PLACEHOLDER_BANNER = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300"%3E%3Crect fill="%23e0e0e0" width="1200" height="300"/%3E%3Ctext fill="%23999" x="600" y="150" text-anchor="middle" dy=".3em" font-size="24"%3EStore Banner%3C/text%3E%3C/svg%3E';
+const PLACEHOLDER_BANNER =
+	'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300"%3E%3Crect fill="%23e0e0e0" width="1200" height="300"/%3E%3Ctext fill="%23999" x="600" y="150" text-anchor="middle" dy=".3em" font-size="24"%3EStore Banner%3C/text%3E%3C/svg%3E';
 
 /**
  * Placeholder vendor data for preview.
@@ -118,14 +141,13 @@ const PLACEHOLDER_VENDOR = {
 /**
  * Store banner block edit component.
  *
- * @param {Object} props Block props.
- * @param {Object} props.attributes Block attributes.
+ * @param {Object}   props               Block props.
+ * @param {Object}   props.attributes    Block attributes.
  * @param {Function} props.setAttributes Function to update attributes.
- * @param {string} props.clientId Block client ID.
- * @param {Object} props.context Block context.
+ * @param {Object}   props.context       Block context.
  * @return {JSX.Element} Block edit component.
  */
-function Edit( { attributes, setAttributes, clientId, context } ) {
+function Edit( { attributes, setAttributes, context } ) {
 	const {
 		height = 300,
 		minHeight = 200,
@@ -143,7 +165,7 @@ function Edit( { attributes, setAttributes, clientId, context } ) {
 	const [ recentVendors, setRecentVendors ] = useState( [] );
 
 	// Get vendor data from context (if inside store-list or other parent)
-	const contextVendor = context['dokan/vendor'];
+	const contextVendor = context[ 'dokan/vendor' ];
 
 	// Fetch initial vendors list for dropdown
 	useEffect( () => {
@@ -154,7 +176,7 @@ function Edit( { attributes, setAttributes, clientId, context } ) {
 				const options = ( response || [] ).map( ( vendor ) => ( {
 					value: vendor.id,
 					label: vendor.store_name || `Vendor #${ vendor.id }`,
-					vendor: vendor,
+					vendor,
 				} ) );
 				setRecentVendors( options );
 				if ( vendorOptions.length === 0 ) {
@@ -178,13 +200,15 @@ function Edit( { attributes, setAttributes, clientId, context } ) {
 			setIsSearching( true );
 
 			apiFetch( {
-				path: `/dokan/v1/stores?search=${ encodeURIComponent( searchTerm ) }&per_page=20`,
+				path: `/dokan/v1/stores?search=${ encodeURIComponent(
+					searchTerm
+				) }&per_page=20`,
 			} )
 				.then( ( response ) => {
 					const options = ( response || [] ).map( ( vendor ) => ( {
 						value: vendor.id,
 						label: vendor.store_name || `Vendor #${ vendor.id }`,
-						vendor: vendor,
+						vendor,
 					} ) );
 					setVendorOptions( options );
 					setIsSearching( false );
@@ -201,10 +225,10 @@ function Edit( { attributes, setAttributes, clientId, context } ) {
 	useEffect( () => {
 		if ( previewVendorId > 0 ) {
 			// First check if vendor is in our cached options
-			const cachedVendor = [ ...recentVendors, ...vendorOptions ].find( 
-				( opt ) => opt.value === previewVendorId 
+			const cachedVendor = [ ...recentVendors, ...vendorOptions ].find(
+				( opt ) => opt.value === previewVendorId
 			);
-			
+
 			if ( cachedVendor?.vendor ) {
 				setPreviewVendorData( cachedVendor.vendor );
 				return;
@@ -234,15 +258,20 @@ function Edit( { attributes, setAttributes, clientId, context } ) {
 	// Get current vendor name for display
 	const currentVendorName = useMemo( () => {
 		if ( contextVendor ) {
-			return contextVendor.store_name || __( 'Current Vendor (from context)', 'dokan-blocks' );
+			return (
+				contextVendor.store_name ||
+				__( 'Current Vendor (from context)', 'dokan-blocks' )
+			);
 		}
 		if ( previewVendorId === 0 ) {
 			return __( 'Sample Store', 'dokan-blocks' );
 		}
 		if ( previewVendorData ) {
-			return previewVendorData.store_name || `Vendor #${ previewVendorId }`;
+			return (
+				previewVendorData.store_name || `Vendor #${ previewVendorId }`
+			);
 		}
-		return __( 'Loading...', 'dokan-blocks' );
+		return __( 'Loading…', 'dokan-blocks' );
 	}, [ contextVendor, previewVendorId, previewVendorData ] );
 
 	// Parse overlay color to get RGB values for overlay
@@ -260,13 +289,20 @@ function Edit( { attributes, setAttributes, clientId, context } ) {
 
 		return {
 			backgroundImage: `linear-gradient(${ overlayRgba }, ${ overlayRgba }), url(${ bannerUrl })`,
-			backgroundSize: backgroundSize,
-			backgroundPosition: backgroundPosition,
+			backgroundSize,
+			backgroundPosition,
 			backgroundRepeat: 'no-repeat',
 			minHeight: `${ minHeight }px`,
 			height: height ? `${ height }px` : 'auto',
 		};
-	}, [ vendorData?.banner, overlayRgba, backgroundSize, backgroundPosition, height, minHeight ] );
+	}, [
+		vendorData?.banner,
+		overlayRgba,
+		backgroundSize,
+		backgroundPosition,
+		height,
+		minHeight,
+	] );
 
 	const blockProps = useBlockProps( {
 		className: 'dokan-vendor-store-banner',
@@ -274,9 +310,12 @@ function Edit( { attributes, setAttributes, clientId, context } ) {
 	} );
 
 	// Context to provide to inner blocks
-	const blockContext = useMemo( () => ( {
-		'dokan/vendor': vendorData,
-	} ), [ vendorData ] );
+	const blockContext = useMemo(
+		() => ( {
+			'dokan/vendor': vendorData,
+		} ),
+		[ vendorData ]
+	);
 
 	// Build dropdown items for toolbar vendor selector
 	const vendorDropdownItems = useMemo( () => {
@@ -321,22 +360,36 @@ function Edit( { attributes, setAttributes, clientId, context } ) {
 
 			<InspectorControls>
 				{ ! contextVendor && (
-					<PanelBody title={ __( 'Preview Settings', 'dokan-blocks' ) } initialOpen={ true }>
+					<PanelBody
+						title={ __( 'Preview Settings', 'dokan-blocks' ) }
+						initialOpen={ true }
+					>
 						<ComboboxControl
 							label={ __( 'Preview Vendor', 'dokan-blocks' ) }
-							help={ __( 'Select a vendor to preview how the banner will look with real data. This is for preview only and will not be saved.', 'dokan-blocks' ) }
+							help={ __(
+								'Select a vendor to preview how the banner will look with real data. This is for preview only and will not be saved.',
+								'dokan-blocks'
+							) }
 							value={ previewVendorId || '' }
 							options={ [
-								{ value: 0, label: __( '— Sample Store —', 'dokan-blocks' ) },
+								{
+									value: 0,
+									label: __(
+										'— Sample Store —',
+										'dokan-blocks'
+									),
+								},
 								...vendorOptions,
 							] }
 							onChange={ ( value ) => {
 								const newVendorId = parseInt( value, 10 ) || 0;
 								setPreviewVendorId( newVendorId );
-								
+
 								// Update preview data from cached options
 								if ( newVendorId > 0 ) {
-									const selected = vendorOptions.find( ( opt ) => opt.value === newVendorId );
+									const selected = vendorOptions.find(
+										( opt ) => opt.value === newVendorId
+									);
 									if ( selected?.vendor ) {
 										setPreviewVendorData( selected.vendor );
 									}
@@ -345,26 +398,63 @@ function Edit( { attributes, setAttributes, clientId, context } ) {
 							onFilterValueChange={ searchVendors }
 						/>
 						{ isSearching && (
-							<div style={ { display: 'flex', alignItems: 'center', gap: '8px', marginTop: '8px' } }>
+							<div
+								style={ {
+									display: 'flex',
+									alignItems: 'center',
+									gap: '8px',
+									marginTop: '8px',
+								} }
+							>
 								<Spinner />
-								<span>{ __( 'Searching vendors...', 'dokan-blocks' ) }</span>
+								<span>
+									{ __(
+										'Searching vendors…',
+										'dokan-blocks'
+									) }
+								</span>
 							</div>
 						) }
-						<div style={ { marginTop: '12px', padding: '8px', background: '#f0f0f0', borderRadius: '4px' } }>
-							<strong>{ __( 'Previewing:', 'dokan-blocks' ) }</strong> { currentVendorName }
+						<div
+							style={ {
+								marginTop: '12px',
+								padding: '8px',
+								background: '#f0f0f0',
+								borderRadius: '4px',
+							} }
+						>
+							<strong>
+								{ __( 'Previewing:', 'dokan-blocks' ) }
+							</strong>{ ' ' }
+							{ currentVendorName }
 						</div>
-						<Notice status="info" isDismissible={ false } style={ { marginTop: '12px' } }>
-							{ __( 'On the frontend, the vendor is automatically detected from the store page. This preview selection is not saved.', 'dokan-blocks' ) }
+						<Notice
+							status="info"
+							isDismissible={ false }
+							style={ { marginTop: '12px' } }
+						>
+							{ __(
+								'On the frontend, the vendor is automatically detected from the store page. This preview selection is not saved.',
+								'dokan-blocks'
+							) }
 						</Notice>
 					</PanelBody>
 				) }
 
-				<PanelBody title={ __( 'Banner Settings', 'dokan-blocks' ) } initialOpen={ !! contextVendor }>
+				<PanelBody
+					title={ __( 'Banner Settings', 'dokan-blocks' ) }
+					initialOpen={ !! contextVendor }
+				>
 					<RangeControl
 						label={ __( 'Banner Height', 'dokan-blocks' ) }
-						help={ __( 'Set the height of the banner container.', 'dokan-blocks' ) }
+						help={ __(
+							'Set the height of the banner container.',
+							'dokan-blocks'
+						) }
 						value={ height }
-						onChange={ ( value ) => setAttributes( { height: value } ) }
+						onChange={ ( value ) =>
+							setAttributes( { height: value } )
+						}
 						min={ 100 }
 						max={ 800 }
 						step={ 10 }
@@ -372,9 +462,14 @@ function Edit( { attributes, setAttributes, clientId, context } ) {
 
 					<RangeControl
 						label={ __( 'Minimum Height', 'dokan-blocks' ) }
-						help={ __( 'Set the minimum height to ensure content is always visible.', 'dokan-blocks' ) }
+						help={ __(
+							'Set the minimum height to ensure content is always visible.',
+							'dokan-blocks'
+						) }
 						value={ minHeight }
-						onChange={ ( value ) => setAttributes( { minHeight: value } ) }
+						onChange={ ( value ) =>
+							setAttributes( { minHeight: value } )
+						}
 						min={ 100 }
 						max={ 600 }
 						step={ 10 }
@@ -384,33 +479,69 @@ function Edit( { attributes, setAttributes, clientId, context } ) {
 						label={ __( 'Background Size', 'dokan-blocks' ) }
 						value={ backgroundSize }
 						options={ [
-							{ label: __( 'Cover', 'dokan-blocks' ), value: 'cover' },
-							{ label: __( 'Contain', 'dokan-blocks' ), value: 'contain' },
-							{ label: __( 'Auto', 'dokan-blocks' ), value: 'auto' },
+							{
+								label: __( 'Cover', 'dokan-blocks' ),
+								value: 'cover',
+							},
+							{
+								label: __( 'Contain', 'dokan-blocks' ),
+								value: 'contain',
+							},
+							{
+								label: __( 'Auto', 'dokan-blocks' ),
+								value: 'auto',
+							},
 						] }
-						onChange={ ( value ) => setAttributes( { backgroundSize: value } ) }
+						onChange={ ( value ) =>
+							setAttributes( { backgroundSize: value } )
+						}
 					/>
 
 					<SelectControl
 						label={ __( 'Background Position', 'dokan-blocks' ) }
 						value={ backgroundPosition }
 						options={ [
-							{ label: __( 'Center', 'dokan-blocks' ), value: 'center' },
-							{ label: __( 'Top', 'dokan-blocks' ), value: 'top' },
-							{ label: __( 'Bottom', 'dokan-blocks' ), value: 'bottom' },
-							{ label: __( 'Left', 'dokan-blocks' ), value: 'left' },
-							{ label: __( 'Right', 'dokan-blocks' ), value: 'right' },
+							{
+								label: __( 'Center', 'dokan-blocks' ),
+								value: 'center',
+							},
+							{
+								label: __( 'Top', 'dokan-blocks' ),
+								value: 'top',
+							},
+							{
+								label: __( 'Bottom', 'dokan-blocks' ),
+								value: 'bottom',
+							},
+							{
+								label: __( 'Left', 'dokan-blocks' ),
+								value: 'left',
+							},
+							{
+								label: __( 'Right', 'dokan-blocks' ),
+								value: 'right',
+							},
 						] }
-						onChange={ ( value ) => setAttributes( { backgroundPosition: value } ) }
+						onChange={ ( value ) =>
+							setAttributes( { backgroundPosition: value } )
+						}
 					/>
 				</PanelBody>
 
-				<PanelBody title={ __( 'Overlay Settings', 'dokan-blocks' ) } initialOpen={ false }>
+				<PanelBody
+					title={ __( 'Overlay Settings', 'dokan-blocks' ) }
+					initialOpen={ false }
+				>
 					<RangeControl
 						label={ __( 'Overlay Opacity', 'dokan-blocks' ) }
-						help={ __( 'Add a dark overlay to improve text readability.', 'dokan-blocks' ) }
+						help={ __(
+							'Add a dark overlay to improve text readability.',
+							'dokan-blocks'
+						) }
 						value={ backgroundOverlay }
-						onChange={ ( value ) => setAttributes( { backgroundOverlay: value } ) }
+						onChange={ ( value ) =>
+							setAttributes( { backgroundOverlay: value } )
+						}
 						min={ 0 }
 						max={ 1 }
 						step={ 0.05 }
@@ -420,14 +551,34 @@ function Edit( { attributes, setAttributes, clientId, context } ) {
 						label={ __( 'Overlay Color', 'dokan-blocks' ) }
 						value={ overlayColor }
 						options={ [
-							{ label: __( 'Black', 'dokan-blocks' ), value: '#000000' },
-							{ label: __( 'Dark Blue', 'dokan-blocks' ), value: '#1a237e' },
-							{ label: __( 'Dark Green', 'dokan-blocks' ), value: '#1b5e20' },
-							{ label: __( 'Dark Red', 'dokan-blocks' ), value: '#b71c1c' },
-							{ label: __( 'Dark Purple', 'dokan-blocks' ), value: '#4a148c' },
-							{ label: __( 'White', 'dokan-blocks' ), value: '#ffffff' },
+							{
+								label: __( 'Black', 'dokan-blocks' ),
+								value: '#000000',
+							},
+							{
+								label: __( 'Dark Blue', 'dokan-blocks' ),
+								value: '#1a237e',
+							},
+							{
+								label: __( 'Dark Green', 'dokan-blocks' ),
+								value: '#1b5e20',
+							},
+							{
+								label: __( 'Dark Red', 'dokan-blocks' ),
+								value: '#b71c1c',
+							},
+							{
+								label: __( 'Dark Purple', 'dokan-blocks' ),
+								value: '#4a148c',
+							},
+							{
+								label: __( 'White', 'dokan-blocks' ),
+								value: '#ffffff',
+							},
 						] }
-						onChange={ ( value ) => setAttributes( { overlayColor: value } ) }
+						onChange={ ( value ) =>
+							setAttributes( { overlayColor: value } )
+						}
 					/>
 				</PanelBody>
 			</InspectorControls>
@@ -463,11 +614,8 @@ function Save() {
 	);
 }
 
-registerBlockType(
-	metadata.name,
-	{
-		...metadata,
-		edit: Edit,
-		save: Save,
-	}
-);
+registerBlockType( metadata.name, {
+	...metadata,
+	edit: Edit,
+	save: Save,
+} );

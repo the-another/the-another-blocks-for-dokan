@@ -13,6 +13,7 @@
 
 	// Show placeholder when empty
 	&.is-selected {
+
 		.block-editor-block-list__layout {
 			min-height: 100px;
 		}
@@ -26,7 +27,7 @@
 			background: rgba(255, 255, 255, 0.2);
 			backdrop-filter: blur(10px);
 			border: 1px dashed rgba(255, 255, 255, 0.5);
-			color: #ffffff;
+			color: #fff;
 
 			&:hover {
 				background: rgba(255, 255, 255, 0.3);
@@ -42,7 +43,7 @@
 
 	// Visual indicator for the banner container
 	&::before {
-		content: '';
+		content: "";
 		position: absolute;
 		top: 0;
 		left: 0;

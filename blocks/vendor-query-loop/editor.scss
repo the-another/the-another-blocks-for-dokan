@@ -105,6 +105,7 @@
 			display: block;
 		}
 
+		/* stylelint-disable-next-line no-descending-specificity */
 		a {
 			display: block;
 		}
@@ -118,6 +119,7 @@
 		margin: 0.5rem 0;
 
 		.theabd--vendor-rating-stars {
+
 			.theabd--star {
 				color: #ffb900;
 				font-size: 1rem;
@@ -161,6 +163,7 @@
 		gap: 0.5rem;
 		margin: 0.5rem 0;
 
+		/* stylelint-disable-next-line no-descending-specificity */
 		a {
 			text-decoration: none;
 			color: #0073aa;
@@ -208,6 +211,7 @@
 			display: block;
 		}
 
+		/* stylelint-disable-next-line no-descending-specificity */
 		a {
 			display: block;
 		}

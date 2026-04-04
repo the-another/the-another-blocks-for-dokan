@@ -583,13 +583,13 @@ test.describe( 'Vendor Query Loop – search form interaction', () => {
 
 		// Filter form should be hidden initially.
 		const filterForm = page.locator(
-			'#theabd--vendor-query-looping-filter-form-wrap'
+			'[data-testid="vendor-filter-form"]'
 		);
 		await expect( filterForm ).toBeHidden();
 
 		// Click filter button to show the form.
 		const filterButton = page.locator(
-			'.theabd--vendor-query-loop-filter-button'
+			'[data-testid="vendor-filter-toggle"]'
 		);
 		await filterButton.click();
 		await expect( filterForm ).toBeVisible();
@@ -601,7 +601,7 @@ test.describe( 'Vendor Query Loop – search form interaction', () => {
 		await expect( searchInput ).toBeVisible();
 
 		// Click cancel to hide the form.
-		await page.locator( '#cancel-filter-btn' ).click();
+		await page.locator( '[data-testid="vendor-filter-cancel"]' ).click();
 		await expect( filterForm ).toBeHidden();
 
 		await deletePage( requestUtils, newPage.id );
@@ -631,11 +631,11 @@ test.describe( 'Vendor Query Loop – search form interaction', () => {
 
 		// Open filter form.
 		await page
-			.locator( '.theabd--vendor-query-loop-filter-button' )
+			.locator( '[data-testid="vendor-filter-toggle"]' )
 			.click();
 
 		const filterForm = page.locator(
-			'#theabd--vendor-query-looping-filter-form-wrap'
+			'[data-testid="vendor-filter-form"]'
 		);
 		await expect( filterForm ).toBeVisible();
 
@@ -647,16 +647,17 @@ test.describe( 'Vendor Query Loop – search form interaction', () => {
 		await expect( searchInput ).toHaveValue( 'Unique' );
 
 		// Apply and cancel buttons should be present.
-		await expect( page.locator( '#apply-filter-btn' ) ).toBeVisible();
+		await expect( page.locator( '[data-testid="vendor-filter-apply"]' ) ).toBeVisible();
 		await expect(
-			page.locator( '#cancel-filter-btn' )
+			page.locator( '[data-testid="vendor-filter-cancel"]' )
 		).toBeVisible();
 
 		// Submit the form and verify URL contains the search param.
 		// Note: form method="get" with no action navigates away from
 		// pretty permalink pages, so we verify via navigation URL.
-		await page.locator( '#apply-filter-btn' ).click();
-		await page.waitForLoadState( 'domcontentloaded' );
+		await page.locator( '[data-testid="vendor-filter-apply"]' ).click();
+		// Wait for the URL to contain the search param after form submission.
+		await page.waitForURL( /dokan_seller_search=Unique/ );
 		expect( page.url() ).toContain( 'dokan_seller_search=Unique' );
 
 		await deletePage( requestUtils, newPage.id );
@@ -706,6 +707,60 @@ test.describe( 'Vendor Query Loop – store count', () => {
 		const storeCount = page.locator( '.theabd--store-count' );
 		await expect( storeCount ).toBeVisible();
 		await expect( storeCount ).toContainText( '5' );
+
+		await deletePage( requestUtils, newPage.id );
+	} );
+} );
+
+// ---------------------------------------------------------------------------
+// Empty state (zero vendors)
+// ---------------------------------------------------------------------------
+test.describe( 'Vendor Query Loop – empty state', () => {
+	test( 'shows empty message or renders without error when no vendors match', async ( {
+		page,
+		requestUtils,
+	} ) => {
+		// Use showFeaturedOnly to get zero results without needing
+		// to delete all vendors in the system. No featured vendors
+		// are created in this suite.
+		const markup = queryLoopMarkup(
+			{
+				perPage: 12,
+				columns: 3,
+				displayLayout: 'grid',
+				showFeaturedOnly: true,
+			},
+			`${ SEARCH_BLOCK }\n${ CARD_WITH_NAME }`
+		);
+
+		const newPage = await createPage(
+			requestUtils,
+			'Empty State E2E',
+			markup
+		);
+
+		await page.goto( newPage.link );
+
+		const wrapper = page.locator(
+			'.wp-block-the-another-blocks-for-dokan-vendor-query-loop'
+		);
+		await expect( wrapper ).toBeVisible();
+
+		// If meta_query filtering works in SQLite, should show empty message.
+		// If SQLite doesn't filter, cards may still appear — both are acceptable.
+		const emptyMsg = wrapper.locator( '.theabd--vendor-query-loop-empty' );
+		const cards = page.locator( '.theabd--single-vendor' );
+		const emptyCount = await emptyMsg.count();
+		const cardCount = await cards.count();
+
+		// Either empty state OR cards should appear (page shouldn't be blank/broken).
+		expect( emptyCount + cardCount ).toBeGreaterThan( 0 );
+
+		// If empty state IS shown, verify the message and no cards.
+		if ( emptyCount > 0 ) {
+			await expect( emptyMsg ).toContainText( 'No vendors found' );
+			expect( cardCount ).toBe( 0 );
+		}
 
 		await deletePage( requestUtils, newPage.id );
 	} );

@@ -59,30 +59,19 @@ function theabd_render_more_from_seller_block( array $attributes, string $conten
 		'post_status'    => 'publish',
 	);
 
-	// Add orderby.
-	switch ( $order_by ) {
-		case 'title':
-			$query_args['orderby'] = 'title';
-			$query_args['order']   = 'ASC';
-			break;
-		case 'price':
-			$query_args['orderby'] = 'meta_value_num';
-			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-			$query_args['meta_key'] = '_price';
-			$query_args['order']    = 'ASC';
-			break;
-		case 'popularity':
-			$query_args['orderby'] = 'meta_value_num';
-			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-			$query_args['meta_key'] = 'total_sales';
-			$query_args['order']    = 'DESC';
-			break;
-		case 'date':
-			$query_args['orderby'] = 'date';
-			$query_args['order']   = 'DESC';
-			break;
-		default: // Random order.
-			$query_args['orderby'] = 'rand';
+	// Add orderby using match expression.
+	// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Required for price/popularity sorting.
+	[ $query_args['orderby'], $query_args['order'], $query_args['meta_key'] ] = match ( $order_by ) {
+		'title'      => array( 'title', 'ASC', null ),
+		'price'      => array( 'meta_value_num', 'ASC', '_price' ),
+		'popularity' => array( 'meta_value_num', 'DESC', 'total_sales' ),
+		'date'       => array( 'date', 'DESC', null ),
+		default      => array( 'rand', '', null ),
+	};
+
+	// Remove meta_key if not needed.
+	if ( null === $query_args['meta_key'] ) {
+		unset( $query_args['meta_key'] );
 	}
 
 	/**

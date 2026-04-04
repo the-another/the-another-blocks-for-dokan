@@ -1,7 +1,7 @@
 /**
  * Store rating block editor component.
  *
- * @package DokanBlocks
+ * @package
  * @since 1.0.0
  */
 
@@ -24,13 +24,20 @@ function StarRating( { rating } ) {
 	const emptyStars = 5 - fullStars - ( hasHalfStar ? 1 : 0 );
 
 	return (
-		<span className="dokan-vendor-rating-stars" aria-label={ `${ rating } out of 5 stars` }>
+		<span
+			className="dokan-vendor-rating-stars"
+			aria-label={ `${ rating } out of 5 stars` }
+		>
 			{ [ ...Array( fullStars ) ].map( ( _, i ) => (
-				<span key={ `full-${ i }` } className="star star-full">★</span>
+				<span key={ `full-${ i }` } className="star star-full">
+					★
+				</span>
 			) ) }
 			{ hasHalfStar && <span className="star star-half">★</span> }
 			{ [ ...Array( emptyStars ) ].map( ( _, i ) => (
-				<span key={ `empty-${ i }` } className="star star-empty">☆</span>
+				<span key={ `empty-${ i }` } className="star star-empty">
+					☆
+				</span>
 			) ) }
 		</span>
 	);
@@ -39,20 +46,20 @@ function StarRating( { rating } ) {
 /**
  * Store rating block edit component.
  *
- * @param {Object} props Block props.
- * @param {Object} props.attributes Block attributes.
+ * @param {Object}   props               Block props.
+ * @param {Object}   props.attributes    Block attributes.
  * @param {Function} props.setAttributes Function to update attributes.
- * @param {Object} props.context Block context.
+ * @param {Object}   props.context       Block context.
  * @return {JSX.Element} Block edit component.
  */
 function Edit( { attributes, setAttributes, context } ) {
 	const { showCount = true } = attributes;
-	const vendor = context['dokan/vendor'] || {};
+	const vendor = context[ 'dokan/vendor' ] || {};
 
 	// Use vendor rating if available, otherwise show sample data for preview
 	const hasVendorData = vendor.rating?.rating !== undefined;
-	const rating = hasVendorData ? ( vendor.rating?.rating || 0 ) : 4.5;
-	const count = hasVendorData ? ( vendor.rating?.count || 0 ) : 24;
+	const rating = hasVendorData ? vendor.rating?.rating || 0 : 4.5;
+	const count = hasVendorData ? vendor.rating?.count || 0 : 24;
 
 	const blockProps = useBlockProps( {
 		className: 'dokan-vendor-rating',
@@ -61,12 +68,20 @@ function Edit( { attributes, setAttributes, context } ) {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={ __( 'Settings', 'dokan-blocks' ) } initialOpen={ true }>
+				<PanelBody
+					title={ __( 'Settings', 'dokan-blocks' ) }
+					initialOpen={ true }
+				>
 					<ToggleControl
 						label={ __( 'Show Review Count', 'dokan-blocks' ) }
-						help={ __( 'Display the number of reviews alongside the rating.', 'dokan-blocks' ) }
+						help={ __(
+							'Display the number of reviews alongside the rating.',
+							'dokan-blocks'
+						) }
 						checked={ showCount }
-						onChange={ ( value ) => setAttributes( { showCount: value } ) }
+						onChange={ ( value ) =>
+							setAttributes( { showCount: value } )
+						}
 					/>
 				</PanelBody>
 			</InspectorControls>
@@ -75,7 +90,11 @@ function Edit( { attributes, setAttributes, context } ) {
 				<StarRating rating={ rating } />
 				{ showCount && (
 					<span className="dokan-vendor-rating-count">
-						({ count } { count === 1 ? __( 'review', 'dokan-blocks' ) : __( 'reviews', 'dokan-blocks' ) })
+						({ count }{ ' ' }
+						{ count === 1
+							? __( 'review', 'dokan-blocks' )
+							: __( 'reviews', 'dokan-blocks' ) }
+						)
 					</span>
 				) }
 			</div>
@@ -92,11 +111,8 @@ function Save() {
 	return null;
 }
 
-registerBlockType(
-	metadata.name,
-	{
-		...metadata,
-		edit: Edit,
-		save: Save,
-	}
-);
+registerBlockType( metadata.name, {
+	...metadata,
+	edit: Edit,
+	save: Save,
+} );

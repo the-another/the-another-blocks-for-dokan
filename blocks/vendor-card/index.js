@@ -1,18 +1,23 @@
 /**
  * Vendor card block editor component.
  *
- * @package DokanBlocks
+ * @package
  * @since 1.0.0
  */
 
 import { registerBlockType } from '@wordpress/blocks';
-import { 
-	useBlockProps, 
-	InspectorControls, 
+import {
+	useBlockProps,
+	InspectorControls,
 	InnerBlocks,
 	BlockContextProvider,
 } from '@wordpress/block-editor';
-import { PanelBody, ToggleControl, TextControl, RangeControl } from '@wordpress/components';
+import {
+	PanelBody,
+	ToggleControl,
+	TextControl,
+	RangeControl,
+} from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useMemo, useEffect, useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
@@ -47,31 +52,45 @@ const ALLOWED_BLOCKS = [
  * Default template for vendor card.
  */
 const TEMPLATE = [
-	[ 'the-another/blocks-for-dokan-vendor-avatar', { width: '10rem', height: '10rem' } ],
-	[ 'core/group', {
-		style: { spacing: { margin: { top: '1rem' } } },
-		layout: { type: 'flex', flexWrap: 'nowrap', justifyContent: 'center' },
-	}, [
-		[ 'the-another/blocks-for-dokan-vendor-store-name', { tagName: 'h3' } ],
-	] ],
+	[
+		'the-another/blocks-for-dokan-vendor-avatar',
+		{ width: '10rem', height: '10rem' },
+	],
+	[
+		'core/group',
+		{
+			style: { spacing: { margin: { top: '1rem' } } },
+			layout: {
+				type: 'flex',
+				flexWrap: 'nowrap',
+				justifyContent: 'center',
+			},
+		},
+		[
+			[
+				'the-another/blocks-for-dokan-vendor-store-name',
+				{ tagName: 'h3' },
+			],
+		],
+	],
 ];
 
 /**
  * Default placeholder banner SVG.
  */
-const PLACEHOLDER_BANNER = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200"%3E%3Crect fill="%23e0e0e0" width="800" height="200"/%3E%3Ctext fill="%23999" x="400" y="100" text-anchor="middle" dy=".3em" font-size="24"%3EStore Banner%3C/text%3E%3C/svg%3E';
+const PLACEHOLDER_BANNER =
+	'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200"%3E%3Crect fill="%23e0e0e0" width="800" height="200"/%3E%3Ctext fill="%23999" x="400" y="100" text-anchor="middle" dy=".3em" font-size="24"%3EStore Banner%3C/text%3E%3C/svg%3E';
 
 /**
  * Vendor card block edit component.
  *
- * @param {Object} props Block props.
- * @param {Object} props.attributes Block attributes.
+ * @param {Object}   props               Block props.
+ * @param {Object}   props.attributes    Block attributes.
  * @param {Function} props.setAttributes Function to update attributes.
- * @param {string} props.clientId Block client ID.
- * @param {Object} props.context Block context.
+ * @param {Object}   props.context       Block context.
  * @return {JSX.Element} Block edit component.
  */
-function Edit( { attributes, setAttributes, clientId, context } ) {
+function Edit( { attributes, setAttributes, context } ) {
 	const {
 		vendorId = 0,
 		useBannerAsBackground = false,
@@ -82,7 +101,7 @@ function Edit( { attributes, setAttributes, clientId, context } ) {
 	const [ fetchedVendorData, setFetchedVendorData ] = useState( null );
 
 	// Get vendor data from context (if inside store-list)
-	const contextVendor = context['dokan/vendor'];
+	const contextVendor = context[ 'dokan/vendor' ];
 
 	// Fetch vendor data when vendorId changes (only if not in context)
 	useEffect( () => {
@@ -105,10 +124,11 @@ function Edit( { attributes, setAttributes, clientId, context } ) {
 	}, [ vendorId, contextVendor ] );
 
 	// Determine which vendor data to use: context first, then fetched, then placeholder
-	const vendorData = contextVendor || fetchedVendorData || {
-		banner: PLACEHOLDER_BANNER,
-		store_name: __( 'Sample Store', 'dokan-blocks' ),
-	};
+	const vendorData = contextVendor ||
+		fetchedVendorData || {
+			banner: PLACEHOLDER_BANNER,
+			store_name: __( 'Sample Store', 'dokan-blocks' ),
+		};
 
 	// Build background style if using banner as background
 	const backgroundStyle = useMemo( () => {
@@ -130,40 +150,69 @@ function Edit( { attributes, setAttributes, clientId, context } ) {
 	} );
 
 	// Context to provide to inner blocks
-	const blockContext = useMemo( () => ( {
-		'dokan/vendor': vendorData,
-	} ), [ vendorData ] );
+	const blockContext = useMemo(
+		() => ( {
+			'dokan/vendor': vendorData,
+		} ),
+		[ vendorData ]
+	);
 
 	return (
 		<>
 			<InspectorControls>
 				{ ! contextVendor && (
-					<PanelBody title={ __( 'Store Settings', 'dokan-blocks' ) } initialOpen={ true }>
+					<PanelBody
+						title={ __( 'Store Settings', 'dokan-blocks' ) }
+						initialOpen={ true }
+					>
 						<TextControl
 							label={ __( 'Vendor ID', 'dokan-blocks' ) }
-							help={ __( 'Enter the vendor/store ID to display. Leave as 0 to show a placeholder.', 'dokan-blocks' ) }
+							help={ __(
+								'Enter the vendor/store ID to display. Leave as 0 to show a placeholder.',
+								'dokan-blocks'
+							) }
 							type="number"
 							value={ vendorId }
-							onChange={ ( value ) => setAttributes( { vendorId: parseInt( value, 10 ) || 0 } ) }
+							onChange={ ( value ) =>
+								setAttributes( {
+									vendorId: parseInt( value, 10 ) || 0,
+								} )
+							}
 							min={ 0 }
 						/>
 					</PanelBody>
 				) }
 
-				<PanelBody title={ __( 'Background Options', 'dokan-blocks' ) } initialOpen={ true }>
+				<PanelBody
+					title={ __( 'Background Options', 'dokan-blocks' ) }
+					initialOpen={ true }
+				>
 					<ToggleControl
-						label={ __( 'Use Banner as Background', 'dokan-blocks' ) }
-						help={ __( 'Display the store banner as a background image instead of as a separate block.', 'dokan-blocks' ) }
+						label={ __(
+							'Use Banner as Background',
+							'dokan-blocks'
+						) }
+						help={ __(
+							'Display the store banner as a background image instead of as a separate block.',
+							'dokan-blocks'
+						) }
 						checked={ useBannerAsBackground }
-						onChange={ ( value ) => setAttributes( { useBannerAsBackground: value } ) }
+						onChange={ ( value ) =>
+							setAttributes( { useBannerAsBackground: value } )
+						}
 					/>
 
 					{ useBannerAsBackground && (
 						<RangeControl
 							label={ __( 'Background Overlay', 'dokan-blocks' ) }
-							help={ __( 'Add a dark overlay to improve text readability.', 'dokan-blocks' ) }
+							help={ __(
+								'Add a dark overlay to improve text readability.',
+								'dokan-blocks'
+							) }
 							value={ backgroundOverlay }
-							onChange={ ( value ) => setAttributes( { backgroundOverlay: value } ) }
+							onChange={ ( value ) =>
+								setAttributes( { backgroundOverlay: value } )
+							}
 							min={ 0 }
 							max={ 1 }
 							step={ 0.1 }
@@ -203,11 +252,8 @@ function Save() {
 	);
 }
 
-registerBlockType(
-	metadata.name,
-	{
-		...metadata,
-		edit: Edit,
-		save: Save,
-	}
-);
+registerBlockType( metadata.name, {
+	...metadata,
+	edit: Edit,
+	save: Save,
+} );

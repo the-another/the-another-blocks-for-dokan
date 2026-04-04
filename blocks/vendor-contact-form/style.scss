@@ -38,7 +38,9 @@
 		}
 	}
 
+	/* stylelint-disable-next-line no-descending-specificity */
 	textarea.theabd--textarea,
+	/* stylelint-disable-next-line no-descending-specificity */
 	textarea {
 		resize: vertical;
 		min-height: 120px;
@@ -116,7 +118,9 @@
 
 // Editor-specific styles
 .editor-styles-wrapper {
+
 	.theabd--vendor-contact-form {
+
 		.theabd--vendor-form {
 			padding: 0;
 		}

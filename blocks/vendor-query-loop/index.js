@@ -1,16 +1,31 @@
 /**
  * Store Query Loop block editor component.
  *
- * @package DokanBlocks
+ * @package
  * @since 1.0.0
  */
 
-import { registerBlockType, createBlock } from '@wordpress/blocks';
-import { useBlockProps, InspectorControls, BlockControls, InnerBlocks, useInnerBlocksProps } from '@wordpress/block-editor';
-import { PanelBody, RangeControl, SelectControl, ToggleControl, Placeholder, Spinner, ToolbarGroup, ToolbarDropdownMenu, ToolbarButton, Notice } from '@wordpress/components';
+import { registerBlockType } from '@wordpress/blocks';
+import {
+	useBlockProps,
+	InspectorControls,
+	BlockControls,
+	InnerBlocks,
+	useInnerBlocksProps,
+} from '@wordpress/block-editor';
+import {
+	PanelBody,
+	RangeControl,
+	SelectControl,
+	ToggleControl,
+	Placeholder,
+	Spinner,
+	ToolbarGroup,
+	ToolbarDropdownMenu,
+	Notice,
+} from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { useState, useEffect, useMemo, useCallback } from '@wordpress/element';
-import { useSelect, useDispatch } from '@wordpress/data';
+import { useState, useEffect, useMemo } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import metadata from './block.json';
 import './editor.scss';
@@ -18,30 +33,52 @@ import './style.scss';
 
 // Default template for vendor cards - includes search at the beginning and pagination at the end
 const TEMPLATE = [
-	[ 'the-another/blocks-for-dokan-vendor-search', { enableSearch: true, enableSortBy: true } ],
-	[ 'the-another/blocks-for-dokan-vendor-card', {
-		layout: { type: 'flex', orientation: 'vertical', justifyContent: 'center' },
-	}, [
-		[ 'the-another/blocks-for-dokan-vendor-avatar', { width: '10rem', height: '10rem' } ],
-		[ 'core/group', {
-			style: { spacing: { margin: { top: '1rem' } } },
-			layout: { type: 'flex', flexWrap: 'nowrap', justifyContent: 'center' },
-		}, [
-			[ 'the-another/blocks-for-dokan-vendor-store-name', { tagName: 'h3' } ],
-		] ],
-	] ],
-	[ 'the-another/blocks-for-dokan-vendor-query-pagination', { paginationArrow: 'arrow', showLabel: true } ],
+	[
+		'the-another/blocks-for-dokan-vendor-search',
+		{ enableSearch: true, enableSortBy: true },
+	],
+	[
+		'the-another/blocks-for-dokan-vendor-card',
+		{
+			layout: {
+				type: 'flex',
+				orientation: 'vertical',
+				justifyContent: 'center',
+			},
+		},
+		[
+			[
+				'the-another/blocks-for-dokan-vendor-avatar',
+				{ width: '10rem', height: '10rem' },
+			],
+			[
+				'core/group',
+				{
+					style: { spacing: { margin: { top: '1rem' } } },
+					layout: {
+						type: 'flex',
+						flexWrap: 'nowrap',
+						justifyContent: 'center',
+					},
+				},
+				[
+					[
+						'the-another/blocks-for-dokan-vendor-store-name',
+						{ tagName: 'h3' },
+					],
+				],
+			],
+		],
+	],
+	[
+		'the-another/blocks-for-dokan-vendor-query-pagination',
+		{ paginationArrow: 'arrow', showLabel: true },
+	],
 ];
 
 // Allowed blocks inside store query loop (top level)
 const ALLOWED_BLOCKS = [
 	'the-another/blocks-for-dokan-vendor-card',
-	'the-another/blocks-for-dokan-vendor-query-pagination',
-	'the-another/blocks-for-dokan-vendor-search',
-];
-
-// Blocks that are "template" blocks (repeat per vendor) vs "query" blocks (render once)
-const QUERY_LEVEL_BLOCKS = [
 	'the-another/blocks-for-dokan-vendor-query-pagination',
 	'the-another/blocks-for-dokan-vendor-search',
 ];
@@ -81,8 +118,8 @@ const PLACEHOLDER_VENDOR = {
 /**
  * Store Query Loop block edit component.
  *
- * @param {Object} props Block props.
- * @param {Object} props.attributes Block attributes.
+ * @param {Object}   props               Block props.
+ * @param {Object}   props.attributes    Block attributes.
  * @param {Function} props.setAttributes Function to update attributes.
  * @return {JSX.Element} Block edit component.
  */
@@ -105,9 +142,18 @@ function Edit( { attributes, setAttributes } ) {
 		setIsLoading( true );
 		setError( null );
 
+		let orderByValue;
+		if ( orderBy === 'date' ) {
+			orderByValue = 'registered';
+		} else if ( orderBy === 'name' ) {
+			orderByValue = 'display_name';
+		} else {
+			orderByValue = orderBy;
+		}
+
 		const queryParams = new URLSearchParams( {
 			per_page: '10', // Fetch a few vendors for the preview selector
-			orderby: orderBy === 'date' ? 'registered' : ( orderBy === 'name' ? 'display_name' : orderBy ),
+			orderby: orderByValue,
 		} );
 
 		if ( showFeaturedOnly ) {
@@ -126,8 +172,12 @@ function Edit( { attributes, setAttributes } ) {
 				setIsLoading( false );
 			} )
 			.catch( ( err ) => {
+				// eslint-disable-next-line no-console
 				console.error( 'Failed to fetch vendors:', err );
-				setError( err.message || __( 'Failed to load vendors', 'dokan-blocks' ) );
+				setError(
+					err.message ||
+						__( 'Failed to load vendors', 'dokan-blocks' )
+				);
 				setIsLoading( false );
 			} );
 	}, [ orderBy, showFeaturedOnly ] );
@@ -163,36 +213,17 @@ function Edit( { attributes, setAttributes } ) {
 		} ) );
 	}, [ vendors, selectedVendorId ] );
 
-	// Grid styles for preview
-	const gridStyle = useMemo( () => {
-		if ( displayLayout === 'grid' ) {
-			return {
-				display: 'grid',
-				gridTemplateColumns: `repeat(${ columns }, 1fr)`,
-				gap: '1.5rem',
-			};
-		}
-		return {
-			display: 'flex',
-			flexDirection: 'column',
-			gap: '1.5rem',
-		};
-	}, [ displayLayout, columns ] );
-
 	const blockProps = useBlockProps( {
 		className: `dokan-vendor-query-loop dokan-vendor-query-loop-${ displayLayout }`,
 	} );
 
 	// Use inner blocks for the entire query structure
-	const innerBlocksProps = useInnerBlocksProps(
-		blockProps,
-		{
-			template: TEMPLATE,
-			allowedBlocks: ALLOWED_BLOCKS,
-			templateLock: false,
-			renderAppender: InnerBlocks.ButtonBlockAppender,
-		}
-	);
+	const innerBlocksProps = useInnerBlocksProps( blockProps, {
+		template: TEMPLATE,
+		allowedBlocks: ALLOWED_BLOCKS,
+		templateLock: false,
+		renderAppender: InnerBlocks.ButtonBlockAppender,
+	} );
 
 	return (
 		<>
@@ -207,33 +238,60 @@ function Edit( { attributes, setAttributes } ) {
 			</BlockControls>
 
 			<InspectorControls>
-				<PanelBody title={ __( 'Preview Settings', 'dokan-blocks' ) } initialOpen={ true }>
+				<PanelBody
+					title={ __( 'Preview Settings', 'dokan-blocks' ) }
+					initialOpen={ true }
+				>
 					<SelectControl
 						label={ __( 'Preview Vendor', 'dokan-blocks' ) }
-						help={ __( 'Select a vendor to preview how your template will look with real data.', 'dokan-blocks' ) }
+						help={ __(
+							'Select a vendor to preview how your template will look with real data.',
+							'dokan-blocks'
+						) }
 						value={ selectedVendorId || '' }
 						options={ [
-							{ label: __( '— Select a vendor —', 'dokan-blocks' ), value: '' },
+							{
+								label: __(
+									'— Select a vendor —',
+									'dokan-blocks'
+								),
+								value: '',
+							},
 							...vendors.map( ( vendor ) => ( {
-								label: vendor.store_name || `Vendor #${ vendor.id }`,
+								label:
+									vendor.store_name ||
+									`Vendor #${ vendor.id }`,
 								value: vendor.id,
 							} ) ),
 						] }
-						onChange={ ( value ) => setSelectedVendorId( parseInt( value, 10 ) || null ) }
+						onChange={ ( value ) =>
+							setSelectedVendorId( parseInt( value, 10 ) || null )
+						}
 					/>
 					{ vendors.length === 0 && ! isLoading && (
 						<Notice status="warning" isDismissible={ false }>
-							{ __( 'No vendors found. Showing placeholder data.', 'dokan-blocks' ) }
+							{ __(
+								'No vendors found. Showing placeholder data.',
+								'dokan-blocks'
+							) }
 						</Notice>
 					) }
 				</PanelBody>
 
-				<PanelBody title={ __( 'Query Settings', 'dokan-blocks' ) } initialOpen={ true }>
+				<PanelBody
+					title={ __( 'Query Settings', 'dokan-blocks' ) }
+					initialOpen={ true }
+				>
 					<RangeControl
 						label={ __( 'Items per Page', 'dokan-blocks' ) }
-						help={ __( 'Number of stores to display per page on the frontend.', 'dokan-blocks' ) }
+						help={ __(
+							'Number of stores to display per page on the frontend.',
+							'dokan-blocks'
+						) }
 						value={ perPage }
-						onChange={ ( value ) => setAttributes( { perPage: value } ) }
+						onChange={ ( value ) =>
+							setAttributes( { perPage: value } )
+						}
 						min={ 1 }
 						max={ 50 }
 					/>
@@ -241,37 +299,72 @@ function Edit( { attributes, setAttributes } ) {
 						label={ __( 'Order By', 'dokan-blocks' ) }
 						value={ orderBy }
 						options={ [
-							{ label: __( 'Date', 'dokan-blocks' ), value: 'date' },
-							{ label: __( 'Name', 'dokan-blocks' ), value: 'name' },
-							{ label: __( 'Rating', 'dokan-blocks' ), value: 'rating' },
-							{ label: __( 'Featured', 'dokan-blocks' ), value: 'featured' },
+							{
+								label: __( 'Date', 'dokan-blocks' ),
+								value: 'date',
+							},
+							{
+								label: __( 'Name', 'dokan-blocks' ),
+								value: 'name',
+							},
+							{
+								label: __( 'Rating', 'dokan-blocks' ),
+								value: 'rating',
+							},
+							{
+								label: __( 'Featured', 'dokan-blocks' ),
+								value: 'featured',
+							},
 						] }
-						onChange={ ( value ) => setAttributes( { orderBy: value } ) }
+						onChange={ ( value ) =>
+							setAttributes( { orderBy: value } )
+						}
 					/>
 					<ToggleControl
 						label={ __( 'Featured Only', 'dokan-blocks' ) }
-						help={ __( 'Show only featured stores.', 'dokan-blocks' ) }
+						help={ __(
+							'Show only featured stores.',
+							'dokan-blocks'
+						) }
 						checked={ showFeaturedOnly }
-						onChange={ ( value ) => setAttributes( { showFeaturedOnly: value } ) }
+						onChange={ ( value ) =>
+							setAttributes( { showFeaturedOnly: value } )
+						}
 					/>
 				</PanelBody>
 
-				<PanelBody title={ __( 'Layout Settings', 'dokan-blocks' ) } initialOpen={ true }>
+				<PanelBody
+					title={ __( 'Layout Settings', 'dokan-blocks' ) }
+					initialOpen={ true }
+				>
 					<SelectControl
 						label={ __( 'Layout', 'dokan-blocks' ) }
 						value={ displayLayout }
 						options={ [
-							{ label: __( 'Grid', 'dokan-blocks' ), value: 'grid' },
-							{ label: __( 'List', 'dokan-blocks' ), value: 'list' },
+							{
+								label: __( 'Grid', 'dokan-blocks' ),
+								value: 'grid',
+							},
+							{
+								label: __( 'List', 'dokan-blocks' ),
+								value: 'list',
+							},
 						] }
-						onChange={ ( value ) => setAttributes( { displayLayout: value } ) }
+						onChange={ ( value ) =>
+							setAttributes( { displayLayout: value } )
+						}
 					/>
 					{ displayLayout === 'grid' && (
 						<RangeControl
 							label={ __( 'Columns', 'dokan-blocks' ) }
-							help={ __( 'Number of stores to display per row.', 'dokan-blocks' ) }
+							help={ __(
+								'Number of stores to display per row.',
+								'dokan-blocks'
+							) }
 							value={ columns }
-							onChange={ ( value ) => setAttributes( { columns: value } ) }
+							onChange={ ( value ) =>
+								setAttributes( { columns: value } )
+							}
 							min={ 1 }
 							max={ 6 }
 						/>
@@ -279,14 +372,17 @@ function Edit( { attributes, setAttributes } ) {
 				</PanelBody>
 			</InspectorControls>
 
-			{ isLoading ? (
+			{ isLoading && (
 				<div { ...blockProps }>
 					<Placeholder>
 						<Spinner />
-						<span>{ __( 'Loading vendors...', 'dokan-blocks' ) }</span>
+						<span>
+							{ __( 'Loading vendors…', 'dokan-blocks' ) }
+						</span>
 					</Placeholder>
 				</div>
-			) : error ? (
+			) }
+			{ ! isLoading && error && (
 				<div { ...blockProps }>
 					<Placeholder>
 						<Notice status="error" isDismissible={ false }>
@@ -294,9 +390,8 @@ function Edit( { attributes, setAttributes } ) {
 						</Notice>
 					</Placeholder>
 				</div>
-			) : (
-				<div { ...innerBlocksProps } />
 			) }
+			{ ! isLoading && ! error && <div { ...innerBlocksProps } /> }
 		</>
 	);
 }
@@ -310,11 +405,8 @@ function Save() {
 	return null;
 }
 
-registerBlockType(
-	metadata.name,
-	{
-		...metadata,
-		edit: Edit,
-		save: Save,
-	}
-);
+registerBlockType( metadata.name, {
+	...metadata,
+	edit: Edit,
+	save: Save,
+} );

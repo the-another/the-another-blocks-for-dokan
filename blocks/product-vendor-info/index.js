@@ -1,7 +1,7 @@
 /**
  * Product vendor info block editor component.
  *
- * @package DokanBlocks
+ * @package
  * @since 1.0.0
  */
 
@@ -12,7 +12,12 @@ import {
 	InnerBlocks,
 	BlockContextProvider,
 } from '@wordpress/block-editor';
-import { PanelBody, TextControl, Placeholder, Spinner } from '@wordpress/components';
+import {
+	PanelBody,
+	TextControl,
+	Placeholder,
+	Spinner,
+} from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useMemo, useEffect, useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
@@ -43,13 +48,23 @@ const ALLOWED_BLOCKS = [
  * Default template: minimal layout with avatar and name in a row.
  */
 const TEMPLATE = [
-	[ 'core/group', {
-		layout: { type: 'flex', orientation: 'horizontal' },
-		style: { spacing: { blockGap: '1rem' } },
-	}, [
-		[ 'the-another/blocks-for-dokan-vendor-avatar', { width: '80px', height: '80px' } ],
-		[ 'the-another/blocks-for-dokan-vendor-store-name', { tagName: 'h3', isLink: true } ],
-	] ],
+	[
+		'core/group',
+		{
+			layout: { type: 'flex', orientation: 'horizontal' },
+			style: { spacing: { blockGap: '1rem' } },
+		},
+		[
+			[
+				'the-another/blocks-for-dokan-vendor-avatar',
+				{ width: '80px', height: '80px' },
+			],
+			[
+				'the-another/blocks-for-dokan-vendor-store-name',
+				{ tagName: 'h3', isLink: true },
+			],
+		],
+	],
 ];
 
 /**
@@ -80,8 +95,8 @@ const PLACEHOLDER_VENDOR = {
 /**
  * Product vendor info block edit component.
  *
- * @param {Object} props Block props.
- * @param {Object} props.attributes Block attributes.
+ * @param {Object}   props               Block props.
+ * @param {Object}   props.attributes    Block attributes.
  * @param {Function} props.setAttributes Function to update attributes.
  * @return {JSX.Element} Block edit component.
  */
@@ -114,7 +129,12 @@ function Edit( { attributes, setAttributes } ) {
 				const vendorId = product.author;
 
 				if ( ! vendorId ) {
-					setError( __( 'Product has no vendor associated.', 'dokan-blocks' ) );
+					setError(
+						__(
+							'Product has no vendor associated.',
+							'dokan-blocks'
+						)
+					);
 					setVendorData( null );
 					setIsLoading( false );
 					return;
@@ -132,7 +152,10 @@ function Edit( { attributes, setAttributes } ) {
 				}
 			} )
 			.catch( ( err ) => {
-				setError( err.message || __( 'Failed to load vendor data.', 'dokan-blocks' ) );
+				setError(
+					err.message ||
+						__( 'Failed to load vendor data.', 'dokan-blocks' )
+				);
 				setVendorData( null );
 				setIsLoading( false );
 			} );
@@ -146,9 +169,12 @@ function Edit( { attributes, setAttributes } ) {
 	} );
 
 	// Context to provide to inner blocks
-	const blockContext = useMemo( () => ( {
-		'dokan/vendor': displayVendorData,
-	} ), [ displayVendorData ] );
+	const blockContext = useMemo(
+		() => ( {
+			'dokan/vendor': displayVendorData,
+		} ),
+		[ displayVendorData ]
+	);
 
 	// Show loading state
 	if ( isLoading ) {
@@ -159,7 +185,7 @@ function Edit( { attributes, setAttributes } ) {
 					label={ __( 'Product Vendor Info', 'dokan-blocks' ) }
 				>
 					<Spinner />
-					<p>{ __( 'Loading vendor data...', 'dokan-blocks' ) }</p>
+					<p>{ __( 'Loading vendor data…', 'dokan-blocks' ) }</p>
 				</Placeholder>
 			</div>
 		);
@@ -170,13 +196,23 @@ function Edit( { attributes, setAttributes } ) {
 		return (
 			<>
 				<InspectorControls>
-					<PanelBody title={ __( 'Product Settings', 'dokan-blocks' ) } initialOpen={ true }>
+					<PanelBody
+						title={ __( 'Product Settings', 'dokan-blocks' ) }
+						initialOpen={ true }
+					>
 						<TextControl
 							label={ __( 'Product ID', 'dokan-blocks' ) }
-							help={ __( 'Enter a specific product ID, or leave as 0 to auto-detect on product pages.', 'dokan-blocks' ) }
+							help={ __(
+								'Enter a specific product ID, or leave as 0 to auto-detect on product pages.',
+								'dokan-blocks'
+							) }
 							type="number"
 							value={ productId }
-							onChange={ ( value ) => setAttributes( { productId: parseInt( value, 10 ) || 0 } ) }
+							onChange={ ( value ) =>
+								setAttributes( {
+									productId: parseInt( value, 10 ) || 0,
+								} )
+							}
 							min={ 0 }
 						/>
 					</PanelBody>
@@ -197,18 +233,37 @@ function Edit( { attributes, setAttributes } ) {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={ __( 'Product Settings', 'dokan-blocks' ) } initialOpen={ true }>
+				<PanelBody
+					title={ __( 'Product Settings', 'dokan-blocks' ) }
+					initialOpen={ true }
+				>
 					<TextControl
 						label={ __( 'Product ID', 'dokan-blocks' ) }
-						help={ __( 'Enter a specific product ID, or leave as 0 to auto-detect on product pages.', 'dokan-blocks' ) }
+						help={ __(
+							'Enter a specific product ID, or leave as 0 to auto-detect on product pages.',
+							'dokan-blocks'
+						) }
 						type="number"
 						value={ productId }
-						onChange={ ( value ) => setAttributes( { productId: parseInt( value, 10 ) || 0 } ) }
+						onChange={ ( value ) =>
+							setAttributes( {
+								productId: parseInt( value, 10 ) || 0,
+							} )
+						}
 						min={ 0 }
 					/>
 					{ productId === 0 && (
-						<p style={ { fontSize: '12px', color: '#757575', marginTop: '8px' } }>
-							{ __( 'Using placeholder data. On the frontend, the vendor will be auto-detected from the current product.', 'dokan-blocks' ) }
+						<p
+							style={ {
+								fontSize: '12px',
+								color: '#757575',
+								marginTop: '8px',
+							} }
+						>
+							{ __(
+								'Using placeholder data. On the frontend, the vendor will be auto-detected from the current product.',
+								'dokan-blocks'
+							) }
 						</p>
 					) }
 				</PanelBody>
@@ -281,12 +336,9 @@ const deprecated = [
 	},
 ];
 
-registerBlockType(
-	metadata.name,
-	{
-		...metadata,
-		edit: Edit,
-		save: Save,
-		deprecated,
-	}
-);
+registerBlockType( metadata.name, {
+	...metadata,
+	edit: Edit,
+	save: Save,
+	deprecated,
+} );

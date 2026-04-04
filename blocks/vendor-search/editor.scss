@@ -1,8 +1,9 @@
 /**
  * Store search block editor styles.
  *
- * These styles ensure the search form displays correctly in the Gutenberg editor
- * with the same appearance as on the frontend.
+ * These styles ensure the search form displays correctly
+ * in the Gutenberg editor with the same appearance
+ * as on the frontend.
  */
 
 .wp-block-the-another-blocks-for-dokan-vendor-search {
@@ -71,7 +72,9 @@
 				}
 			}
 
+			/* stylelint-disable-next-line no-duplicate-selectors */
 			.theabd--store-filter-row-inner.theabd--store-filter-row-sort {
+
 				.theabd--item.theabd--sort-by {
 					display: flex;
 					align-items: center;
@@ -97,6 +100,7 @@
 
 		// Mobile: two rows
 		@media (max-width: 768px) {
+
 			.theabd--store-filter-row {
 				flex-direction: column;
 				align-items: stretch;
@@ -123,7 +127,7 @@
 		position: relative;
 
 		&::before {
-			content: '';
+			content: "";
 			position: absolute;
 			top: -8px;
 			right: 20px;
@@ -177,6 +181,7 @@
 				flex: 0 1 auto;
 				min-width: 150px;
 
+				/* stylelint-disable-next-line no-descending-specificity */
 				label {
 					display: block;
 					margin-bottom: 0.25rem;
@@ -223,7 +228,8 @@
 		}
 
 		// Button text wrapper for icon customization.
-		// Icons can be added via CSS ::before/::after or by adding elements inside the button.
+		// Icons can be added via CSS ::before/::after
+		// or by adding elements inside the button.
 		.theabd--btn-text {
 			display: inline-block;
 			line-height: 1;
@@ -231,7 +237,8 @@
 
 		// Allow icons to be added before or after the text.
 		// Example: .theabd--btn::before { content: '🔍'; }
-		// Or add an icon element: <i class="icon"></i><span class="theabd--btn-text">Text</span>
+		// Or add an icon element:
+		// <i class="icon"></i><span class="theabd--btn-text">Text</span>
 		&::before,
 		&::after {
 			display: inline-block;
@@ -278,6 +285,8 @@
 		margin-top: 1rem;
 
 		.theabd--color-control {
+
+			/* stylelint-disable-next-line no-descending-specificity */
 			label {
 				display: block;
 				margin-bottom: 0.5rem;

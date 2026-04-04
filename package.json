@@ -8,7 +8,7 @@
   "scripts": {
     "build": "wp-scripts build src/blocks.js --output-path=dist",
     "start": "wp-scripts start src/blocks.js --output-path=dist",
-    "format": "wp-scripts format blocks/*/src/*.js",
+    "format": "wp-scripts format blocks/*/index.js src/",
     "lint:js": "wp-scripts lint-js blocks/*/index.js src/",
     "lint:css": "wp-scripts lint-style blocks/*/editor.scss blocks/*/style.scss",
     "test:e2e": "WP_BASE_URL=http://localhost:8881 npx playwright test --config playwright.config.ts",

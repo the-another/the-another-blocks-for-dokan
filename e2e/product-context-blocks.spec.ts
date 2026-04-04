@@ -79,10 +79,8 @@ test.describe( 'Product Vendor Info – context provider rendering', () => {
 		// Inner blocks should render with vendor context.
 		const nameBlock = infoBlock.locator( '.theabd--vendor-store-name' );
 		await expect( nameBlock ).toBeVisible();
-		const nameText = await nameBlock.textContent();
-		if ( nameText && nameText.trim().length > 0 ) {
-			await expect( nameBlock.locator( 'a' ) ).toBeVisible();
-		}
+		await expect( nameBlock ).not.toBeEmpty();
+		await expect( nameBlock.locator( 'a' ) ).toBeVisible();
 
 		const avatar = infoBlock.locator( '.theabd--vendor-avatar' );
 		await expect( avatar ).toBeVisible();
@@ -98,25 +96,48 @@ test.describe( 'Product Vendor Info – context provider rendering', () => {
 // More from seller
 // ---------------------------------------------------------------------------
 test.describe( 'More From Seller – related products rendering', () => {
+	/** Vendor with 3 products (for "shows related" test). */
+	let multiProductIds: number[] = [];
+
+	/** Vendor with exactly 1 product (for "empty state" test). */
+	let soloProductId: number;
+
 	test.beforeAll( async ( { requestUtils } ) => {
 		vendorIds = [];
 		productIds = [];
+		multiProductIds = [];
 
-		const vendorId = await createVendor( requestUtils, {
+		// Multi-product vendor.
+		const multiVendorId = await createVendor( requestUtils, {
 			index: 1,
 			store_name: 'Multi Product Vendor',
 		} );
-		vendorIds.push( vendorId );
+		vendorIds.push( multiVendorId );
 
 		// Create 3 products so when we exclude one, 2 remain.
 		for ( let i = 1; i <= 3; i++ ) {
 			const productId = await createProduct( requestUtils, {
-				vendor_id: vendorId,
+				vendor_id: multiVendorId,
 				title: `Seller Product ${ i }`,
 				price: 10 * i,
 			} );
 			productIds.push( productId );
+			multiProductIds.push( productId );
 		}
+
+		// Solo-product vendor (for empty-state test).
+		const soloVendorId = await createVendor( requestUtils, {
+			index: 2,
+			store_name: 'Solo Product Vendor',
+		} );
+		vendorIds.push( soloVendorId );
+
+		soloProductId = await createProduct( requestUtils, {
+			vendor_id: soloVendorId,
+			title: 'Only Product',
+			price: 15,
+		} );
+		productIds.push( soloProductId );
 	} );
 
 	test.afterAll( async ( { requestUtils } ) => {
@@ -128,13 +149,14 @@ test.describe( 'More From Seller – related products rendering', () => {
 		}
 		vendorIds = [];
 		productIds = [];
+		multiProductIds = [];
 	} );
 
 	test( 'shows related products from the same seller', async ( {
 		page,
 		requestUtils,
 	} ) => {
-		const productId = productIds[ 0 ];
+		const productId = multiProductIds[ 0 ];
 		const content = `<!-- wp:the-another/blocks-for-dokan-more-from-seller {"productId":${ productId },"perPage":6,"columns":4,"orderBy":"date"} /-->`;
 
 		const newPage = await createPage(
@@ -162,12 +184,10 @@ test.describe( 'More From Seller – related products rendering', () => {
 		const footerLink = moreBlock.locator(
 			'.theabd--more-from-vendor-footer a'
 		);
-		const footerCount = await footerLink.count();
-		if ( footerCount > 0 ) {
-			await expect( footerLink ).toContainText(
-				'View all products from'
-			);
-		}
+		await expect( footerLink ).toBeVisible();
+		await expect( footerLink ).toContainText(
+			'View all products from'
+		);
 
 		await deletePage( requestUtils, newPage.id );
 	} );
@@ -176,18 +196,6 @@ test.describe( 'More From Seller – related products rendering', () => {
 		page,
 		requestUtils,
 	} ) => {
-		// Create a second vendor with exactly one product.
-		const soloVendorId = await createVendor( requestUtils, {
-			index: 2,
-			store_name: 'Solo Product Vendor',
-		} );
-
-		const soloProductId = await createProduct( requestUtils, {
-			vendor_id: soloVendorId,
-			title: 'Only Product',
-			price: 15,
-		} );
-
 		const content = `<!-- wp:the-another/blocks-for-dokan-more-from-seller {"productId":${ soloProductId },"perPage":6,"columns":4} /-->`;
 
 		const newPage = await createPage(
@@ -206,9 +214,6 @@ test.describe( 'More From Seller – related products rendering', () => {
 			moreBlock.locator( '.theabd--more-from-vendor-empty' )
 		).toContainText( 'No other products found from this seller' );
 
-		// Cleanup solo vendor and product.
 		await deletePage( requestUtils, newPage.id );
-		await deleteProduct( requestUtils, soloProductId );
-		await deleteVendor( requestUtils, soloVendorId );
 	} );
 } );

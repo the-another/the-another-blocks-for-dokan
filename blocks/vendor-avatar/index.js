@@ -1,13 +1,23 @@
 /**
  * Vendor Logo block editor component.
  *
- * @package DokanBlocks
+ * @package
  * @since 1.0.0
  */
 
 import { registerBlockType } from '@wordpress/blocks';
-import { useBlockProps, InspectorControls, BlockControls, AlignmentToolbar } from '@wordpress/block-editor';
-import { ToggleControl, __experimentalUnitControl as UnitControl, __experimentalToolsPanel as ToolsPanel, __experimentalToolsPanelItem as ToolsPanelItem } from '@wordpress/components';
+import {
+	useBlockProps,
+	InspectorControls,
+	BlockControls,
+	AlignmentToolbar,
+} from '@wordpress/block-editor';
+import {
+	ToggleControl,
+	__experimentalUnitControl as UnitControl,
+	__experimentalToolsPanel as ToolsPanel,
+	__experimentalToolsPanelItem as ToolsPanelItem,
+} from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useMemo } from '@wordpress/element';
 import metadata from './block.json';
@@ -16,20 +26,27 @@ import './style.scss';
 /**
  * Default placeholder avatar SVG.
  */
-const PLACEHOLDER_AVATAR = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect fill="%23ddd" width="100" height="100"/%3E%3Ctext fill="%23999" x="50" y="50" text-anchor="middle" dy=".3em" font-size="16"%3ELogo%3C/text%3E%3C/svg%3E';
+const PLACEHOLDER_AVATAR =
+	'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect fill="%23ddd" width="100" height="100"/%3E%3Ctext fill="%23999" x="50" y="50" text-anchor="middle" dy=".3em" font-size="16"%3ELogo%3C/text%3E%3C/svg%3E';
 
 /**
  * Vendor Logo block edit component.
  *
- * @param {Object} props Block props.
- * @param {Object} props.attributes Block attributes.
+ * @param {Object}   props               Block props.
+ * @param {Object}   props.attributes    Block attributes.
  * @param {Function} props.setAttributes Function to update attributes.
- * @param {Object} props.context Block context.
+ * @param {Object}   props.context       Block context.
  * @return {JSX.Element} Block edit component.
  */
 function Edit( { attributes, setAttributes, context } ) {
-	const { width = '80px', height = '80px', isLink = true, align, style } = attributes;
-	const vendor = context['dokan/vendor'] || {};
+	const {
+		width = '80px',
+		height = '80px',
+		isLink = true,
+		align,
+		style,
+	} = attributes;
+	const vendor = context[ 'dokan/vendor' ] || {};
 
 	const avatarUrl = vendor.gravatar || PLACEHOLDER_AVATAR;
 	const storeName = vendor.store_name || __( 'Store Logo', 'dokan-blocks' );
@@ -60,15 +77,17 @@ function Edit( { attributes, setAttributes, context } ) {
 	// Build inline styles for the image
 	const imageStyle = useMemo( () => {
 		return {
-			width: width,
-			height: height,
+			width,
+			height,
 			objectFit: 'cover',
 			display: 'block',
 		};
 	}, [ width, height ] );
 
 	const blockProps = useBlockProps( {
-		className: `dokan-vendor-avatar${ align ? ` has-text-align-${ align }` : '' }`,
+		className: `dokan-vendor-avatar${
+			align ? ` has-text-align-${ align }` : ''
+		}`,
 		style: wrapperStyle,
 	} );
 
@@ -86,7 +105,9 @@ function Edit( { attributes, setAttributes, context } ) {
 			<BlockControls>
 				<AlignmentToolbar
 					value={ align }
-					onChange={ ( newAlign ) => setAttributes( { align: newAlign } ) }
+					onChange={ ( newAlign ) =>
+						setAttributes( { align: newAlign } )
+					}
 				/>
 			</BlockControls>
 
@@ -101,7 +122,9 @@ function Edit( { attributes, setAttributes, context } ) {
 						<UnitControl
 							label={ __( 'Width', 'dokan-blocks' ) }
 							value={ width }
-							onChange={ ( value ) => setAttributes( { width: value } ) }
+							onChange={ ( value ) =>
+								setAttributes( { width: value } )
+							}
 							units={ [
 								{ value: 'px', label: 'px', default: 80 },
 								{ value: 'rem', label: 'rem', default: 5 },
@@ -119,7 +142,9 @@ function Edit( { attributes, setAttributes, context } ) {
 						<UnitControl
 							label={ __( 'Height', 'dokan-blocks' ) }
 							value={ height }
-							onChange={ ( value ) => setAttributes( { height: value } ) }
+							onChange={ ( value ) =>
+								setAttributes( { height: value } )
+							}
 							units={ [
 								{ value: 'px', label: 'px', default: 80 },
 								{ value: 'rem', label: 'rem', default: 5 },
@@ -136,9 +161,14 @@ function Edit( { attributes, setAttributes, context } ) {
 					>
 						<ToggleControl
 							label={ __( 'Link to Store', 'dokan-blocks' ) }
-							help={ __( 'Make the logo a clickable link to the store page.', 'dokan-blocks' ) }
+							help={ __(
+								'Make the logo a clickable link to the store page.',
+								'dokan-blocks'
+							) }
 							checked={ isLink }
-							onChange={ ( value ) => setAttributes( { isLink: value } ) }
+							onChange={ ( value ) =>
+								setAttributes( { isLink: value } )
+							}
 						/>
 					</ToolsPanelItem>
 				</ToolsPanel>
@@ -166,11 +196,8 @@ function Save() {
 	return null;
 }
 
-registerBlockType(
-	metadata.name,
-	{
-		...metadata,
-		edit: Edit,
-		save: Save,
-	}
-);
+registerBlockType( metadata.name, {
+	...metadata,
+	edit: Edit,
+	save: Save,
+} );

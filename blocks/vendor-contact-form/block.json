@@ -7,7 +7,7 @@
 	"icon": "email",
 	"description": "Contact vendor form using Dokan's contact seller functionality.",
 	"keywords": [ "dokan", "vendor", "store", "contact", "form", "email" ],
-	"textdomain": "dokan-blocks",
+	"textdomain": "another-blocks-for-dokan",
 	"supports": {
 		"html": false,
 		"align": true,

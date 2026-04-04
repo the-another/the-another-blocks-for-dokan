@@ -1,7 +1,7 @@
 /**
  * Become vendor CTA block editor component.
  *
- * @package DokanBlocks
+ * @package
  * @since 1.0.0
  */
 
@@ -14,15 +14,18 @@ import metadata from './block.json';
 /**
  * Become vendor CTA block edit component.
  *
- * @param {Object} props Block props.
- * @param {Object} props.attributes Block attributes.
+ * @param {Object}   props               Block props.
+ * @param {Object}   props.attributes    Block attributes.
  * @param {Function} props.setAttributes Function to update attributes.
  * @return {JSX.Element} Block edit component.
  */
 function Edit( { attributes, setAttributes } ) {
 	const {
 		heading = __( 'Become a Vendor', 'dokan-blocks' ),
-		description = __( 'Vendors can sell products and manage a store with a vendor dashboard.', 'dokan-blocks' ),
+		description = __(
+			'Vendors can sell products and manage a store with a vendor dashboard.',
+			'dokan-blocks'
+		),
 		buttonText = __( 'Become a Vendor', 'dokan-blocks' ),
 		buttonLink = '',
 	} = attributes;
@@ -34,26 +37,37 @@ function Edit( { attributes, setAttributes } ) {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={ __( 'Content', 'dokan-blocks' ) } initialOpen={ true }>
+				<PanelBody
+					title={ __( 'Content', 'dokan-blocks' ) }
+					initialOpen={ true }
+				>
 					<TextControl
 						label={ __( 'Heading', 'dokan-blocks' ) }
 						value={ heading }
-						onChange={ ( value ) => setAttributes( { heading: value } ) }
+						onChange={ ( value ) =>
+							setAttributes( { heading: value } )
+						}
 					/>
 					<TextControl
 						label={ __( 'Description', 'dokan-blocks' ) }
 						value={ description }
-						onChange={ ( value ) => setAttributes( { description: value } ) }
+						onChange={ ( value ) =>
+							setAttributes( { description: value } )
+						}
 					/>
 					<TextControl
 						label={ __( 'Button Text', 'dokan-blocks' ) }
 						value={ buttonText }
-						onChange={ ( value ) => setAttributes( { buttonText: value } ) }
+						onChange={ ( value ) =>
+							setAttributes( { buttonText: value } )
+						}
 					/>
 					<TextControl
 						label={ __( 'Button Link', 'dokan-blocks' ) }
 						value={ buttonLink }
-						onChange={ ( value ) => setAttributes( { buttonLink: value } ) }
+						onChange={ ( value ) =>
+							setAttributes( { buttonLink: value } )
+						}
 					/>
 				</PanelBody>
 			</InspectorControls>
@@ -63,13 +77,18 @@ function Edit( { attributes, setAttributes } ) {
 					<ul className="theabd--account-migration-lists">
 						<li>
 							<div className="theabd--w8 theabd--left-content">
-								<p><strong>{ heading }</strong></p>
+								<p>
+									<strong>{ heading }</strong>
+								</p>
 								<p>{ description }</p>
 							</div>
 							<div className="theabd--w4 theabd--right-content">
-								<a href="#" className="theabd--btn theabd--btn-primary">
+								<button
+									type="button"
+									className="theabd--btn theabd--btn-primary"
+								>
 									{ buttonText }
-								</a>
+								</button>
 							</div>
 							<div className="theabd--clearfix"></div>
 						</li>
@@ -89,11 +108,8 @@ function Save() {
 	return null;
 }
 
-registerBlockType(
-	metadata.name,
-	{
-		...metadata,
-		edit: Edit,
-		save: Save,
-	}
-);
+registerBlockType( metadata.name, {
+	...metadata,
+	edit: Edit,
+	save: Save,
+} );

@@ -29,7 +29,13 @@
 		.wp-block-the-another-blocks-for-dokan-vendor-store-name a,
 		.wp-block-the-another-blocks-for-dokan-vendor-store-address,
 		.wp-block-the-another-blocks-for-dokan-vendor-store-phone,
-		p, h1, h2, h3, h4, h5, h6 {
+		p,
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
 			color: #fff;
 			text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 		}
@@ -61,6 +67,7 @@
 
 	// Flow layout (traditional block stacking)
 	&.is-layout-flow {
+
 		> * + * {
 			margin-block-start: var(--wp--style--block-gap, 1rem);
 		}
@@ -68,6 +75,7 @@
 
 	// Constrained layout
 	&.is-layout-constrained {
+
 		> * {
 			max-width: var(--wp--style--global--content-size, 100%);
 			margin-left: auto !important;
@@ -149,9 +157,8 @@
 			text-align: center;
 
 			.theabd--vendor-store-name {
-				display: block;
 				font-size: 1rem;
-				line-height: 1.25rem;
+				line-height: 1.25;
 				font-weight: 600;
 				max-height: 2.5rem;
 				overflow: hidden;

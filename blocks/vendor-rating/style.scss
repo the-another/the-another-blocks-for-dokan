@@ -29,7 +29,7 @@
 			position: relative;
 
 			&::before {
-				content: '★';
+				content: "★";
 				position: absolute;
 				left: 0;
 				width: 50%;
@@ -51,7 +51,9 @@
 
 // When inside store banner (light text on dark background)
 .theabd--vendor-store-banner .theabd--vendor-rating {
+
 	.theabd--vendor-rating-stars {
+
 		.theabd--star-empty {
 			color: rgba(255, 255, 255, 0.3);
 		}

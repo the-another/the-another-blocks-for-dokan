@@ -7,10 +7,10 @@
 	&.has-banner-background {
 		// Ensure the block has minimum height in editor
 		min-height: 300px;
-		
+
 		// Add visual indicator for background in editor
 		&::before {
-			content: '';
+			content: "";
 			position: absolute;
 			top: 0;
 			left: 0;

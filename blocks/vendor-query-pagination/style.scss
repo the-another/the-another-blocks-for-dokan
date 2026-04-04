@@ -31,7 +31,7 @@
 	min-width: 2.5rem;
 	text-decoration: none;
 	color: inherit;
-	border: 1px solid currentColor;
+	border: 1px solid currentcolor;
 	border-radius: 4px;
 	transition: all 0.2s ease;
 	cursor: pointer;
@@ -60,6 +60,7 @@
 
 // Editor-specific styles
 .block-editor-block-list__block {
+
 	.theabd--vendor-query-pagination-preview {
 		padding: 1rem;
 		background-color: #f8f9fa;

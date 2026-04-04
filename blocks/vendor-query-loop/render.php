@@ -143,6 +143,12 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 		remove_action( 'pre_user_query', $query_filter_callback, 9 );
 	}
 
+	// Prime user meta cache for all sellers to avoid per-vendor queries in the loop.
+	if ( ! empty( $sellers ) ) {
+		$seller_ids = wp_list_pluck( $sellers, 'ID' );
+		cache_users( $seller_ids );
+	}
+
 	// Calculate pagination info.
 	$total_users = $user_query->get_total();
 	$total_pages = ceil( $total_users / $per_page );
@@ -174,24 +180,19 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 	$block->context['dokan/queryId'] = $query_context['queryId'];
 	$block->context['dokan/query']   = $query_context['query'];
 
-	// Check if pagination block exists as inner block.
-	$has_pagination_block = false;
-	if ( ! empty( $block->inner_blocks ) ) {
-		foreach ( $block->inner_blocks as $inner_block ) {
-			if ( 'the-another/blocks-for-dokan-vendor-query-pagination' === $inner_block->name ) {
-				$has_pagination_block = true;
-				break;
-			}
-		}
-	}
+	// Separate template blocks (vendor-card) from query-level blocks (search, pagination).
+	$template_blocks   = array();
+	$search_blocks     = array();
+	$pagination_blocks = array();
 
-	// Check if search block exists as inner block.
-	$has_search_block = false;
 	if ( ! empty( $block->inner_blocks ) ) {
 		foreach ( $block->inner_blocks as $inner_block ) {
 			if ( 'the-another/blocks-for-dokan-vendor-search' === $inner_block->name ) {
-				$has_search_block = true;
-				break;
+				$search_blocks[] = $inner_block;
+			} elseif ( 'the-another/blocks-for-dokan-vendor-query-pagination' === $inner_block->name ) {
+				$pagination_blocks[] = $inner_block;
+			} elseif ( 'the-another/blocks-for-dokan-vendor-card' === $inner_block->name ) {
+				$template_blocks[] = $inner_block;
 			}
 		}
 	}
@@ -214,22 +215,6 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 			$grid_classes .= ' theabd--vendor-query-loop-list';
 		}
 
-		// Separate template blocks (vendor-card) from query-level blocks (search, pagination).
-		$template_blocks   = array();
-		$search_blocks     = array();
-		$pagination_blocks = array();
-
-		if ( ! empty( $block->inner_blocks ) ) {
-			foreach ( $block->inner_blocks as $inner_block ) {
-				if ( 'the-another/blocks-for-dokan-vendor-search' === $inner_block->name ) {
-					$search_blocks[] = $inner_block;
-				} elseif ( 'the-another/blocks-for-dokan-vendor-query-pagination' === $inner_block->name ) {
-					$pagination_blocks[] = $inner_block;
-				} elseif ( 'the-another/blocks-for-dokan-vendor-card' === $inner_block->name ) {
-					$template_blocks[] = $inner_block;
-				}
-			}
-		}
 		?>
 		<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<?php
@@ -329,7 +314,7 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 			// Fallback: Show default pagination if no pagination block is present and pages > 1.
 			if ( ! $pagination_rendered && $total_pages > 1 ) :
 				?>
-				<nav class="theabd--vendor-query-loop-pagination">
+				<nav class="theabd--vendor-query-loop-pagination" data-testid="vendor-pagination">
 					<?php
 					echo wp_kses_post(
 						paginate_links(
@@ -347,22 +332,6 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 		</div>
 		<?php
 	} else {
-		// Separate blocks for empty state as well.
-		$template_blocks   = array();
-		$search_blocks     = array();
-		$pagination_blocks = array();
-
-		if ( ! empty( $block->inner_blocks ) ) {
-			foreach ( $block->inner_blocks as $inner_block ) {
-				if ( 'the-another/blocks-for-dokan-vendor-search' === $inner_block->name ) {
-					$search_blocks[] = $inner_block;
-				} elseif ( 'the-another/blocks-for-dokan-vendor-query-pagination' === $inner_block->name ) {
-					$pagination_blocks[] = $inner_block;
-				} elseif ( 'the-another/blocks-for-dokan-vendor-card' === $inner_block->name ) {
-					$template_blocks[] = $inner_block;
-				}
-			}
-		}
 		?>
 		<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<?php

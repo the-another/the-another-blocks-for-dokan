@@ -54,9 +54,10 @@
 
 // When inside store banner (light text on dark background)
 .theabd--vendor-store-banner .theabd--vendor-store-status {
+
 	.theabd--vendor-store-status-open {
 		background: rgba(46, 204, 113, 0.3);
-		color: #ffffff;
+		color: #fff;
 
 		.dashicons {
 			color: #2ecc71;
@@ -65,7 +66,7 @@
 
 	.theabd--vendor-store-status-closed {
 		background: rgba(231, 76, 60, 0.3);
-		color: #ffffff;
+		color: #fff;
 
 		.dashicons {
 			color: #e74c3c;
