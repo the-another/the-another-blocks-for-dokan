@@ -44,76 +44,16 @@ function theabd_render_vendor_store_name_block( array $attributes, string $conte
 		$tag_name = 'h2';
 	}
 
-	// Build inline styles from style attribute.
-	$inline_styles = array();
-
-	// Typography styles.
-	if ( ! empty( $attributes['style']['typography']['fontSize'] ) ) {
-		$inline_styles[] = 'font-size: ' . esc_attr( $attributes['style']['typography']['fontSize'] );
-	}
-	if ( ! empty( $attributes['style']['typography']['fontWeight'] ) ) {
-		$inline_styles[] = 'font-weight: ' . esc_attr( $attributes['style']['typography']['fontWeight'] );
-	}
-	if ( ! empty( $attributes['style']['typography']['lineHeight'] ) ) {
-		$inline_styles[] = 'line-height: ' . esc_attr( $attributes['style']['typography']['lineHeight'] );
-	}
-
-	// Color styles.
-	if ( ! empty( $attributes['style']['color']['text'] ) ) {
-		$inline_styles[] = 'color: ' . esc_attr( $attributes['style']['color']['text'] );
-	}
-	if ( ! empty( $attributes['style']['color']['background'] ) ) {
-		$inline_styles[] = 'background-color: ' . esc_attr( $attributes['style']['color']['background'] );
-	}
-
-	// Spacing styles.
-	if ( ! empty( $attributes['style']['spacing']['margin'] ) ) {
-		$margin = $attributes['style']['spacing']['margin'];
-		if ( ! empty( $margin['top'] ) ) {
-			$inline_styles[] = 'margin-top: ' . esc_attr( $margin['top'] );
-		}
-		if ( ! empty( $margin['right'] ) ) {
-			$inline_styles[] = 'margin-right: ' . esc_attr( $margin['right'] );
-		}
-		if ( ! empty( $margin['bottom'] ) ) {
-			$inline_styles[] = 'margin-bottom: ' . esc_attr( $margin['bottom'] );
-		}
-		if ( ! empty( $margin['left'] ) ) {
-			$inline_styles[] = 'margin-left: ' . esc_attr( $margin['left'] );
-		}
-	}
-	if ( ! empty( $attributes['style']['spacing']['padding'] ) ) {
-		$padding = $attributes['style']['spacing']['padding'];
-		if ( ! empty( $padding['top'] ) ) {
-			$inline_styles[] = 'padding-top: ' . esc_attr( $padding['top'] );
-		}
-		if ( ! empty( $padding['right'] ) ) {
-			$inline_styles[] = 'padding-right: ' . esc_attr( $padding['right'] );
-		}
-		if ( ! empty( $padding['bottom'] ) ) {
-			$inline_styles[] = 'padding-bottom: ' . esc_attr( $padding['bottom'] );
-		}
-		if ( ! empty( $padding['left'] ) ) {
-			$inline_styles[] = 'padding-left: ' . esc_attr( $padding['left'] );
-		}
-	}
-
-	// Get wrapper attributes without style (to avoid conflicts).
+	// WordPress handles color, typography, and spacing styles automatically via block.json supports.
 	$wrapper_attributes = get_block_wrapper_attributes(
 		array(
 			'class' => 'theabd--vendor-store-name',
 		)
 	);
 
-	// Build style attribute separately to avoid WordPress merging issues.
-	$style_attr = '';
-	if ( ! empty( $inline_styles ) ) {
-		$style_attr = ' style="' . esc_attr( implode( '; ', $inline_styles ) ) . '"';
-	}
-
 	ob_start();
 	?>
-	<<?php echo esc_attr( $tag_name ); ?> <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+	<<?php echo esc_attr( $tag_name ); ?> <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 		<?php if ( $is_link && ! empty( $shop_url ) ) : ?>
 			<a href="<?php echo esc_url( $shop_url ); ?>">
 				<?php echo esc_html( $shop_name ); ?>
