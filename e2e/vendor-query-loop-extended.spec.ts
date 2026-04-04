@@ -656,7 +656,8 @@ test.describe( 'Vendor Query Loop – search form interaction', () => {
 		// Note: form method="get" with no action navigates away from
 		// pretty permalink pages, so we verify via navigation URL.
 		await page.locator( '[data-testid="vendor-filter-apply"]' ).click();
-		await page.waitForLoadState( 'domcontentloaded' );
+		// Wait for the URL to contain the search param after form submission.
+		await page.waitForURL( /dokan_seller_search=Unique/ );
 		expect( page.url() ).toContain( 'dokan_seller_search=Unique' );
 
 		await deletePage( requestUtils, newPage.id );

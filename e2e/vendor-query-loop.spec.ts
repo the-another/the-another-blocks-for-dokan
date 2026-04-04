@@ -95,7 +95,8 @@ test.describe( 'Vendor Query Loop – frontend rendering', () => {
 			hasText: `${ TOTAL_PAGES }`,
 		} );
 		await lastPageLink.click();
-		await page.waitForLoadState( 'domcontentloaded' );
+		// Wait for the page URL to reflect the new page number.
+		await page.waitForURL( /paged=/ );
 
 		const cardsLastPage = page.locator( '.theabd--single-vendor' );
 		await expect( cardsLastPage ).toHaveCount(
