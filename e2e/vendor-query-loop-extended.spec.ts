@@ -583,13 +583,13 @@ test.describe( 'Vendor Query Loop – search form interaction', () => {
 
 		// Filter form should be hidden initially.
 		const filterForm = page.locator(
-			'#theabd--vendor-query-looping-filter-form-wrap'
+			'[data-testid="vendor-filter-form"]'
 		);
 		await expect( filterForm ).toBeHidden();
 
 		// Click filter button to show the form.
 		const filterButton = page.locator(
-			'.theabd--vendor-query-loop-filter-button'
+			'[data-testid="vendor-filter-toggle"]'
 		);
 		await filterButton.click();
 		await expect( filterForm ).toBeVisible();
@@ -601,7 +601,7 @@ test.describe( 'Vendor Query Loop – search form interaction', () => {
 		await expect( searchInput ).toBeVisible();
 
 		// Click cancel to hide the form.
-		await page.locator( '#cancel-filter-btn' ).click();
+		await page.locator( '[data-testid="vendor-filter-cancel"]' ).click();
 		await expect( filterForm ).toBeHidden();
 
 		await deletePage( requestUtils, newPage.id );
@@ -631,11 +631,11 @@ test.describe( 'Vendor Query Loop – search form interaction', () => {
 
 		// Open filter form.
 		await page
-			.locator( '.theabd--vendor-query-loop-filter-button' )
+			.locator( '[data-testid="vendor-filter-toggle"]' )
 			.click();
 
 		const filterForm = page.locator(
-			'#theabd--vendor-query-looping-filter-form-wrap'
+			'[data-testid="vendor-filter-form"]'
 		);
 		await expect( filterForm ).toBeVisible();
 
@@ -647,15 +647,15 @@ test.describe( 'Vendor Query Loop – search form interaction', () => {
 		await expect( searchInput ).toHaveValue( 'Unique' );
 
 		// Apply and cancel buttons should be present.
-		await expect( page.locator( '#apply-filter-btn' ) ).toBeVisible();
+		await expect( page.locator( '[data-testid="vendor-filter-apply"]' ) ).toBeVisible();
 		await expect(
-			page.locator( '#cancel-filter-btn' )
+			page.locator( '[data-testid="vendor-filter-cancel"]' )
 		).toBeVisible();
 
 		// Submit the form and verify URL contains the search param.
 		// Note: form method="get" with no action navigates away from
 		// pretty permalink pages, so we verify via navigation URL.
-		await page.locator( '#apply-filter-btn' ).click();
+		await page.locator( '[data-testid="vendor-filter-apply"]' ).click();
 		await page.waitForLoadState( 'domcontentloaded' );
 		expect( page.url() ).toContain( 'dokan_seller_search=Unique' );
 

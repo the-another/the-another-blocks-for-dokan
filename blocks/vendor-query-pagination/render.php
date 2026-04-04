@@ -46,7 +46,8 @@ function theabd_render_vendor_query_pagination_block( array $attributes, string 
 	// Get wrapper attributes.
 	$wrapper_attributes = get_block_wrapper_attributes(
 		array(
-			'class' => 'theabd--vendor-query-pagination',
+			'class'       => 'theabd--vendor-query-pagination',
+			'data-testid' => 'vendor-pagination',
 		)
 	);
 

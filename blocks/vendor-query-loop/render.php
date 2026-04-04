@@ -314,7 +314,7 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 			// Fallback: Show default pagination if no pagination block is present and pages > 1.
 			if ( ! $pagination_rendered && $total_pages > 1 ) :
 				?>
-				<nav class="theabd--vendor-query-loop-pagination">
+				<nav class="theabd--vendor-query-loop-pagination" data-testid="vendor-pagination">
 					<?php
 					echo wp_kses_post(
 						paginate_links(
