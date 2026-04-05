@@ -4,7 +4,7 @@ Tags: dokan, woocommerce, multivendor, blocks, fse, full-site-editing, gutenberg
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 8.3
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,6 +41,14 @@ PHP 8.3 or higher is required.
 
 
 
+
+
+= 1.0.6 - 2026-04-05 =
+* Fix: Unified form element styles across all blocks for consistent theme integration
+* Fix: Buttons now use WordPress `wp-element-button` class for native theme color support
+* Fix: Removed hardcoded colors from inputs, buttons, selects, and pagination
+* Fix: Added CSS custom properties for overriding form element spacing and border-radius
+* Fix: Adjusted vendor-search and vendor-card spacing defaults
 
 = 1.0.5 - 2026-04-05 =
 * Fix: Vendor Search block now renders on the frontend when added inside the Vendor Query Loop
