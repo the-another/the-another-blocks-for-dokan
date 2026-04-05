@@ -10,68 +10,68 @@
 
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 import {
-	createVendor,
-	deleteVendor,
-	createProduct,
-	deleteProduct,
+	createVendors,
+	deleteVendors,
+	createProducts,
+	deleteProducts,
 	createPage,
 	deletePage,
 } from './helpers';
 
-let vendorIds: number[] = [];
-let productIds: number[] = [];
+test.describe( 'Product context blocks – frontend rendering', () => {
+	let vendorIds: number[] = [];
+	let productIds: number[] = [];
+	let pages: Array< { id: number; link: string } > = [];
 
-// ---------------------------------------------------------------------------
-// Product vendor info
-// ---------------------------------------------------------------------------
-test.describe( 'Product Vendor Info – context provider rendering', () => {
 	test.beforeAll( async ( { requestUtils } ) => {
-		vendorIds = [];
-		productIds = [];
+		// Create all 3 vendors in one call.
+		vendorIds = await createVendors( requestUtils, [
+			{ index: 1, store_name: 'Product Info Vendor', phone: '+1-555-0300' },
+			{ index: 2, store_name: 'Multi Product Vendor' },
+			{ index: 3, store_name: 'Solo Product Vendor' },
+		] );
 
-		const vendorId = await createVendor( requestUtils, {
-			index: 1,
-			store_name: 'Product Info Vendor',
-			phone: '+1-555-0300',
-		} );
-		vendorIds.push( vendorId );
+		// Create all 5 products in one call.
+		productIds = await createProducts( requestUtils, [
+			{ vendor_id: vendorIds[ 0 ], title: 'Test Widget Alpha', price: 29.99 },
+			{ vendor_id: vendorIds[ 1 ], title: 'Seller Product 1', price: 10 },
+			{ vendor_id: vendorIds[ 1 ], title: 'Seller Product 2', price: 20 },
+			{ vendor_id: vendorIds[ 1 ], title: 'Seller Product 3', price: 30 },
+			{ vendor_id: vendorIds[ 2 ], title: 'Only Product', price: 15 },
+		] );
 
-		const productId = await createProduct( requestUtils, {
-			vendor_id: vendorId,
-			title: 'Test Widget Alpha',
-			price: 29.99,
-		} );
-		productIds.push( productId );
+		// Pre-create all 3 test pages.
+		pages = [
+			// Product vendor info page (uses productIds[0]).
+			await createPage( requestUtils, 'Product Vendor Info E2E',
+				`<!-- wp:the-another/blocks-for-dokan-product-vendor-info {"productId":${ productIds[ 0 ] }} -->
+<!-- wp:the-another/blocks-for-dokan-vendor-store-name {"tagName":"h3","isLink":true} /-->
+<!-- wp:the-another/blocks-for-dokan-vendor-avatar {"width":"60px","height":"60px"} /-->
+<!-- /wp:the-another/blocks-for-dokan-product-vendor-info -->` ),
+			// More from seller page (uses productIds[1] — multi-product vendor).
+			await createPage( requestUtils, 'More From Seller E2E',
+				`<!-- wp:the-another/blocks-for-dokan-more-from-seller {"productId":${ productIds[ 1 ] },"perPage":6,"columns":4,"orderBy":"date"} /-->` ),
+			// More from seller empty page (uses productIds[4] — solo vendor).
+			await createPage( requestUtils, 'More From Seller Empty E2E',
+				`<!-- wp:the-another/blocks-for-dokan-more-from-seller {"productId":${ productIds[ 4 ] },"perPage":6,"columns":4} /-->` ),
+		];
 	} );
 
 	test.afterAll( async ( { requestUtils } ) => {
-		for ( const id of productIds ) {
-			await deleteProduct( requestUtils, id );
+		for ( const p of pages ) {
+			await deletePage( requestUtils, p.id );
 		}
-		for ( const id of vendorIds ) {
-			await deleteVendor( requestUtils, id );
-		}
+		await deleteProducts( requestUtils, productIds );
+		await deleteVendors( requestUtils, vendorIds );
 		vendorIds = [];
 		productIds = [];
+		pages = [];
 	} );
 
 	test( 'renders vendor info with inner blocks for a product', async ( {
 		page,
-		requestUtils,
 	} ) => {
-		const productId = productIds[ 0 ];
-		const content = `<!-- wp:the-another/blocks-for-dokan-product-vendor-info {"productId":${ productId }} -->
-<!-- wp:the-another/blocks-for-dokan-vendor-store-name {"tagName":"h3","isLink":true} /-->
-<!-- wp:the-another/blocks-for-dokan-vendor-avatar {"width":"60px","height":"60px"} /-->
-<!-- /wp:the-another/blocks-for-dokan-product-vendor-info -->`;
-
-		const newPage = await createPage(
-			requestUtils,
-			'Product Vendor Info E2E',
-			content
-		);
-
-		await page.goto( newPage.link );
+		await page.goto( pages[ 0 ].link );
 
 		const infoBlock = page.locator( '.theabd--product-vendor-info' );
 		await expect( infoBlock ).toBeVisible();
@@ -87,85 +87,12 @@ test.describe( 'Product Vendor Info – context provider rendering', () => {
 		await expect(
 			avatar.locator( '.theabd--vendor-avatar-image' )
 		).toHaveAttribute( 'src', /.+/ );
-
-		await deletePage( requestUtils, newPage.id );
-	} );
-} );
-
-// ---------------------------------------------------------------------------
-// More from seller
-// ---------------------------------------------------------------------------
-test.describe( 'More From Seller – related products rendering', () => {
-	/** Vendor with 3 products (for "shows related" test). */
-	let multiProductIds: number[] = [];
-
-	/** Vendor with exactly 1 product (for "empty state" test). */
-	let soloProductId: number;
-
-	test.beforeAll( async ( { requestUtils } ) => {
-		vendorIds = [];
-		productIds = [];
-		multiProductIds = [];
-
-		// Multi-product vendor.
-		const multiVendorId = await createVendor( requestUtils, {
-			index: 1,
-			store_name: 'Multi Product Vendor',
-		} );
-		vendorIds.push( multiVendorId );
-
-		// Create 3 products so when we exclude one, 2 remain.
-		for ( let i = 1; i <= 3; i++ ) {
-			const productId = await createProduct( requestUtils, {
-				vendor_id: multiVendorId,
-				title: `Seller Product ${ i }`,
-				price: 10 * i,
-			} );
-			productIds.push( productId );
-			multiProductIds.push( productId );
-		}
-
-		// Solo-product vendor (for empty-state test).
-		const soloVendorId = await createVendor( requestUtils, {
-			index: 2,
-			store_name: 'Solo Product Vendor',
-		} );
-		vendorIds.push( soloVendorId );
-
-		soloProductId = await createProduct( requestUtils, {
-			vendor_id: soloVendorId,
-			title: 'Only Product',
-			price: 15,
-		} );
-		productIds.push( soloProductId );
-	} );
-
-	test.afterAll( async ( { requestUtils } ) => {
-		for ( const id of productIds ) {
-			await deleteProduct( requestUtils, id );
-		}
-		for ( const id of vendorIds ) {
-			await deleteVendor( requestUtils, id );
-		}
-		vendorIds = [];
-		productIds = [];
-		multiProductIds = [];
 	} );
 
 	test( 'shows related products from the same seller', async ( {
 		page,
-		requestUtils,
 	} ) => {
-		const productId = multiProductIds[ 0 ];
-		const content = `<!-- wp:the-another/blocks-for-dokan-more-from-seller {"productId":${ productId },"perPage":6,"columns":4,"orderBy":"date"} /-->`;
-
-		const newPage = await createPage(
-			requestUtils,
-			'More From Seller E2E',
-			content
-		);
-
-		await page.goto( newPage.link );
+		await page.goto( pages[ 1 ].link );
 
 		const moreBlock = page.locator( '.theabd--more-from-vendor' );
 		await expect( moreBlock ).toBeVisible();
@@ -188,23 +115,12 @@ test.describe( 'More From Seller – related products rendering', () => {
 		await expect( footerLink ).toContainText(
 			'View all products from'
 		);
-
-		await deletePage( requestUtils, newPage.id );
 	} );
 
 	test( 'shows empty message when vendor has only one product', async ( {
 		page,
-		requestUtils,
 	} ) => {
-		const content = `<!-- wp:the-another/blocks-for-dokan-more-from-seller {"productId":${ soloProductId },"perPage":6,"columns":4} /-->`;
-
-		const newPage = await createPage(
-			requestUtils,
-			'More From Seller Empty E2E',
-			content
-		);
-
-		await page.goto( newPage.link );
+		await page.goto( pages[ 2 ].link );
 
 		const moreBlock = page.locator( '.theabd--more-from-vendor' );
 		await expect( moreBlock ).toBeVisible();
@@ -213,7 +129,5 @@ test.describe( 'More From Seller – related products rendering', () => {
 		await expect(
 			moreBlock.locator( '.theabd--more-from-vendor-empty' )
 		).toContainText( 'No other products found from this seller' );
-
-		await deletePage( requestUtils, newPage.id );
 	} );
 } );

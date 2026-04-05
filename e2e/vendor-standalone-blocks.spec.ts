@@ -7,13 +7,11 @@
 
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 import {
-	createVendor,
-	deleteVendor,
+	createVendors,
+	deleteVendors,
 	createPage,
 	deletePage,
 } from './helpers';
-
-let vendorIds: number[] = [];
 
 /** Store time schedule: Mon-Fri 09:00-17:00, Sat-Sun closed. */
 const STORE_TIME: Record< string, unknown > = {
@@ -28,50 +26,63 @@ const STORE_TIME: Record< string, unknown > = {
 
 const TNC_TEXT = 'These are our test terms and conditions for e2e testing purposes.';
 
-// ---------------------------------------------------------------------------
-// Store hours
-// ---------------------------------------------------------------------------
-test.describe( 'Vendor Store Hours – standalone rendering', () => {
+test.describe( 'Vendor standalone blocks – frontend rendering', () => {
+	let vendorIds: number[] = [];
+	let pages: Array< { id: number; link: string } > = [];
+
 	test.beforeAll( async ( { requestUtils } ) => {
-		vendorIds = [];
-		const id = await createVendor( requestUtils, {
-			index: 1,
-			store_name: 'Hours Test Store',
-			phone: '+1-555-0200',
-			address: {
-				street_1: '456 Schedule Ave',
-				city: 'Clocktown',
-				state: 'CA',
-				zip: '90001',
-				country: 'US',
+		vendorIds = await createVendors( requestUtils, [
+			{
+				index: 1,
+				store_name: 'Hours Test Store',
+				phone: '+1-555-0200',
+				address: {
+					street_1: '456 Schedule Ave',
+					city: 'Clocktown',
+					state: 'CA',
+					zip: '90001',
+					country: 'US',
+				},
+				dokan_store_time_enabled: 'yes',
+				dokan_store_time: STORE_TIME,
 			},
-			dokan_store_time_enabled: 'yes',
-			dokan_store_time: STORE_TIME,
-		} );
-		vendorIds.push( id );
+			{
+				index: 2,
+				store_name: 'T&C Test Store',
+				store_tnc: TNC_TEXT,
+			},
+			{
+				index: 3,
+				store_name: 'Tabs Test Store',
+			},
+		] );
+
+		pages = [
+			await createPage( requestUtils, 'Store Hours Compact E2E',
+				`<!-- wp:the-another/blocks-for-dokan-vendor-store-hours {"vendorId":${ vendorIds[ 0 ] },"layout":"compact","showCurrentStatus":true} /-->` ),
+			await createPage( requestUtils, 'Store Hours Detailed E2E',
+				`<!-- wp:the-another/blocks-for-dokan-vendor-store-hours {"vendorId":${ vendorIds[ 0 ] },"layout":"detailed","showCurrentStatus":true} /-->` ),
+			await createPage( requestUtils, 'T&C With Title E2E',
+				`<!-- wp:the-another/blocks-for-dokan-vendor-store-terms-conditions {"vendorId":${ vendorIds[ 1 ] },"showTitle":true,"titleTag":"h2"} /-->` ),
+			await createPage( requestUtils, 'T&C No Title E2E',
+				`<!-- wp:the-another/blocks-for-dokan-vendor-store-terms-conditions {"vendorId":${ vendorIds[ 1 ] },"showTitle":false} /-->` ),
+			await createPage( requestUtils, 'Store Tabs E2E',
+				`<!-- wp:the-another/blocks-for-dokan-vendor-store-tabs {"vendorId":${ vendorIds[ 2 ] }} /-->` ),
+		];
 	} );
 
 	test.afterAll( async ( { requestUtils } ) => {
-		for ( const id of vendorIds ) {
-			await deleteVendor( requestUtils, id );
+		for ( const p of pages ) {
+			await deletePage( requestUtils, p.id );
 		}
+		await deleteVendors( requestUtils, vendorIds );
 		vendorIds = [];
+		pages = [];
 	} );
 
-	test( 'renders compact layout with status section', async ( {
-		page,
-		requestUtils,
-	} ) => {
-		const vendorId = vendorIds[ 0 ];
-		const content = `<!-- wp:the-another/blocks-for-dokan-vendor-store-hours {"vendorId":${ vendorId },"layout":"compact","showCurrentStatus":true} /-->`;
-
-		const newPage = await createPage(
-			requestUtils,
-			'Store Hours Compact E2E',
-			content
-		);
-
-		await page.goto( newPage.link );
+	// Store hours – compact layout
+	test( 'renders compact layout with status section', async ( { page } ) => {
+		await page.goto( pages[ 0 ].link );
 
 		const hoursBlock = page.locator( '.theabd--vendor-store-hours' );
 		await expect( hoursBlock ).toBeVisible();
@@ -93,24 +104,11 @@ test.describe( 'Vendor Store Hours – standalone rendering', () => {
 		const openCount = await openBadge.count();
 		const closedCount = await closedBadge.count();
 		expect( openCount + closedCount ).toBe( 1 );
-
-		await deletePage( requestUtils, newPage.id );
 	} );
 
-	test( 'renders detailed layout with 7 days and today marker', async ( {
-		page,
-		requestUtils,
-	} ) => {
-		const vendorId = vendorIds[ 0 ];
-		const content = `<!-- wp:the-another/blocks-for-dokan-vendor-store-hours {"vendorId":${ vendorId },"layout":"detailed","showCurrentStatus":true} /-->`;
-
-		const newPage = await createPage(
-			requestUtils,
-			'Store Hours Detailed E2E',
-			content
-		);
-
-		await page.goto( newPage.link );
+	// Store hours – detailed layout
+	test( 'renders detailed layout with 7 days and today marker', async ( { page } ) => {
+		await page.goto( pages[ 1 ].link );
 
 		const hoursBlock = page.locator( '.theabd--vendor-store-hours' );
 		await expect( hoursBlock ).toBeVisible();
@@ -138,46 +136,11 @@ test.describe( 'Vendor Store Hours – standalone rendering', () => {
 		await expect(
 			firstDay.locator( '.theabd--day-hours' )
 		).toBeVisible();
-
-		await deletePage( requestUtils, newPage.id );
-	} );
-} );
-
-// ---------------------------------------------------------------------------
-// Terms and conditions
-// ---------------------------------------------------------------------------
-test.describe( 'Vendor Store Terms & Conditions – standalone rendering', () => {
-	test.beforeAll( async ( { requestUtils } ) => {
-		vendorIds = [];
-		const id = await createVendor( requestUtils, {
-			index: 1,
-			store_name: 'T&C Test Store',
-			store_tnc: TNC_TEXT,
-		} );
-		vendorIds.push( id );
 	} );
 
-	test.afterAll( async ( { requestUtils } ) => {
-		for ( const id of vendorIds ) {
-			await deleteVendor( requestUtils, id );
-		}
-		vendorIds = [];
-	} );
-
-	test( 'renders T&C content with title', async ( {
-		page,
-		requestUtils,
-	} ) => {
-		const vendorId = vendorIds[ 0 ];
-		const content = `<!-- wp:the-another/blocks-for-dokan-vendor-store-terms-conditions {"vendorId":${ vendorId },"showTitle":true,"titleTag":"h2"} /-->`;
-
-		const newPage = await createPage(
-			requestUtils,
-			'T&C With Title E2E',
-			content
-		);
-
-		await page.goto( newPage.link );
+	// Terms & Conditions – with title
+	test( 'renders T&C content with title', async ( { page } ) => {
+		await page.goto( pages[ 2 ].link );
 
 		const tncBlock = page.locator(
 			'.theabd--vendor-store-terms-conditions'
@@ -195,24 +158,11 @@ test.describe( 'Vendor Store Terms & Conditions – standalone rendering', () =>
 		// Content should contain our test text.
 		const tncContent = tncBlock.locator( '.theabd--store-toc-content' );
 		await expect( tncContent ).toContainText( TNC_TEXT );
-
-		await deletePage( requestUtils, newPage.id );
 	} );
 
-	test( 'hides title when showTitle is false', async ( {
-		page,
-		requestUtils,
-	} ) => {
-		const vendorId = vendorIds[ 0 ];
-		const content = `<!-- wp:the-another/blocks-for-dokan-vendor-store-terms-conditions {"vendorId":${ vendorId },"showTitle":false} /-->`;
-
-		const newPage = await createPage(
-			requestUtils,
-			'T&C No Title E2E',
-			content
-		);
-
-		await page.goto( newPage.link );
+	// Terms & Conditions – without title
+	test( 'hides title when showTitle is false', async ( { page } ) => {
+		await page.goto( pages[ 3 ].link );
 
 		const tncBlock = page.locator(
 			'.theabd--vendor-store-terms-conditions'
@@ -228,46 +178,11 @@ test.describe( 'Vendor Store Terms & Conditions – standalone rendering', () =>
 		await expect(
 			tncBlock.locator( '.theabd--store-toc-content' )
 		).toContainText( TNC_TEXT );
-
-		await deletePage( requestUtils, newPage.id );
-	} );
-} );
-
-// ---------------------------------------------------------------------------
-// Store tabs (soft assertion – depends on Dokan's rewrite rules)
-// ---------------------------------------------------------------------------
-test.describe( 'Vendor Store Tabs – standalone rendering', () => {
-	test.beforeAll( async ( { requestUtils } ) => {
-		vendorIds = [];
-		const id = await createVendor( requestUtils, {
-			index: 1,
-			store_name: 'Tabs Test Store',
-		} );
-		vendorIds.push( id );
 	} );
 
-	test.afterAll( async ( { requestUtils } ) => {
-		for ( const id of vendorIds ) {
-			await deleteVendor( requestUtils, id );
-		}
-		vendorIds = [];
-	} );
-
-	// Store tabs require Dokan's rewrite rules which aren't active in wp-now.
-	test.fixme( 'renders tab items when Dokan rewrite rules are active', async ( {
-		page,
-		requestUtils,
-	} ) => {
-		const vendorId = vendorIds[ 0 ];
-		const content = `<!-- wp:the-another/blocks-for-dokan-vendor-store-tabs {"vendorId":${ vendorId }} /-->`;
-
-		const newPage = await createPage(
-			requestUtils,
-			'Store Tabs E2E',
-			content
-		);
-
-		await page.goto( newPage.link );
+	// Store tabs
+	test( 'renders tab items when Dokan rewrite rules are active', async ( { page } ) => {
+		await page.goto( pages[ 4 ].link );
 
 		const tabsBlock = page.locator( '.theabd--vendor-store-tabs' );
 		await expect( tabsBlock ).toBeVisible();
@@ -277,59 +192,5 @@ test.describe( 'Vendor Store Tabs – standalone rendering', () => {
 
 		const firstTab = tabItems.first();
 		await expect( firstTab.locator( 'a' ) ).toBeVisible();
-
-		await deletePage( requestUtils, newPage.id );
-	} );
-} );
-
-// ---------------------------------------------------------------------------
-// Store sidebar (soft assertion – depends on widget area registration)
-// ---------------------------------------------------------------------------
-test.describe( 'Vendor Store Sidebar – standalone rendering', () => {
-	test.beforeAll( async ( { requestUtils } ) => {
-		vendorIds = [];
-		const id = await createVendor( requestUtils, {
-			index: 1,
-			store_name: 'Sidebar Test Store',
-			address: {
-				street_1: '789 Widget Way',
-				city: 'Sidebarville',
-				state: 'NY',
-				zip: '10001',
-				country: 'US',
-			},
-		} );
-		vendorIds.push( id );
-	} );
-
-	test.afterAll( async ( { requestUtils } ) => {
-		for ( const id of vendorIds ) {
-			await deleteVendor( requestUtils, id );
-		}
-		vendorIds = [];
-	} );
-
-	// Sidebar rendering requires Dokan widget areas which aren't
-	// registered in wp-now.
-	test.fixme( 'renders sidebar with widget areas when Dokan is fully active', async ( {
-		page,
-		requestUtils,
-	} ) => {
-		const vendorId = vendorIds[ 0 ];
-		const content = `<!-- wp:the-another/blocks-for-dokan-vendor-store-sidebar {"vendorId":${ vendorId }} /-->`;
-
-		const newPage = await createPage(
-			requestUtils,
-			'Store Sidebar E2E',
-			content
-		);
-
-		await page.goto( newPage.link );
-
-		const sidebar = page.locator( '.theabd--vendor-store-sidebar' );
-		await expect( sidebar ).toBeVisible();
-		await expect( sidebar ).toHaveAttribute( 'role', 'complementary' );
-
-		await deletePage( requestUtils, newPage.id );
 	} );
 } );

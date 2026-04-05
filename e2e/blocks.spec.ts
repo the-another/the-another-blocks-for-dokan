@@ -4,104 +4,101 @@
  * Tests block insertion and editor rendering for plugin blocks.
  * Frontend rendering requires Dokan + WooCommerce vendor data and is not tested here.
  *
- * Blocks are grouped by insertion context:
- * - Top-level blocks: can be inserted directly into a post.
- * - Nested blocks: require a parent/ancestor block (e.g., vendor-query-loop).
+ * Blocks are grouped into fewer editor sessions to reduce overhead from
+ * admin.createNewPost() which takes 3-5 seconds per call.
  */
 
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 
-test.describe( 'Become Vendor CTA Block', () => {
-	test( 'displays CTA content in editor', async ( {
+test.describe( 'Block editor rendering', () => {
+	test( 'standalone blocks are visible in editor', async ( {
 		admin,
 		editor,
 	} ) => {
-		await admin.createNewPost( { title: 'CTA Block Test' } );
-		await editor.insertBlock( {
-			name: 'the-another/blocks-for-dokan-become-vendor-cta',
-		} );
+		await admin.createNewPost( { title: 'Standalone Blocks Test' } );
 
-		const block = editor.canvas.locator(
-			'.wp-block-the-another-blocks-for-dokan-become-vendor-cta'
-		);
+		const blocks = [
+			{
+				name: 'the-another/blocks-for-dokan-become-vendor-cta',
+				selector: '.wp-block-the-another-blocks-for-dokan-become-vendor-cta',
+				text: 'Become a Vendor',
+			},
+			{
+				name: 'the-another/blocks-for-dokan-vendor-store-header',
+				selector: '.wp-block-the-another-blocks-for-dokan-vendor-store-header',
+				text: 'Vendor Store Header',
+			},
+			{
+				name: 'the-another/blocks-for-dokan-vendor-store-banner',
+				selector: '.wp-block-the-another-blocks-for-dokan-vendor-store-banner',
+			},
+			{
+				name: 'the-another/blocks-for-dokan-more-from-seller',
+				selector: '.wp-block-the-another-blocks-for-dokan-more-from-seller',
+				text: 'More from Seller',
+			},
+			{
+				name: 'the-another/blocks-for-dokan-product-vendor-info',
+				selector: '.wp-block-the-another-blocks-for-dokan-product-vendor-info',
+			},
+		];
 
-		await expect( block ).toBeVisible();
-		await expect( block ).toContainText( 'Become a Vendor' );
+		for ( const block of blocks ) {
+			await editor.insertBlock( { name: block.name } );
+		}
+
+		for ( const block of blocks ) {
+			const el = editor.canvas.locator( block.selector );
+			await expect( el ).toBeVisible();
+			if ( block.text ) {
+				await expect( el ).toContainText( block.text );
+			}
+		}
 	} );
 
-	test( 'can publish page with block', async ( {
-		admin,
-		editor,
-		page,
-	} ) => {
-		await admin.createNewPost( { title: 'CTA Publish Test' } );
-		await editor.insertBlock( {
-			name: 'the-another/blocks-for-dokan-become-vendor-cta',
-		} );
-		await editor.publishPost();
-
-		const errorNotice = page.locator(
-			'.components-snackbar-list .is-error'
-		);
-		await expect( errorNotice ).toHaveCount( 0 );
-	} );
-} );
-
-test.describe( 'Store Header Block', () => {
-	test( 'displays placeholder in editor', async ( {
-		admin,
-		editor,
-	} ) => {
-		await admin.createNewPost( { title: 'Store Header Test' } );
-		await editor.insertBlock( {
-			name: 'the-another/blocks-for-dokan-vendor-store-header',
-		} );
-
-		const block = editor.canvas.locator(
-			'.wp-block-the-another-blocks-for-dokan-vendor-store-header'
-		);
-
-		await expect( block ).toBeVisible();
-		await expect( block ).toContainText( 'Vendor Store Header' );
-	} );
-} );
-
-test.describe( 'Store Banner Block', () => {
-	test( 'displays placeholder in editor', async ( {
+	test( 'widget and sidebar blocks are visible in editor', async ( {
 		admin,
 		editor,
 	} ) => {
-		await admin.createNewPost( { title: 'Store Banner Test' } );
-		await editor.insertBlock( {
-			name: 'the-another/blocks-for-dokan-vendor-store-banner',
-		} );
+		await admin.createNewPost( { title: 'Widget Blocks Test' } );
 
-		const block = editor.canvas.locator(
-			'.wp-block-the-another-blocks-for-dokan-vendor-store-banner'
-		);
+		const blocks = [
+			{
+				name: 'the-another/blocks-for-dokan-vendor-store-tabs',
+				selector: '.wp-block-the-another-blocks-for-dokan-vendor-store-tabs',
+				text: 'Products',
+			},
+			{
+				name: 'the-another/blocks-for-dokan-vendor-store-sidebar',
+				selector: '.wp-block-the-another-blocks-for-dokan-vendor-store-sidebar',
+				text: 'Vendor Store Sidebar',
+			},
+			{
+				name: 'the-another/blocks-for-dokan-vendor-contact-form',
+				selector: '.wp-block-the-another-blocks-for-dokan-vendor-contact-form',
+				text: 'Contact Form',
+			},
+			{
+				name: 'the-another/blocks-for-dokan-vendor-store-terms-conditions',
+				selector: '.wp-block-the-another-blocks-for-dokan-vendor-store-terms-conditions',
+				text: 'Terms & Conditions',
+			},
+		];
 
-		await expect( block ).toBeVisible();
+		for ( const block of blocks ) {
+			await editor.insertBlock( { name: block.name } );
+		}
+
+		for ( const block of blocks ) {
+			const el = editor.canvas.locator( block.selector );
+			await expect( el ).toBeVisible();
+			if ( block.text ) {
+				await expect( el ).toContainText( block.text );
+			}
+		}
 	} );
-} );
 
-test.describe( 'Vendor Query Loop Block', () => {
-	test( 'can be inserted and is visible in editor', async ( {
-		admin,
-		editor,
-	} ) => {
-		await admin.createNewPost( { title: 'Query Loop Test' } );
-		await editor.insertBlock( {
-			name: 'the-another/blocks-for-dokan-vendor-query-loop',
-		} );
-
-		const block = editor.canvas.locator(
-			'.wp-block-the-another-blocks-for-dokan-vendor-query-loop'
-		);
-
-		await expect( block ).toBeVisible();
-	} );
-
-	test( 'can publish page with block', async ( {
+	test( 'query loop block can be inserted and published', async ( {
 		admin,
 		editor,
 		page,
@@ -110,124 +107,16 @@ test.describe( 'Vendor Query Loop Block', () => {
 		await editor.insertBlock( {
 			name: 'the-another/blocks-for-dokan-vendor-query-loop',
 		} );
-		await editor.publishPost();
 
+		const block = editor.canvas.locator(
+			'.wp-block-the-another-blocks-for-dokan-vendor-query-loop'
+		);
+		await expect( block ).toBeVisible();
+
+		await editor.publishPost();
 		const errorNotice = page.locator(
 			'.components-snackbar-list .is-error'
 		);
 		await expect( errorNotice ).toHaveCount( 0 );
-	} );
-} );
-
-test.describe( 'More From Seller Block', () => {
-	test( 'displays placeholder in editor', async ( {
-		admin,
-		editor,
-	} ) => {
-		await admin.createNewPost( { title: 'More From Seller Test' } );
-		await editor.insertBlock( {
-			name: 'the-another/blocks-for-dokan-more-from-seller',
-		} );
-
-		const block = editor.canvas.locator(
-			'.wp-block-the-another-blocks-for-dokan-more-from-seller'
-		);
-
-		await expect( block ).toBeVisible();
-		await expect( block ).toContainText( 'More from Seller' );
-	} );
-} );
-
-test.describe( 'Product Vendor Info Block', () => {
-	test( 'displays placeholder in editor', async ( {
-		admin,
-		editor,
-	} ) => {
-		await admin.createNewPost( { title: 'Product Vendor Info Test' } );
-		await editor.insertBlock( {
-			name: 'the-another/blocks-for-dokan-product-vendor-info',
-		} );
-
-		const block = editor.canvas.locator(
-			'.wp-block-the-another-blocks-for-dokan-product-vendor-info'
-		);
-
-		await expect( block ).toBeVisible();
-	} );
-} );
-
-test.describe( 'Store Tabs Block', () => {
-	test( 'displays tabs preview in editor', async ( {
-		admin,
-		editor,
-	} ) => {
-		await admin.createNewPost( { title: 'Store Tabs Test' } );
-		await editor.insertBlock( {
-			name: 'the-another/blocks-for-dokan-vendor-store-tabs',
-		} );
-
-		const block = editor.canvas.locator(
-			'.wp-block-the-another-blocks-for-dokan-vendor-store-tabs'
-		);
-
-		await expect( block ).toBeVisible();
-		await expect( block ).toContainText( 'Products' );
-	} );
-} );
-
-test.describe( 'Store Sidebar Block', () => {
-	test( 'displays placeholder in editor', async ( {
-		admin,
-		editor,
-	} ) => {
-		await admin.createNewPost( { title: 'Store Sidebar Test' } );
-		await editor.insertBlock( {
-			name: 'the-another/blocks-for-dokan-vendor-store-sidebar',
-		} );
-
-		const block = editor.canvas.locator(
-			'.wp-block-the-another-blocks-for-dokan-vendor-store-sidebar'
-		);
-
-		await expect( block ).toBeVisible();
-		await expect( block ).toContainText( 'Vendor Store Sidebar' );
-	} );
-} );
-
-test.describe( 'Contact Form Block', () => {
-	test( 'displays placeholder in editor', async ( {
-		admin,
-		editor,
-	} ) => {
-		await admin.createNewPost( { title: 'Contact Form Test' } );
-		await editor.insertBlock( {
-			name: 'the-another/blocks-for-dokan-vendor-contact-form',
-		} );
-
-		const block = editor.canvas.locator(
-			'.wp-block-the-another-blocks-for-dokan-vendor-contact-form'
-		);
-
-		await expect( block ).toBeVisible();
-		await expect( block ).toContainText( 'Contact Form' );
-	} );
-} );
-
-test.describe( 'Store Terms & Conditions Block', () => {
-	test( 'displays placeholder in editor', async ( {
-		admin,
-		editor,
-	} ) => {
-		await admin.createNewPost( { title: 'Terms Test' } );
-		await editor.insertBlock( {
-			name: 'the-another/blocks-for-dokan-vendor-store-terms-conditions',
-		} );
-
-		const block = editor.canvas.locator(
-			'.wp-block-the-another-blocks-for-dokan-vendor-store-terms-conditions'
-		);
-
-		await expect( block ).toBeVisible();
-		await expect( block ).toContainText( 'Terms & Conditions' );
 	} );
 } );

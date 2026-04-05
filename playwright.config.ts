@@ -11,6 +11,7 @@ export default defineConfig( {
 	testDir: './e2e',
 	fullyParallel: false,
 	forbidOnly: !! process.env.CI,
+	timeout: process.env.CI ? 60_000 : 30_000,
 	retries: 1,
 	workers: 1,
 	reporter: 'list',
@@ -20,6 +21,18 @@ export default defineConfig( {
 		screenshot: 'only-on-failure',
 		video: 'on',
 	},
+	projects: [
+		{
+			name: 'setup',
+			testMatch: '*.setup.ts',
+			retries: 0,
+		},
+		{
+			name: 'default',
+			testMatch: '*.spec.ts',
+			dependencies: [ 'setup' ],
+		},
+	],
 	globalSetup: './e2e/global-setup.ts',
 	globalTeardown: './e2e/global-teardown.ts',
 	webServer: {
