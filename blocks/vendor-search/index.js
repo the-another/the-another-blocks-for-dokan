@@ -18,6 +18,7 @@ import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import metadata from './block.json';
 import './editor.scss';
+import '../_shared/style.scss';
 import './style.scss';
 
 /**
@@ -55,24 +56,8 @@ function Edit( { attributes, setAttributes } ) {
 		buttonTextColor = '',
 	} = attributes;
 
-	// Button style object for preview (reusable for all buttons).
+	// Button style object for preview (user-chosen color overrides only).
 	const buttonStyle = {};
-	// Add button size padding.
-	switch ( buttonSize ) {
-		case 'small':
-			buttonStyle.padding = '0.375rem 1rem';
-			buttonStyle.fontSize = '0.875rem';
-			break;
-		case 'large':
-			buttonStyle.padding = '0.75rem 2rem';
-			buttonStyle.fontSize = '1.125rem';
-			break;
-		default: // medium
-			buttonStyle.padding = '0.5rem 1.5rem';
-			buttonStyle.fontSize = '1rem';
-			break;
-	}
-	// Add button colors.
 	if ( buttonBackgroundColor ) {
 		buttonStyle.backgroundColor = buttonBackgroundColor;
 	}
@@ -80,9 +65,10 @@ function Edit( { attributes, setAttributes } ) {
 		buttonStyle.color = buttonTextColor;
 	}
 
-	const buttonClasses = [ 'dokan-btn', 'dokan-btn-theme' ];
-	if ( buttonSize && 'medium' !== buttonSize ) {
-		buttonClasses.push( 'dokan-btn-' + buttonSize );
+	// Button classes — colors from wp-element-button / theme, sizes from CSS.
+	const buttonClasses = [ 'wp-element-button', 'theabd--btn' ];
+	if ( buttonSize ) {
+		buttonClasses.push( 'theabd--btn-' + buttonSize );
 	}
 
 	return (

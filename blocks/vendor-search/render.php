@@ -62,20 +62,16 @@ function theabd_render_vendor_search_block( array $attributes, string $content, 
 		)
 	);
 
-	// Generate button classes and styles (reusable for all buttons).
-	$button_classes = array( 'theabd--btn', 'theabd--btn-theme' );
-	if ( ! empty( $button_size ) && 'medium' !== $button_size ) {
-		$button_classes[] = 'dokan-btn-' . esc_attr( $button_size );
+	// Generate button classes (colors from wp-element-button / theme).
+	$button_classes = array( 'wp-element-button', 'theabd--btn' );
+	if ( ! empty( $button_size ) ) {
+		$button_classes[] = 'theabd--btn-' . esc_attr( $button_size );
 	}
 
-	$button_style = match ( $button_size ) {
-		'small' => 'padding: 0.375rem 1rem; font-size: 0.875rem;',
-		'large' => 'padding: 0.75rem 2rem; font-size: 1.125rem;',
-		default => 'padding: 0.5rem 1.5rem; font-size: 1rem;',
-	};
-	// Add button colors.
+	// User-chosen color overrides (inline styles take priority over theme).
+	$button_style = '';
 	if ( ! empty( $button_bg_color ) ) {
-		$button_style .= ' background-color: ' . esc_attr( $button_bg_color ) . ';';
+		$button_style .= 'background-color: ' . esc_attr( $button_bg_color ) . ';';
 	}
 	if ( ! empty( $button_text_color ) ) {
 		$button_style .= ' color: ' . esc_attr( $button_text_color ) . ';';
@@ -141,7 +137,7 @@ function theabd_render_vendor_search_block( array $attributes, string $content, 
 							}
 							?>
 							<label><?php echo esc_html( $sort_by_label ); ?></label>
-							<select name="stores_orderby" id="stores_orderby" aria-label="<?php echo esc_attr( $sort_by_label ); ?>">
+							<select name="stores_orderby" id="stores_orderby" class="theabd--form-control" aria-label="<?php echo esc_attr( $sort_by_label ); ?>">
 								<?php foreach ( $sort_by_options as $key => $label ) : ?>
 									<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $sort_by, $key ); ?>>
 										<?php echo esc_html( $label ); ?>
@@ -177,7 +173,7 @@ function theabd_render_vendor_search_block( array $attributes, string $content, 
 						<label for="dokan-seller-search" class="screen-reader-text"><?php echo esc_html( $search_placeholder ); ?></label>
 						<input type="search"
 							id="dokan-seller-search"
-							class="theabd--vendor-search-input theabd--vendor-search-input"
+							class="theabd--form-control theabd--vendor-search-input"
 							name="dokan_seller_search"
 							value="<?php echo esc_attr( $search_query ); ?>"
 							placeholder="<?php echo esc_attr( $search_placeholder ); ?>" />
@@ -231,7 +227,7 @@ function theabd_render_vendor_search_block( array $attributes, string $content, 
 								$wc_countries  = WC()->countries->get_countries();
 								$wc_all_states = WC()->countries->get_states();
 								?>
-								<select name="dokan_store_location" class="theabd--store-filter-select">
+								<select name="dokan_store_location" class="theabd--form-control theabd--store-filter-select">
 									<option value=""><?php echo esc_html__( 'All Locations', 'another-blocks-for-dokan' ); ?></option>
 									<?php foreach ( $country_states as $cc => $states ) : ?>
 										<?php
@@ -261,7 +257,7 @@ function theabd_render_vendor_search_block( array $attributes, string $content, 
 						<?php if ( $enable_rating_filter ) : ?>
 							<div class="theabd--store-filter-field">
 								<label><?php echo esc_html__( 'Minimum Rating:', 'another-blocks-for-dokan' ); ?></label>
-								<select name="dokan_store_rating" class="theabd--store-filter-select">
+								<select name="dokan_store_rating" class="theabd--form-control theabd--store-filter-select">
 									<option value=""><?php echo esc_html__( 'All Ratings', 'another-blocks-for-dokan' ); ?></option>
 									<option value="5" <?php selected( isset( $_GET['dokan_store_rating'] ) ? sanitize_text_field( wp_unslash( $_GET['dokan_store_rating'] ) ) : '', '5' ); ?>>5 <?php echo esc_html__( 'Stars', 'another-blocks-for-dokan' ); ?></option><?php // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
 									<option value="4" <?php selected( isset( $_GET['dokan_store_rating'] ) ? sanitize_text_field( wp_unslash( $_GET['dokan_store_rating'] ) ) : '', '4' ); ?>>4+ <?php echo esc_html__( 'Stars', 'another-blocks-for-dokan' ); ?></option><?php // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
@@ -283,7 +279,7 @@ function theabd_render_vendor_search_block( array $attributes, string $content, 
 										'selected'         => $selected_category,
 										'show_option_none' => __( 'All Categories', 'another-blocks-for-dokan' ),
 										'value_field'      => 'slug',
-										'class'            => 'theabd--store-filter-select',
+										'class'            => 'theabd--form-control theabd--store-filter-select',
 									)
 								);
 								?>

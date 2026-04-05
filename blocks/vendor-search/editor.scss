@@ -218,15 +218,6 @@
 		white-space: nowrap;
 		text-decoration: none;
 
-		&.theabd--btn-theme {
-			background-color: #0073aa;
-			color: #fff;
-
-			&:hover:not(:disabled) {
-				background-color: #005a87;
-			}
-		}
-
 		// Button text wrapper for icon customization.
 		// Icons can be added via CSS ::before/::after
 		// or by adding elements inside the button.

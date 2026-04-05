@@ -18,35 +18,49 @@
 		margin-bottom: 1em;
 	}
 
-	// Input and textarea styling
-	.theabd--form-control,
+	// Input and textarea styling.
+	// Mirrors _shared-forms.scss form-control styles (can't use @include here
+	// because each block's style.scss compiles in its own SCSS context).
 	input[type="text"],
 	input[type="email"],
 	textarea {
 		width: 100%;
-		padding: 8px 12px;
-		border: 1px solid #ddd;
-		border-radius: 4px;
-		font-size: 14px;
+		padding: 0.625rem 0.75rem;
+		border: 1px solid rgba(0, 0, 0, 0.25);
+		border-radius: 6px;
 		line-height: 1.5;
 		box-sizing: border-box;
+		transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+		@supports (color: color-mix(in srgb, red, blue)) {
+			border-color: color-mix(in srgb, currentcolor 25%, transparent);
+		}
 
 		&:focus {
-			border-color: #f05025;
 			outline: none;
-			box-shadow: 0 0 0 1px #f05025;
+			box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.15);
+
+			@supports (color: color-mix(in srgb, red, blue)) {
+				box-shadow: 0 0 0 3px color-mix(in srgb, currentcolor 15%, transparent);
+			}
+		}
+
+		&:hover:not(:focus):not(:disabled) {
+			border-color: rgba(0, 0, 0, 0.4);
+
+			@supports (color: color-mix(in srgb, red, blue)) {
+				border-color: color-mix(in srgb, currentcolor 40%, transparent);
+			}
 		}
 	}
 
-	/* stylelint-disable-next-line no-descending-specificity */
-	textarea.theabd--textarea,
 	/* stylelint-disable-next-line no-descending-specificity */
 	textarea {
 		resize: vertical;
 		min-height: 120px;
 	}
 
-	// Privacy policy text
+	// Privacy policy text.
 	.theabd--privacy-policy-text {
 		margin: 1em 0;
 		padding: 10px;
@@ -54,31 +68,6 @@
 		border-radius: 4px;
 		font-size: 13px;
 		color: #666;
-	}
-
-	// Submit button
-	.theabd--btn {
-		display: inline-block;
-		padding: 10px 20px;
-		font-size: 14px;
-		font-weight: 500;
-		line-height: 1.5;
-		text-align: center;
-		white-space: nowrap;
-		vertical-align: middle;
-		cursor: pointer;
-		border: none;
-		border-radius: 4px;
-		transition: background-color 0.15s ease-in-out;
-	}
-
-	.theabd--btn-theme {
-		color: #fff;
-		background-color: #f05025;
-
-		&:hover {
-			background-color: #d9451d;
-		}
 	}
 
 	.theabd--right {

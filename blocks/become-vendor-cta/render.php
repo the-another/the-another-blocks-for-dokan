@@ -57,7 +57,7 @@ function theabd_render_become_vendor_cta_block( array $attributes, string $conte
 					<p><?php echo esc_html( $description ); ?></p>
 				</div>
 				<div class="theabd--w4 theabd--right-content">
-					<a href="<?php echo esc_url( $button_link ); ?>" class="theabd--btn theabd--btn-primary">
+					<a href="<?php echo esc_url( $button_link ); ?>" class="wp-element-button theabd--btn">
 						<?php echo esc_html( $button_text ); ?>
 					</a>
 				</div>

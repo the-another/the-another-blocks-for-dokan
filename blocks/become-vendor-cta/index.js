@@ -85,7 +85,7 @@ function Edit( { attributes, setAttributes } ) {
 							<div className="theabd--w4 theabd--right-content">
 								<button
 									type="button"
-									className="theabd--btn theabd--btn-primary"
+									className="wp-element-button theabd--btn"
 								>
 									{ buttonText }
 								</button>
