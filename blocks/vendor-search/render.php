@@ -198,9 +198,62 @@ function theabd_render_vendor_search_block( array $attributes, string $content, 
 						<?php if ( $enable_location_filter ) : ?>
 							<div class="theabd--store-filter-field">
 								<label><?php echo esc_html__( 'Location:', 'another-blocks-for-dokan' ); ?></label>
+								<?php
+								// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+								$selected_location = isset( $_GET['dokan_store_location'] ) ? sanitize_text_field( wp_unslash( $_GET['dokan_store_location'] ) ) : '';
+
+								// Build country → states hierarchy from all vendor profiles.
+								$seller_ids = get_users(
+									array(
+										'role'   => 'seller',
+										'fields' => 'ID',
+									)
+								);
+
+								$country_states = array();
+								foreach ( $seller_ids as $seller_id ) {
+									$profile      = get_user_meta( $seller_id, 'dokan_profile_settings', true );
+									$country_code = $profile['address']['country'] ?? '';
+									$state_code   = $profile['address']['state'] ?? '';
+									if ( empty( $country_code ) ) {
+										continue;
+									}
+									if ( ! isset( $country_states[ $country_code ] ) ) {
+										$country_states[ $country_code ] = array();
+									}
+									if ( ! empty( $state_code ) ) {
+										$country_states[ $country_code ][ $state_code ] = true;
+									}
+								}
+								ksort( $country_states );
+
+								// Resolve country and state names via WooCommerce.
+								$wc_countries  = WC()->countries->get_countries();
+								$wc_all_states = WC()->countries->get_states();
+								?>
 								<select name="dokan_store_location" class="theabd--store-filter-select">
 									<option value=""><?php echo esc_html__( 'All Locations', 'another-blocks-for-dokan' ); ?></option>
-									<!-- Location options would be populated dynamically -->
+									<?php foreach ( $country_states as $cc => $states ) : ?>
+										<?php
+										$country_name = $wc_countries[ $cc ] ?? $cc;
+										$state_names  = $wc_all_states[ $cc ] ?? array();
+										ksort( $states );
+										?>
+										<optgroup label="<?php echo esc_attr( $country_name ); ?>">
+											<option value="<?php echo esc_attr( $cc ); ?>" <?php selected( $selected_location, $cc ); ?>>
+												<?php
+												/* translators: %s: country name */
+												echo esc_html( sprintf( __( 'All %s', 'another-blocks-for-dokan' ), $country_name ) );
+												?>
+											</option>
+											<?php foreach ( $states as $sc => $__ ) : ?>
+												<?php $state_name = $state_names[ $sc ] ?? $sc; ?>
+												<option value="<?php echo esc_attr( $cc . ':' . $sc ); ?>" <?php selected( $selected_location, $cc . ':' . $sc ); ?>>
+													<?php echo esc_html( $state_name ); ?>
+												</option>
+											<?php endforeach; ?>
+										</optgroup>
+									<?php endforeach; ?>
 								</select>
 							</div>
 						<?php endif; ?>

@@ -399,10 +399,13 @@ function Edit( { attributes, setAttributes } ) {
 /**
  * Store Query Loop block save component.
  *
- * @return {null} Always null for server-side blocks.
+ * Must return InnerBlocks.Content so inner blocks (search, card, pagination)
+ * are serialized to post content and available via $block->inner_blocks on the frontend.
+ *
+ * @return {JSX.Element} Inner blocks content.
  */
 function Save() {
-	return null;
+	return <InnerBlocks.Content />;
 }
 
 registerBlockType( metadata.name, {

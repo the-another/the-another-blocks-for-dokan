@@ -12,6 +12,7 @@ import {
 	TextControl,
 	SelectControl,
 	ColorPalette,
+	ToggleControl,
 } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
@@ -123,6 +124,43 @@ function Edit( { attributes, setAttributes } ) {
 							}
 						/>
 					) }
+				</PanelBody>
+
+				<PanelBody
+					title={ __( 'Filter Settings', 'dokan-blocks' ) }
+					initialOpen={ false }
+				>
+					<ToggleControl
+						label={ __( 'Enable Location Filter', 'dokan-blocks' ) }
+						help={ __(
+							'Show a country/state dropdown to filter stores by location.',
+							'dokan-blocks'
+						) }
+						checked={ enableLocationFilter }
+						onChange={ ( value ) =>
+							setAttributes( {
+								enableLocationFilter: value,
+							} )
+						}
+					/>
+					<ToggleControl
+						label={ __( 'Enable Rating Filter', 'dokan-blocks' ) }
+						checked={ enableRatingFilter }
+						onChange={ ( value ) =>
+							setAttributes( {
+								enableRatingFilter: value,
+							} )
+						}
+					/>
+					<ToggleControl
+						label={ __( 'Enable Category Filter', 'dokan-blocks' ) }
+						checked={ enableCategoryFilter }
+						onChange={ ( value ) =>
+							setAttributes( {
+								enableCategoryFilter: value,
+							} )
+						}
+					/>
 				</PanelBody>
 
 				<PanelBody title={ __( 'Button Settings', 'dokan-blocks' ) }>

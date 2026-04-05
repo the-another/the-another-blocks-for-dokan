@@ -4,7 +4,7 @@ Tags: dokan, woocommerce, multivendor, blocks, fse, full-site-editing, gutenberg
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 8.3
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,7 +32,7 @@ The latest stable version of Dokan is recommended.
 
 = What version of PHP is required? =
 
-PHP 7.4 or higher is required.
+PHP 8.3 or higher is required.
 
 == Changelog ==
 
@@ -40,6 +40,12 @@ PHP 7.4 or higher is required.
 
 
 
+
+
+= 1.0.5 - 2026-04-05 =
+* Fix: Vendor Search block now renders on the frontend when added inside the Vendor Query Loop
+* Add: Location filter with country/state dropdown to Vendor Search block
+* Add: Filter Settings panel in the editor for toggling location, rating, and category filters
 
 = 1.0.4 - 2026-04-05 =
 * Add Depot.dev CI workflow support
