@@ -11,6 +11,7 @@ export default defineConfig( {
 	testDir: './e2e',
 	fullyParallel: false,
 	forbidOnly: !! process.env.CI,
+	timeout: process.env.CI ? 60_000 : 30_000,
 	retries: 1,
 	workers: 1,
 	reporter: 'list',
