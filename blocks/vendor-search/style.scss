@@ -7,7 +7,7 @@
 
 .wp-block-the-another-blocks-for-dokan-vendor-search,
 .theabd--vendor-search {
-	margin-bottom: 2rem;
+	margin-bottom: 0;
 
 	// Top filter row - always visible.
 	.theabd--vendor-query-looping-filter-wrap {
@@ -123,7 +123,8 @@
 
 	// Collapsible filter form.
 	.theabd--vendor-search-filter-form {
-		margin-top: 0.5rem;
+		margin-top: 0;
+		margin-bottom: 1rem;
 		padding: 1.5rem;
 		background: #fff;
 		border: 1px solid #e0e0e0;
