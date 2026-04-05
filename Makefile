@@ -1,4 +1,4 @@
-.PHONY: install require update dump-autoload lint format test test-unit test-integration test-coverage docker-build docker-run docker-shell all clean
+.PHONY: install require update dump-autoload lint format test test-unit test-integration test-coverage docker-build docker-run docker-shell release all clean
 
 # Docker image name
 DOCKER_IMAGE = another-blocks-dokan-runner:latest
@@ -61,6 +61,10 @@ docker-run:
 # Open shell in Docker container
 docker-shell:
 	docker run -it --rm -v $(PWD):/app $(DOCKER_IMAGE) sh
+
+# Package plugin for distribution (runs composer build in Docker, npm locally)
+release: install
+	npm run plugin-zip
 
 # Run all: install, lint, test (lint and test run in isolated environment)
 all: install lint test

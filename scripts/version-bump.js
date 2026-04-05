@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
 
 // Configuration
 const MAIN_PLUGIN_FILE = 'another-blocks-for-dokan.php';
@@ -93,5 +94,24 @@ readmeContent = readmeContent.replace(
 
 fs.writeFileSync(readmeFile, readmeContent, 'utf8');
 console.log('✓ Updated readme.txt');
+
+// Sync lock files with updated versions
+const rootDir = path.join(__dirname, '..');
+
+console.log('\nSyncing lock files...');
+
+try {
+  execSync('npm install --package-lock-only', { cwd: rootDir, stdio: 'inherit' });
+  console.log('✓ Updated package-lock.json');
+} catch {
+  console.warn('⚠ Failed to update package-lock.json');
+}
+
+try {
+  execSync('composer update --lock', { cwd: rootDir, stdio: 'inherit' });
+  console.log('✓ Updated composer.lock');
+} catch {
+  console.warn('⚠ Failed to update composer.lock');
+}
 
 console.log(`\nVersion ${newVersion} update complete!`);

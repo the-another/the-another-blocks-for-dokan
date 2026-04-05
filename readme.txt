@@ -4,7 +4,7 @@ Tags: dokan, woocommerce, multivendor, blocks, fse, full-site-editing, gutenberg
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 8.3
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,7 +41,9 @@ PHP 8.3 or higher is required.
 
 
 
-
+= 1.0.7 - 2026-04-06 =
+* Add: GitHub Actions release workflow for automated plugin packaging
+* Chore: Version bump syncs lock files (package-lock.json, composer.lock)
 
 = 1.0.6 - 2026-04-05 =
 * Fix: Unified form element styles across all blocks for consistent theme integration
