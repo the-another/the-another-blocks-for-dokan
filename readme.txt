@@ -4,7 +4,7 @@ Tags: dokan, woocommerce, multivendor, blocks, fse, full-site-editing, gutenberg
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 8.3
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,6 +39,10 @@ PHP 7.4 or higher is required.
 
 
 
+
+
+= 1.0.4 - 2026-04-05 =
+* Add Depot.dev CI workflow support
 
 = 1.0.3 - 2026-02-18 =
 * Version bump
