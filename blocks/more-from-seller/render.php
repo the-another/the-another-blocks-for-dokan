@@ -121,7 +121,7 @@ function theabd_render_more_from_seller_block( array $attributes, string $conten
 
 			<?php if ( ! empty( $vendor_data['shop_url'] ) ) : ?>
 				<div class="theabd--more-from-vendor-footer">
-					<a href="<?php echo esc_url( $vendor_data['shop_url'] ); ?>" class="theabd--btn theabd--btn-theme">
+					<a href="<?php echo esc_url( $vendor_data['shop_url'] ); ?>" class="wp-element-button theabd--btn">
 						<?php
 						echo esc_html(
 							sprintf(
