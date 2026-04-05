@@ -6,6 +6,10 @@ on:
     branches: [master]
   workflow_dispatch:
 
+concurrency:
+  group: release
+  cancel-in-progress: false
+
 permissions:
   contents: write
 
@@ -16,6 +20,8 @@ jobs:
       github.event_name == 'workflow_dispatch' ||
       (github.event.pull_request.merged == true)
     uses: ./.github/workflows/ci.yml
+    with:
+      ref: master
 
   release:
     name: Build & Release
