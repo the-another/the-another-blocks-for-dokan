@@ -24,7 +24,7 @@
 	box-sizing: border-box;
 
 	@supports (color: color-mix(in srgb, red, blue)) {
-		border-color: color-mix(in srgb, currentColor 25%, transparent);
+		border-color: color-mix(in srgb, currentcolor 25%, transparent);
 	}
 
 	&:focus {
@@ -32,7 +32,7 @@
 		box-shadow: 0 0 0 var(--theabd-focus-ring-width) rgba(0, 0, 0, var(--theabd-focus-ring-opacity));
 
 		@supports (color: color-mix(in srgb, red, blue)) {
-			box-shadow: 0 0 0 var(--theabd-focus-ring-width) color-mix(in srgb, currentColor 15%, transparent);
+			box-shadow: 0 0 0 var(--theabd-focus-ring-width) color-mix(in srgb, currentcolor 15%, transparent);
 		}
 	}
 
@@ -40,7 +40,7 @@
 		border-color: rgba(0, 0, 0, 0.4);
 
 		@supports (color: color-mix(in srgb, red, blue)) {
-			border-color: color-mix(in srgb, currentColor 40%, transparent);
+			border-color: color-mix(in srgb, currentcolor 40%, transparent);
 		}
 	}
 }
@@ -62,6 +62,7 @@
 // .theabd--form-control (inputs, selects, textareas)
 // ---------------------------------------------------------------------------
 .theabd--form-control {
+
 	@include theabd-form-control-styles;
 }
 

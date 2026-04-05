@@ -116,7 +116,7 @@
 				transition: all 0.2s ease;
 
 				@supports (color: color-mix(in srgb, red, blue)) {
-					border-color: color-mix(in srgb, currentColor 15%, transparent);
+					border-color: color-mix(in srgb, currentcolor 15%, transparent);
 				}
 
 				&:hover {
@@ -124,8 +124,8 @@
 					background: rgba(0, 0, 0, 0.04);
 
 					@supports (color: color-mix(in srgb, red, blue)) {
-						border-color: color-mix(in srgb, currentColor 30%, transparent);
-						background: color-mix(in srgb, currentColor 4%, transparent);
+						border-color: color-mix(in srgb, currentcolor 30%, transparent);
+						background: color-mix(in srgb, currentcolor 4%, transparent);
 					}
 				}
 			}
@@ -139,8 +139,8 @@
 				border-color: #333;
 
 				@supports (color: color-mix(in srgb, red, blue)) {
-					background: color-mix(in srgb, currentColor 85%, transparent);
-					border-color: color-mix(in srgb, currentColor 85%, transparent);
+					background: color-mix(in srgb, currentcolor 85%, transparent);
+					border-color: color-mix(in srgb, currentcolor 85%, transparent);
 				}
 
 				&:hover {
@@ -148,8 +148,8 @@
 					border-color: #111;
 
 					@supports (color: color-mix(in srgb, red, blue)) {
-						background: currentColor;
-						border-color: currentColor;
+						background: currentcolor;
+						border-color: currentcolor;
 					}
 				}
 			}

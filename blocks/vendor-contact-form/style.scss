@@ -33,7 +33,7 @@
 		transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
 		@supports (color: color-mix(in srgb, red, blue)) {
-			border-color: color-mix(in srgb, currentColor 25%, transparent);
+			border-color: color-mix(in srgb, currentcolor 25%, transparent);
 		}
 
 		&:focus {
@@ -41,7 +41,7 @@
 			box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.15);
 
 			@supports (color: color-mix(in srgb, red, blue)) {
-				box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 15%, transparent);
+				box-shadow: 0 0 0 3px color-mix(in srgb, currentcolor 15%, transparent);
 			}
 		}
 
@@ -49,7 +49,7 @@
 			border-color: rgba(0, 0, 0, 0.4);
 
 			@supports (color: color-mix(in srgb, red, blue)) {
-				border-color: color-mix(in srgb, currentColor 40%, transparent);
+				border-color: color-mix(in srgb, currentcolor 40%, transparent);
 			}
 		}
 	}
