@@ -36,6 +36,9 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 	// Get search query from URL parameter (from store-search input).
 	$dokan_seller_search = isset( $_GET['dokan_seller_search'] ) ? sanitize_text_field( wp_unslash( $_GET['dokan_seller_search'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
+	// Get location filter from URL parameter (from store-search location dropdown).
+	$dokan_store_location = isset( $_GET['dokan_store_location'] ) ? sanitize_text_field( wp_unslash( $_GET['dokan_store_location'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
 	// Get current page for pagination.
 	$paged = get_query_var( 'paged' ) ? absint( get_query_var( 'paged' ) ) : 1;
 
@@ -75,6 +78,32 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 			'value'   => $dokan_seller_search,
 			'compare' => 'LIKE',
 		);
+	}
+
+	// Add location filter if provided.
+	// Format: "CC" for country-only or "CC:STATE" for country+state (values stored in serialized dokan_profile_settings).
+	if ( ! empty( $dokan_store_location ) ) {
+		if ( str_contains( $dokan_store_location, ':' ) ) {
+			// Country + state filter.
+			list( $filter_country, $filter_state ) = explode( ':', $dokan_store_location, 2 );
+			$user_args['meta_query'][]             = array(
+				'key'     => 'dokan_profile_settings',
+				'value'   => '"country";s:' . strlen( $filter_country ) . ':"' . $filter_country . '"',
+				'compare' => 'LIKE',
+			);
+			$user_args['meta_query'][]             = array(
+				'key'     => 'dokan_profile_settings',
+				'value'   => '"state";s:' . strlen( $filter_state ) . ':"' . $filter_state . '"',
+				'compare' => 'LIKE',
+			);
+		} else {
+			// Country-only filter.
+			$user_args['meta_query'][] = array(
+				'key'     => 'dokan_profile_settings',
+				'value'   => '"country";s:' . strlen( $dokan_store_location ) . ':"' . $dokan_store_location . '"',
+				'compare' => 'LIKE',
+			);
+		}
 	}
 
 	if ( $show_featured_only ) {
