@@ -85,7 +85,7 @@ test.describe( 'Vendor Query Loop – frontend rendering', () => {
 		await lastPageLink.click();
 		await page.waitForLoadState( 'load' );
 
-		expect( page.url() ).toMatch( /paged=/ );
+		expect( page.url() ).toMatch( /paged=|\/page\/\d+/ );
 
 		const cardsLastPage = page.locator( '.theabd--single-vendor' );
 		await expect( cardsLastPage ).toHaveCount(
