@@ -293,7 +293,7 @@ function Edit( { attributes, setAttributes } ) {
 							setAttributes( { perPage: value } )
 						}
 						min={ 1 }
-						max={ 50 }
+						max={ 100 }
 					/>
 					<SelectControl
 						label={ __( 'Order By', 'dokan-blocks' ) }
