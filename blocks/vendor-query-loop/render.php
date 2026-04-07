@@ -31,24 +31,34 @@ function theabd_vendor_query_loop_compute_query_id( int $post_id, array $attrs )
 /**
  * Build WP_User_Query args for the vendor query loop.
  *
- * Pure function — reads $_GET for sort/search/location filters but has no side effects.
+ * Pure function — defaults to reading sort/search/location filters from $_GET when
+ * no explicit $filters array is supplied. Has no side effects.
  *
- * @param array<string, mixed> $attributes Block attributes.
- * @param int                  $paged      Page number (1-based).
+ * @param array<string, mixed>       $attributes Block attributes.
+ * @param int                        $paged      Page number (1-based).
+ * @param array<string, string>|null $filters   Optional explicit filters; defaults to $_GET reads.
  * @return array<string, mixed>
  */
-function theabd_vendor_query_loop_build_query_args( array $attributes, int $paged ): array {
+function theabd_vendor_query_loop_build_query_args( array $attributes, int $paged, ?array $filters = null ): array {
 	$per_page           = isset( $attributes['perPage'] ) ? absint( $attributes['perPage'] ) : 12;
 	$order_by           = isset( $attributes['orderBy'] ) ? sanitize_text_field( $attributes['orderBy'] ) : 'name';
 	$show_featured_only = isset( $attributes['showFeaturedOnly'] ) && $attributes['showFeaturedOnly'];
 
-	$stores_orderby = isset( $_GET['stores_orderby'] ) ? sanitize_text_field( wp_unslash( $_GET['stores_orderby'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	if ( null === $filters ) {
+		$filters = array(
+			'stores_orderby'       => isset( $_GET['stores_orderby'] ) ? sanitize_text_field( wp_unslash( $_GET['stores_orderby'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			'dokan_seller_search'  => isset( $_GET['dokan_seller_search'] ) ? sanitize_text_field( wp_unslash( $_GET['dokan_seller_search'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			'dokan_store_location' => isset( $_GET['dokan_store_location'] ) ? sanitize_text_field( wp_unslash( $_GET['dokan_store_location'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		);
+	}
+
+	$stores_orderby = isset( $filters['stores_orderby'] ) ? (string) $filters['stores_orderby'] : '';
 	if ( ! empty( $stores_orderby ) ) {
 		$order_by = $stores_orderby;
 	}
 
-	$dokan_seller_search  = isset( $_GET['dokan_seller_search'] ) ? sanitize_text_field( wp_unslash( $_GET['dokan_seller_search'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-	$dokan_store_location = isset( $_GET['dokan_store_location'] ) ? sanitize_text_field( wp_unslash( $_GET['dokan_store_location'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$dokan_seller_search  = isset( $filters['dokan_seller_search'] ) ? (string) $filters['dokan_seller_search'] : '';
+	$dokan_store_location = isset( $filters['dokan_store_location'] ) ? (string) $filters['dokan_store_location'] : '';
 
 	$wp_orderby = $order_by;
 	if ( 'date' === $order_by || 'most_recent' === $order_by ) {
@@ -349,6 +359,12 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 		$wrapper_args['data-per-page']     = (string) $per_page;
 		$wrapper_args['data-current-page'] = (string) $paged;
 		$wrapper_args['data-total-pages']  = (string) $total_pages;
+		$active_filters                    = array(
+			'stores_orderby'       => isset( $_GET['stores_orderby'] ) ? sanitize_text_field( wp_unslash( $_GET['stores_orderby'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			'dokan_seller_search'  => isset( $_GET['dokan_seller_search'] ) ? sanitize_text_field( wp_unslash( $_GET['dokan_seller_search'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			'dokan_store_location' => isset( $_GET['dokan_store_location'] ) ? sanitize_text_field( wp_unslash( $_GET['dokan_store_location'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		);
+		$wrapper_args['data-filters']      = (string) wp_json_encode( $active_filters );
 		$wrapper_args['data-attributes']   = (string) wp_json_encode(
 			array(
 				'perPage'          => $per_page,

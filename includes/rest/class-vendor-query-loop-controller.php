@@ -62,6 +62,11 @@ class Vendor_Query_Loop_Controller {
 						'required' => true,
 						'type'     => 'object',
 					),
+					'filters'    => array(
+						'required' => false,
+						'type'     => 'object',
+						'default'  => array(),
+					),
 				),
 			)
 		);
@@ -97,6 +102,20 @@ class Vendor_Query_Loop_Controller {
 	}
 
 	/**
+	 * Whitelist the filter values accepted from the client.
+	 *
+	 * @param array<string, mixed> $raw Raw filter object from the request.
+	 * @return array<string, string>
+	 */
+	private function sanitize_filters( array $raw ): array {
+		return array(
+			'stores_orderby'       => isset( $raw['stores_orderby'] ) ? sanitize_text_field( (string) $raw['stores_orderby'] ) : '',
+			'dokan_seller_search'  => isset( $raw['dokan_seller_search'] ) ? sanitize_text_field( (string) $raw['dokan_seller_search'] ) : '',
+			'dokan_store_location' => isset( $raw['dokan_store_location'] ) ? sanitize_text_field( (string) $raw['dokan_store_location'] ) : '',
+		);
+	}
+
+	/**
 	 * Handle a request for an additional page.
 	 *
 	 * @param \WP_REST_Request $request REST request.
@@ -106,6 +125,7 @@ class Vendor_Query_Loop_Controller {
 		$query_id = (string) $request->get_param( 'queryId' );
 		$page     = (int) $request->get_param( 'page' );
 		$attrs    = $this->sanitize_attributes( (array) $request->get_param( 'attributes' ) );
+		$filters  = $this->sanitize_filters( (array) $request->get_param( 'filters' ) );
 
 		// Ensure the render-time helpers are loaded — they live in the block render.php file.
 		if ( ! function_exists( 'theabd_vendor_query_loop_build_query_args' ) ) {
@@ -115,7 +135,7 @@ class Vendor_Query_Loop_Controller {
 			}
 		}
 
-		$user_args   = theabd_vendor_query_loop_build_query_args( $attrs, $page );
+		$user_args   = theabd_vendor_query_loop_build_query_args( $attrs, $page, $filters );
 		$user_query  = theabd_vendor_query_loop_run_query( $user_args );
 		$sellers     = $user_query->get_results();
 		$total_users = (int) $user_query->get_total();

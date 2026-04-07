@@ -17,9 +17,12 @@
 		var current =
 			parseInt( wrapper.getAttribute( 'data-current-page' ), 10 ) || 1;
 		var attrsRaw = wrapper.getAttribute( 'data-attributes' );
+		var filtersRaw = wrapper.getAttribute( 'data-filters' );
 		var attributes;
+		var filters;
 		try {
 			attributes = JSON.parse( attrsRaw || '{}' );
+			filters = JSON.parse( filtersRaw || '{}' );
 		} catch ( e ) {
 			return;
 		}
@@ -57,6 +60,7 @@
 						queryId: queryId,
 						page: nextPage,
 						attributes: attributes,
+						filters: filters,
 					},
 				} );
 			} else {
@@ -67,7 +71,9 @@
 					'&page=' +
 					nextPage +
 					'&attributes=' +
-					encodeURIComponent( JSON.stringify( attributes ) );
+					encodeURIComponent( JSON.stringify( attributes ) ) +
+					'&filters=' +
+					encodeURIComponent( JSON.stringify( filters ) );
 				request = fetch( url, { credentials: 'same-origin' } ).then(
 					function ( r ) {
 						return r.json();
