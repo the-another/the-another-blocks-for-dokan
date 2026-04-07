@@ -42,6 +42,10 @@
 			"type": "boolean",
 			"default": false
 		},
+		"enableInfiniteScroll": {
+			"type": "boolean",
+			"default": false
+		},
 		"previewVendor": {
 			"type": "object",
 			"default": null

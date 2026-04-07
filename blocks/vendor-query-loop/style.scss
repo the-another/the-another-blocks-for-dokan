@@ -164,4 +164,20 @@
 		font-size: 1rem;
 		margin: 0;
 	}
+
+	// Infinite-scroll sentinel (intersected to trigger the next page fetch).
+	.theabd--vendor-query-loop-sentinel {
+		height: 1px;
+		width: 100%;
+	}
+
+	// Visually-hidden status region used for aria-live announcements.
+	.theabd--vendor-query-loop-status {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip: rect(0 0 0 0);
+		white-space: nowrap;
+	}
 }

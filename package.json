@@ -33,6 +33,7 @@
     "readme.txt",
     "blocks/**/block.json",
     "blocks/**/render.php",
+    "blocks/**/view.js",
     "!blocks/**/index.js",
     "!blocks/**/editor.scss",
     "functions/**",

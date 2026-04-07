@@ -11,6 +11,7 @@ namespace The_Another\Plugin\Blocks_Dokan;
 use The_Another\Plugin\Blocks_Dokan\Container\Container;
 use The_Another\Plugin\Blocks_Dokan\Container\Hook_Manager;
 use The_Another\Plugin\Blocks_Dokan\Exceptions\Container_Exception;
+use The_Another\Plugin\Blocks_Dokan\Rest\Vendor_Query_Loop_Controller;
 use The_Another\Plugin\Blocks_Dokan\Templates\Block_Templates_Controller;
 
 // Exit if accessed directly.
@@ -127,6 +128,28 @@ final class Blocks {
 		// Enqueue block assets.
 		$this->hook_manager->register_action( 'enqueue_block_assets', array( $this, 'enqueue_block_assets' ) );
 		$this->hook_manager->register_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
+
+		// Register the vendor query loop infinite-scroll REST route.
+		$this->hook_manager->register_action(
+			'rest_api_init',
+			static function (): void {
+				( new Vendor_Query_Loop_Controller() )->register_routes();
+			}
+		);
+
+		// Register the vendor query loop infinite-scroll view script handle.
+		$this->hook_manager->register_action(
+			'init',
+			static function (): void {
+				wp_register_script(
+					'theabd-vendor-query-loop-view',
+					ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_URL . 'blocks/vendor-query-loop/view.js',
+					array( 'wp-api-fetch' ),
+					ANOTHER_BLOCKS_FOR_DOKAN_VERSION,
+					true
+				);
+			}
+		);
 	}
 
 	/**
