@@ -53,36 +53,32 @@
 			var apiFetch = window.wp && window.wp.apiFetch;
 			var request;
 
+			var payload = {
+				queryId: queryId,
+				postId: postId,
+				page: nextPage,
+				attributes: attributes,
+				filters: filters,
+			};
+
 			if ( apiFetch ) {
 				request = apiFetch( {
 					path: '/another-blocks-for-dokan/v1/vendor-query-loop',
-					method: 'GET',
-					data: {
-						queryId: queryId,
-						postId: postId,
-						page: nextPage,
-						attributes: attributes,
-						filters: filters,
-					},
+					method: 'POST',
+					data: payload,
 				} );
 			} else {
-				var url =
-					'/wp-json/another-blocks-for-dokan/v1/vendor-query-loop?' +
-					'queryId=' +
-					encodeURIComponent( queryId ) +
-					'&postId=' +
-					postId +
-					'&page=' +
-					nextPage +
-					'&attributes=' +
-					encodeURIComponent( JSON.stringify( attributes ) ) +
-					'&filters=' +
-					encodeURIComponent( JSON.stringify( filters ) );
-				request = fetch( url, { credentials: 'same-origin' } ).then(
-					function ( r ) {
-						return r.json();
+				request = fetch(
+					'/wp-json/another-blocks-for-dokan/v1/vendor-query-loop',
+					{
+						method: 'POST',
+						credentials: 'same-origin',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify( payload ),
 					}
-				);
+				).then( function ( r ) {
+					return r.json();
+				} );
 			}
 
 			request

@@ -365,8 +365,20 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 			'dokan_seller_search'  => isset( $_GET['dokan_seller_search'] ) ? sanitize_text_field( wp_unslash( $_GET['dokan_seller_search'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			'dokan_store_location' => isset( $_GET['dokan_store_location'] ) ? sanitize_text_field( wp_unslash( $_GET['dokan_store_location'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		);
-		$wrapper_args['data-filters']      = (string) wp_json_encode( $active_filters );
-		$wrapper_args['data-attributes']   = (string) wp_json_encode(
+		/**
+		 * Filter the request-time context forwarded to the infinite-scroll REST endpoint.
+		 *
+		 * Integrations that inject query args via the `theabd_store_list_query_args`
+		 * filter based on `get_query_var()` should add their query var values here so
+		 * the REST handler can re-set them before re-running the query.
+		 *
+		 * @since 1.1.0
+		 *
+		 * @param array<string, string> $active_filters Active filter values.
+		 */
+		$active_filters                  = apply_filters( 'theabd_vendor_query_loop_infinite_filters', $active_filters );
+		$wrapper_args['data-filters']    = (string) wp_json_encode( $active_filters );
+		$wrapper_args['data-attributes'] = (string) wp_json_encode(
 			array(
 				'perPage'          => $per_page,
 				'columns'          => $columns,

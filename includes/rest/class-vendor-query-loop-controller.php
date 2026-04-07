@@ -43,7 +43,7 @@ class Vendor_Query_Loop_Controller {
 			self::REST_NAMESPACE,
 			self::ROUTE,
 			array(
-				'methods'             => \WP_REST_Server::READABLE,
+				'methods'             => \WP_REST_Server::CREATABLE,
 				'permission_callback' => '__return_true',
 				'callback'            => array( $this, 'handle_request' ),
 				'args'                => array(
@@ -173,11 +173,25 @@ class Vendor_Query_Loop_Controller {
 	 * @return array<string, string>
 	 */
 	private function sanitize_filters( array $raw ): array {
-		return array(
+		$known = array(
 			'stores_orderby'       => isset( $raw['stores_orderby'] ) ? sanitize_text_field( (string) $raw['stores_orderby'] ) : '',
 			'dokan_seller_search'  => isset( $raw['dokan_seller_search'] ) ? sanitize_text_field( (string) $raw['dokan_seller_search'] ) : '',
 			'dokan_store_location' => isset( $raw['dokan_store_location'] ) ? sanitize_text_field( (string) $raw['dokan_store_location'] ) : '',
 		);
+
+		// Allow integrations to whitelist additional filter values forwarded from the
+		// `theabd_vendor_query_loop_infinite_filters` filter on the render side. Each
+		// extra value is sanitized as a plain string.
+		foreach ( $raw as $key => $value ) {
+			if ( isset( $known[ $key ] ) || ! is_string( $key ) ) {
+				continue;
+			}
+			if ( is_scalar( $value ) ) {
+				$known[ sanitize_key( $key ) ] = sanitize_text_field( (string) $value );
+			}
+		}
+
+		return $known;
 	}
 
 	/**
@@ -199,6 +213,22 @@ class Vendor_Query_Loop_Controller {
 			if ( file_exists( $render_file ) ) {
 				require_once $render_file;
 			}
+		}
+
+		// Re-inject forwarded values into the global query var bag so integrations
+		// hooked into `theabd_store_list_query_args` that read `get_query_var()`
+		// (e.g., aucteeno-nexus location routes reading `location_slug`) still see
+		// the same context they did at first render.
+		$known_filter_keys = array(
+			'stores_orderby'       => true,
+			'dokan_seller_search'  => true,
+			'dokan_store_location' => true,
+		);
+		foreach ( $filters as $filter_key => $filter_value ) {
+			if ( isset( $known_filter_keys[ $filter_key ] ) || '' === $filter_value ) {
+				continue;
+			}
+			set_query_var( $filter_key, $filter_value );
 		}
 
 		$user_args   = theabd_vendor_query_loop_build_query_args( $attrs, $page, $filters );
