@@ -135,6 +135,7 @@ function Edit( { attributes, setAttributes } ) {
 		displayLayout = 'grid',
 		orderBy = 'name',
 		showFeaturedOnly = false,
+		enableInfiniteScroll = false,
 	} = attributes;
 
 	// Fetch vendors from Dokan REST API
@@ -329,6 +330,22 @@ function Edit( { attributes, setAttributes } ) {
 						checked={ showFeaturedOnly }
 						onChange={ ( value ) =>
 							setAttributes( { showFeaturedOnly: value } )
+						}
+					/>
+					<ToggleControl
+						label={ __(
+							'Infinite Scroll',
+							'another-blocks-for-dokan'
+						) }
+						help={ __(
+							'Automatically load more vendors as the visitor scrolls. URL stays unchanged. When enabled, the pagination block is hidden.',
+							'another-blocks-for-dokan'
+						) }
+						checked={ enableInfiniteScroll }
+						onChange={ ( value ) =>
+							setAttributes( {
+								enableInfiniteScroll: value,
+							} )
 						}
 					/>
 				</PanelBody>
