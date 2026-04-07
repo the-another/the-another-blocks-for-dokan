@@ -39,7 +39,7 @@ function theabd_render_vendor_store_status_block( array $attributes, string $con
 	}
 
 	if ( empty( $vendor ) || empty( $vendor['id'] ) ) {
-		return '<span class="theabd--vendor-store-status theabd--store-open">' . esc_html__( 'Open Now', 'another-blocks-for-dokan' ) . '</span>';
+		return '<span class="theabd--vendor-store-status theabd--store-open">' . esc_html__( 'Open Now', 'theanother-blocks-for-dokan' ) . '</span>';
 	}
 
 	$vendor_id = absint( $vendor['id'] );
@@ -53,8 +53,8 @@ function theabd_render_vendor_store_status_block( array $attributes, string $con
 
 	// Get custom notices from vendor data.
 	$store_open_close = $vendor['store_open_close'] ?? array();
-	$open_notice      = $store_open_close['open_notice'] ?? __( 'Open Now', 'another-blocks-for-dokan' );
-	$close_notice     = $store_open_close['close_notice'] ?? __( 'Closed', 'another-blocks-for-dokan' );
+	$open_notice      = $store_open_close['open_notice'] ?? __( 'Open Now', 'theanother-blocks-for-dokan' );
+	$close_notice     = $store_open_close['close_notice'] ?? __( 'Closed', 'theanother-blocks-for-dokan' );
 
 	// Get wrapper attributes.
 	$status_class       = $is_store_open ? 'theabd--store-open' : 'theabd--store-closed';

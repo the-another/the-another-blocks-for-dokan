@@ -7,7 +7,7 @@
 	"icon": "grid-view",
 	"description": "Display grid/list of vendor stores with customizable layout.",
 	"keywords": [ "dokan", "vendor", "store", "list", "query", "loop" ],
-	"textdomain": "another-blocks-for-dokan",
+	"textdomain": "theanother-blocks-for-dokan",
 	"providesContext": {
 		"dokan/vendor": "previewVendor"
 	},
@@ -45,6 +45,10 @@
 		"enableInfiniteScroll": {
 			"type": "boolean",
 			"default": false
+		},
+		"infiniteScrollOffset": {
+			"type": "number",
+			"default": 400
 		},
 		"previewVendor": {
 			"type": "object",

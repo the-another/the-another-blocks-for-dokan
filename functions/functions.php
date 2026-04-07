@@ -6,6 +6,10 @@
  * @since 1.0.0
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use The_Another\Plugin\Blocks_Dokan\Blocks;
 use The_Another\Plugin\Blocks_Dokan\Container\Container;
 use The_Another\Plugin\Blocks_Dokan\Container\Hook_Manager;

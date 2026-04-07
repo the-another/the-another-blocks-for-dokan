@@ -81,6 +81,9 @@ const ALLOWED_BLOCKS = [
 	'the-another/blocks-for-dokan-vendor-card',
 	'the-another/blocks-for-dokan-vendor-query-pagination',
 	'the-another/blocks-for-dokan-vendor-search',
+	'core/paragraph',
+	'core/separator',
+	'core/spacer',
 ];
 
 /**
@@ -136,6 +139,7 @@ function Edit( { attributes, setAttributes } ) {
 		orderBy = 'name',
 		showFeaturedOnly = false,
 		enableInfiniteScroll = false,
+		infiniteScrollOffset = 400,
 	} = attributes;
 
 	// Fetch vendors from Dokan REST API
@@ -348,6 +352,28 @@ function Edit( { attributes, setAttributes } ) {
 							} )
 						}
 					/>
+					{ enableInfiniteScroll && (
+						<RangeControl
+							label={ __(
+								'Load Trigger Offset (px)',
+								'another-blocks-for-dokan'
+							) }
+							help={ __(
+								'How far from the bottom of the list (in pixels) the next page begins loading. Larger values start loading earlier.',
+								'another-blocks-for-dokan'
+							) }
+							value={ infiniteScrollOffset }
+							onChange={ ( value ) =>
+								setAttributes( {
+									infiniteScrollOffset:
+										value === undefined ? 400 : value,
+								} )
+							}
+							min={ 0 }
+							max={ 2000 }
+							step={ 50 }
+						/>
+					) }
 				</PanelBody>
 
 				<PanelBody

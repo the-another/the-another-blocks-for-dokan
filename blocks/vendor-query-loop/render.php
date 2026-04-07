@@ -319,9 +319,14 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 	$block->context['dokan/query']   = $query_context['query'];
 
 	// Separate template blocks (vendor-card) from query-level blocks (search, pagination).
-	$template_blocks   = array();
-	$search_blocks     = array();
-	$pagination_blocks = array();
+	// Generic blocks (paragraph/separator/spacer/etc.) are bucketed as "extras" and
+	// rendered before or after the loop based on their position relative to vendor-card.
+	$template_blocks      = array();
+	$search_blocks        = array();
+	$pagination_blocks    = array();
+	$extras_before_blocks = array();
+	$extras_after_blocks  = array();
+	$seen_card            = false;
 
 	if ( ! empty( $block->inner_blocks ) ) {
 		foreach ( $block->inner_blocks as $inner_block ) {
@@ -331,6 +336,11 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 				$pagination_blocks[] = $inner_block;
 			} elseif ( 'the-another/blocks-for-dokan-vendor-card' === $inner_block->name ) {
 				$template_blocks[] = $inner_block;
+				$seen_card         = true;
+			} elseif ( $seen_card ) {
+				$extras_after_blocks[] = $inner_block;
+			} else {
+				$extras_before_blocks[] = $inner_block;
 			}
 		}
 	}
@@ -360,6 +370,7 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 		$wrapper_args['data-per-page']     = (string) $per_page;
 		$wrapper_args['data-current-page'] = (string) $paged;
 		$wrapper_args['data-total-pages']  = (string) $total_pages;
+		$wrapper_args['data-scroll-offset'] = (string) (int) ( $attributes['infiniteScrollOffset'] ?? 400 );
 		$active_filters                    = array(
 			'stores_orderby'       => isset( $_GET['stores_orderby'] ) ? sanitize_text_field( wp_unslash( $_GET['stores_orderby'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			'dokan_seller_search'  => isset( $_GET['dokan_seller_search'] ) ? sanitize_text_field( wp_unslash( $_GET['dokan_seller_search'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -417,6 +428,12 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 					echo $search_block_instance->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				}
 			}
+
+			// Render generic blocks (paragraph/separator/spacer) placed before the vendor-card.
+			foreach ( $extras_before_blocks as $extra_block ) {
+				$extra_block_instance = new WP_Block( $extra_block->parsed_block, $block->context );
+				echo $extra_block_instance->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			}
 			?>
 			<ul class="theabd--vendor-wrap <?php echo esc_attr( $grid_classes ); ?>">
 				<?php
@@ -425,6 +442,12 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 			</ul>
 
 			<?php
+			// Render generic blocks (paragraph/separator/spacer) placed after the vendor-card.
+			foreach ( $extras_after_blocks as $extra_block ) {
+				$extra_block_instance = new WP_Block( $extra_block->parsed_block, $block->context );
+				echo $extra_block_instance->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			}
+
 			if ( $enable_infinite_scroll ) {
 				echo '<div class="theabd--vendor-query-loop-sentinel" aria-hidden="true"></div>';
 				echo '<div class="theabd--vendor-query-loop-status" role="status" aria-live="polite"></div>';
@@ -455,8 +478,8 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 								array(
 									'total'     => $total_pages,
 									'current'   => $paged,
-									'prev_text' => __( '&larr; Previous', 'another-blocks-for-dokan' ),
-									'next_text' => __( 'Next &rarr;', 'another-blocks-for-dokan' ),
+									'prev_text' => __( '&larr; Previous', 'theanother-blocks-for-dokan' ),
+									'next_text' => __( 'Next &rarr;', 'theanother-blocks-for-dokan' ),
 								)
 							)
 						);
@@ -484,7 +507,7 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 			}
 			?>
 			<p class="theabd--vendor-query-loop-empty">
-				<?php echo esc_html__( 'No vendors found.', 'another-blocks-for-dokan' ); ?>
+				<?php echo esc_html__( 'No vendors found.', 'theanother-blocks-for-dokan' ); ?>
 			</p>
 		</div>
 		<?php

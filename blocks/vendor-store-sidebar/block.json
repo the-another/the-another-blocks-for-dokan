@@ -7,7 +7,7 @@
 	"icon": "sidebar",
 	"description": "Display store sidebar with widgets.",
 	"keywords": [ "dokan", "vendor", "store", "sidebar" ],
-	"textdomain": "another-blocks-for-dokan",
+	"textdomain": "theanother-blocks-for-dokan",
 	"supports": {
 		"html": false,
 		"align": true,

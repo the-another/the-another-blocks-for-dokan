@@ -8,7 +8,7 @@
 	"icon": "location",
 	"description": "Display store location on map.",
 	"keywords": [ "dokan", "vendor", "store", "location", "map" ],
-	"textdomain": "another-blocks-for-dokan",
+	"textdomain": "theanother-blocks-for-dokan",
 	"usesContext": [ "dokan/vendor" ],
 	"supports": {
 		"html": false,

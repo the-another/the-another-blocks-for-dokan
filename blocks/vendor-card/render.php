@@ -141,11 +141,11 @@ function theabd_render_vendor_card_block( array $attributes, string $content, WP
 				<div class="theabd--vendor-card-placeholder">
 					<?php if ( ! $vendor_id ) : ?>
 						<p class="theabd--store-placeholder-notice" style="padding: 1rem; background: #f0f0f0; border-radius: 4px; font-size: 0.875rem; color: #666;">
-							<?php echo esc_html__( 'Please enter a valid Vendor ID in the block settings to display a store card.', 'another-blocks-for-dokan' ); ?>
+							<?php echo esc_html__( 'Please enter a valid Vendor ID in the block settings to display a store card.', 'theanother-blocks-for-dokan' ); ?>
 						</p>
 					<?php else : ?>
 						<p class="theabd--store-placeholder-notice" style="padding: 1rem; background: #fff3cd; border-radius: 4px; font-size: 0.875rem; color: #856404;">
-							<?php echo esc_html__( 'Vendor ID not found or user is not a seller.', 'another-blocks-for-dokan' ); ?>
+							<?php echo esc_html__( 'Vendor ID not found or user is not a seller.', 'theanother-blocks-for-dokan' ); ?>
 						</p>
 					<?php endif; ?>
 					<?php

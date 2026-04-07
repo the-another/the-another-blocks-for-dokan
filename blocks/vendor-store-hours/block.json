@@ -8,7 +8,7 @@
 	"icon": "clock",
 	"description": "Display store opening hours.",
 	"keywords": [ "dokan", "vendor", "store", "hours", "time" ],
-	"textdomain": "another-blocks-for-dokan",
+	"textdomain": "theanother-blocks-for-dokan",
 	"usesContext": [ "dokan/vendor" ],
 	"supports": {
 		"html": false,

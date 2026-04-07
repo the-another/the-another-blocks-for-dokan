@@ -10,7 +10,7 @@ This document provides comprehensive information about the **Another Blocks for 
 - **Plugin Name**: Another Blocks for Dokan
 - **Version**: 1.0.3
 - **Namespace**: `The_Another\Plugin\Blocks_Dokan`
-- **Text Domain**: `another-blocks-for-dokan`
+- **Text Domain**: `theanother-blocks-for-dokan`
 - **Prefix**: `theabd` (for render functions: `theabd_render_*_block()`)
 - **CSS Prefix**: `theabd--` (BEM-like: `theabd--vendor-store-header`)
 - **Author**: The Another
@@ -100,7 +100,7 @@ another-blocks-for-dokan/
 - Follow **WordPress Coding Standards** (WordPress-Extra ruleset)
 - Use **WordPress-Docs** for documentation
 - Minimum supported WordPress version: 6.0
-- Text domain: `dokan-blocks`
+- Text domain: `theanother-blocks-for-dokan`
 - All render functions must use `theabd` prefix (e.g., `theabd_render_*_block()`)
 
 #### PHP Version Features
@@ -181,7 +181,7 @@ Blocks use **Block API v3** with `block.json` metadata:
     "name": "the-another/blocks-for-dokan-block-name",
     "title": "Block Title",
     "category": "dokan",
-    "textdomain": "dokan-blocks"
+    "textdomain": "theanother-blocks-for-dokan"
 }
 ```
 
@@ -371,7 +371,7 @@ These templates automatically replace PHP templates when using block themes.
     "category": "dokan",
     "icon": "store",
     "description": "Block description",
-    "textdomain": "dokan-blocks",
+    "textdomain": "theanother-blocks-for-dokan",
     "supports": {
         "html": false
     },
@@ -484,7 +484,7 @@ define( 'SCRIPT_DEBUG', true );
 ### Common Issues
 
 1. **Blocks not appearing**: Run `npm run build` and clear browser cache
-2. **PHP errors**: Check PHP version is 7.4+
+2. **PHP errors**: Check PHP version is 8.3+
 3. **Styling issues**: Ensure both `style-blocks.css` and `blocks.css` are enqueued
 4. **Vendor data not loading**: Verify Dokan is active and vendor exists
 
@@ -499,10 +499,10 @@ define( 'SCRIPT_DEBUG', true );
 
 All strings must be translatable:
 ```php
-esc_html__( 'Text', 'another-blocks-for-dokan' )
-esc_html_e( 'Text', 'another-blocks-for-dokan' )
-esc_attr__( 'Text', 'another-blocks-for-dokan' )
-_n( 'Singular', 'Plural', $count, 'another-blocks-for-dokan' )
+esc_html__( 'Text', 'theanother-blocks-for-dokan' )
+esc_html_e( 'Text', 'theanother-blocks-for-dokan' )
+esc_attr__( 'Text', 'theanother-blocks-for-dokan' )
+_n( 'Singular', 'Plural', $count, 'theanother-blocks-for-dokan' )
 ```
 
 Translation files location: `languages/`
@@ -526,7 +526,7 @@ Translation files location: `languages/`
 
 ## Important Notes for AI Agents
 
-1. **Always maintain PHP 7.4+ compatibility** - use PHP 7.4 features, avoid PHP 8.0+ features
+1. **Target PHP 8.3+** - use modern PHP features (typed properties, enums, readonly, match, etc.)
 2. **Follow WordPress coding standards strictly** - run `composer lint` before committing
 3. **All blocks must be dynamic** - use server-side rendering with `render.php`
 4. **Security first** - escape all output, validate/sanitize all input

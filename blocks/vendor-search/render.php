@@ -22,15 +22,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 function theabd_render_vendor_search_block( array $attributes, string $content, WP_Block $block ): string {
 	// Extract attributes with defaults.
 	$enable_search      = $attributes['enableSearch'] ?? true;
-	$search_placeholder = $attributes['searchPlaceholder'] ?? __( 'Search stores...', 'another-blocks-for-dokan' );
+	$search_placeholder = $attributes['searchPlaceholder'] ?? __( 'Search stores...', 'theanother-blocks-for-dokan' );
 	$enable_sort_by     = $attributes['enableSortBy'] ?? true;
-	$sort_by_label      = $attributes['sortByLabel'] ?? __( 'Sort by:', 'another-blocks-for-dokan' );
+	$sort_by_label      = $attributes['sortByLabel'] ?? __( 'Sort by:', 'theanother-blocks-for-dokan' );
 	/* translators: %s: store count number */
-	$store_count_label      = $attributes['storeCountLabel'] ?? __( 'Total store showing: %s', 'another-blocks-for-dokan' );
+	$store_count_label      = $attributes['storeCountLabel'] ?? __( 'Total store showing: %s', 'theanother-blocks-for-dokan' );
 	$enable_location_filter = $attributes['enableLocationFilter'] ?? false;
 	$enable_rating_filter   = $attributes['enableRatingFilter'] ?? false;
 	$enable_category_filter = $attributes['enableCategoryFilter'] ?? false;
-	$button_text            = $attributes['buttonText'] ?? __( 'Search', 'another-blocks-for-dokan' );
+	$button_text            = $attributes['buttonText'] ?? __( 'Search', 'theanother-blocks-for-dokan' );
 	$button_size            = $attributes['buttonSize'] ?? 'medium';
 	$button_bg_color        = $attributes['buttonBackgroundColor'] ?? '';
 	$button_text_color      = $attributes['buttonTextColor'] ?? '';
@@ -48,10 +48,10 @@ function theabd_render_vendor_search_block( array $attributes, string $content, 
 		'dokan_store_lists_sort_by_options',
 	// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 		array(
-			'name'         => __( 'Name', 'another-blocks-for-dokan' ),
-			'most_recent'  => __( 'Most Recent', 'another-blocks-for-dokan' ),
-			'total_orders' => __( 'Most Popular', 'another-blocks-for-dokan' ),
-			'random'       => __( 'Random', 'another-blocks-for-dokan' ),
+			'name'         => __( 'Name', 'theanother-blocks-for-dokan' ),
+			'most_recent'  => __( 'Most Recent', 'theanother-blocks-for-dokan' ),
+			'total_orders' => __( 'Most Popular', 'theanother-blocks-for-dokan' ),
+			'random'       => __( 'Random', 'theanother-blocks-for-dokan' ),
 		)
 	);
 
@@ -112,8 +112,8 @@ function theabd_render_vendor_search_block( array $attributes, string $content, 
 									<div class="theabd--icon-div"></div>
 									<div class="theabd--icon-div"></div>
 								</div>
-								<button type="button" class="theabd--vendor-query-loop-filter-button <?php echo esc_attr( $button_class_string ); ?>" style="<?php echo ! empty( $button_style_string ) ? esc_attr( $button_style_string ) : ''; ?>" aria-expanded="false" aria-controls="theabd--vendor-query-looping-filter-form-wrap" aria-label="<?php esc_attr_e( 'Toggle search filters', 'another-blocks-for-dokan' ); ?>" data-testid="vendor-filter-toggle">
-									<span class="theabd--btn-text"><?php echo esc_html__( 'Filter', 'another-blocks-for-dokan' ); ?></span>
+								<button type="button" class="theabd--vendor-query-loop-filter-button <?php echo esc_attr( $button_class_string ); ?>" style="<?php echo ! empty( $button_style_string ) ? esc_attr( $button_style_string ) : ''; ?>" aria-expanded="false" aria-controls="theabd--vendor-query-looping-filter-form-wrap" aria-label="<?php esc_attr_e( 'Toggle search filters', 'theanother-blocks-for-dokan' ); ?>" data-testid="vendor-filter-toggle">
+									<span class="theabd--btn-text"><?php echo esc_html__( 'Filter', 'theanother-blocks-for-dokan' ); ?></span>
 								</button>
 							</div>
 						</div>
@@ -181,7 +181,7 @@ function theabd_render_vendor_search_block( array $attributes, string $content, 
 
 					<div class="theabd--apply-filter">
 						<button id="cancel-filter-btn" type="button" data-testid="vendor-filter-cancel" class="<?php echo esc_attr( $button_class_string ); ?>" style="<?php echo ! empty( $button_style_string ) ? esc_attr( $button_style_string ) : ''; ?>">
-							<span class="theabd--btn-text"><?php echo esc_html__( 'Cancel', 'another-blocks-for-dokan' ); ?></span>
+							<span class="theabd--btn-text"><?php echo esc_html__( 'Cancel', 'theanother-blocks-for-dokan' ); ?></span>
 						</button>
 						<button id="apply-filter-btn" type="submit" data-testid="vendor-filter-apply" class="<?php echo esc_attr( $button_class_string ); ?>" style="<?php echo ! empty( $button_style_string ) ? esc_attr( $button_style_string ) : ''; ?>">
 							<span class="theabd--btn-text"><?php echo esc_html( $button_text ); ?></span>
@@ -193,7 +193,7 @@ function theabd_render_vendor_search_block( array $attributes, string $content, 
 					<div class="theabd--store-advanced-filters">
 						<?php if ( $enable_location_filter ) : ?>
 							<div class="theabd--store-filter-field">
-								<label><?php echo esc_html__( 'Location:', 'another-blocks-for-dokan' ); ?></label>
+								<label><?php echo esc_html__( 'Location:', 'theanother-blocks-for-dokan' ); ?></label>
 								<?php
 								// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 								$selected_location = isset( $_GET['dokan_store_location'] ) ? sanitize_text_field( wp_unslash( $_GET['dokan_store_location'] ) ) : '';
@@ -228,7 +228,7 @@ function theabd_render_vendor_search_block( array $attributes, string $content, 
 								$wc_all_states = WC()->countries->get_states();
 								?>
 								<select name="dokan_store_location" class="theabd--form-control theabd--store-filter-select">
-									<option value=""><?php echo esc_html__( 'All Locations', 'another-blocks-for-dokan' ); ?></option>
+									<option value=""><?php echo esc_html__( 'All Locations', 'theanother-blocks-for-dokan' ); ?></option>
 									<?php foreach ( $country_states as $cc => $states ) : ?>
 										<?php
 										$country_name = $wc_countries[ $cc ] ?? $cc;
@@ -239,7 +239,7 @@ function theabd_render_vendor_search_block( array $attributes, string $content, 
 											<option value="<?php echo esc_attr( $cc ); ?>" <?php selected( $selected_location, $cc ); ?>>
 												<?php
 												/* translators: %s: country name */
-												echo esc_html( sprintf( __( 'All %s', 'another-blocks-for-dokan' ), $country_name ) );
+												echo esc_html( sprintf( __( 'All %s', 'theanother-blocks-for-dokan' ), $country_name ) );
 												?>
 											</option>
 											<?php foreach ( $states as $sc => $__ ) : ?>
@@ -256,19 +256,19 @@ function theabd_render_vendor_search_block( array $attributes, string $content, 
 
 						<?php if ( $enable_rating_filter ) : ?>
 							<div class="theabd--store-filter-field">
-								<label><?php echo esc_html__( 'Minimum Rating:', 'another-blocks-for-dokan' ); ?></label>
+								<label><?php echo esc_html__( 'Minimum Rating:', 'theanother-blocks-for-dokan' ); ?></label>
 								<select name="dokan_store_rating" class="theabd--form-control theabd--store-filter-select">
-									<option value=""><?php echo esc_html__( 'All Ratings', 'another-blocks-for-dokan' ); ?></option>
-									<option value="5" <?php selected( isset( $_GET['dokan_store_rating'] ) ? sanitize_text_field( wp_unslash( $_GET['dokan_store_rating'] ) ) : '', '5' ); ?>>5 <?php echo esc_html__( 'Stars', 'another-blocks-for-dokan' ); ?></option><?php // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
-									<option value="4" <?php selected( isset( $_GET['dokan_store_rating'] ) ? sanitize_text_field( wp_unslash( $_GET['dokan_store_rating'] ) ) : '', '4' ); ?>>4+ <?php echo esc_html__( 'Stars', 'another-blocks-for-dokan' ); ?></option><?php // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
-									<option value="3" <?php selected( isset( $_GET['dokan_store_rating'] ) ? sanitize_text_field( wp_unslash( $_GET['dokan_store_rating'] ) ) : '', '3' ); ?>>3+ <?php echo esc_html__( 'Stars', 'another-blocks-for-dokan' ); ?></option><?php // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
+									<option value=""><?php echo esc_html__( 'All Ratings', 'theanother-blocks-for-dokan' ); ?></option>
+									<option value="5" <?php selected( isset( $_GET['dokan_store_rating'] ) ? sanitize_text_field( wp_unslash( $_GET['dokan_store_rating'] ) ) : '', '5' ); ?>>5 <?php echo esc_html__( 'Stars', 'theanother-blocks-for-dokan' ); ?></option><?php // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
+									<option value="4" <?php selected( isset( $_GET['dokan_store_rating'] ) ? sanitize_text_field( wp_unslash( $_GET['dokan_store_rating'] ) ) : '', '4' ); ?>>4+ <?php echo esc_html__( 'Stars', 'theanother-blocks-for-dokan' ); ?></option><?php // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
+									<option value="3" <?php selected( isset( $_GET['dokan_store_rating'] ) ? sanitize_text_field( wp_unslash( $_GET['dokan_store_rating'] ) ) : '', '3' ); ?>>3+ <?php echo esc_html__( 'Stars', 'theanother-blocks-for-dokan' ); ?></option><?php // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
 								</select>
 							</div>
 						<?php endif; ?>
 
 						<?php if ( $enable_category_filter ) : ?>
 							<div class="theabd--store-filter-field">
-								<label><?php echo esc_html__( 'Category:', 'another-blocks-for-dokan' ); ?></label>
+								<label><?php echo esc_html__( 'Category:', 'theanother-blocks-for-dokan' ); ?></label>
 								<?php
 								// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 								$selected_category = isset( $_GET['dokan_store_category'] ) ? sanitize_text_field( wp_unslash( $_GET['dokan_store_category'] ) ) : '';
@@ -277,7 +277,7 @@ function theabd_render_vendor_search_block( array $attributes, string $content, 
 										'taxonomy'         => 'product_cat',
 										'name'             => 'dokan_store_category',
 										'selected'         => $selected_category,
-										'show_option_none' => __( 'All Categories', 'another-blocks-for-dokan' ),
+										'show_option_none' => __( 'All Categories', 'theanother-blocks-for-dokan' ),
 										'value_field'      => 'slug',
 										'class'            => 'theabd--form-control theabd--store-filter-select',
 									)

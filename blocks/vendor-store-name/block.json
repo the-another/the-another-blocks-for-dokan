@@ -8,7 +8,7 @@
 	"icon": "store",
 	"description": "Display the vendor store name.",
 	"keywords": [ "dokan", "vendor", "store", "name", "title" ],
-	"textdomain": "another-blocks-for-dokan",
+	"textdomain": "theanother-blocks-for-dokan",
 	"usesContext": [ "dokan/vendor" ],
 	"supports": {
 		"html": false,

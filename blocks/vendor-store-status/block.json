@@ -8,7 +8,7 @@
 	"icon": "clock",
 	"description": "Display the vendor store open/closed status.",
 	"keywords": [ "dokan", "vendor", "store", "status", "open", "closed", "hours" ],
-	"textdomain": "another-blocks-for-dokan",
+	"textdomain": "theanother-blocks-for-dokan",
 	"usesContext": [ "dokan/vendor" ],
 	"supports": {
 		"html": false,

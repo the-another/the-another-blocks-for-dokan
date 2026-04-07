@@ -54,10 +54,10 @@ function theabd_render_vendor_rating_block( array $attributes, string $content, 
 			$percentage = ( $rating / 5 ) * 100;
 			?>
 			<?php /* translators: %s: rating value (e.g., 4.5) */ ?>
-			<div class="theabd--star-rating" role="img" aria-label="<?php echo esc_attr( sprintf( __( 'Rated %s out of 5', 'another-blocks-for-dokan' ), $rating ) ); ?>">
+			<div class="theabd--star-rating" role="img" aria-label="<?php echo esc_attr( sprintf( __( 'Rated %s out of 5', 'theanother-blocks-for-dokan' ), $rating ) ); ?>">
 				<span style="width:<?php echo esc_attr( $percentage ); ?>%">
 					<?php /* translators: %s: rating value (e.g., 4.5) */ ?>
-					<?php echo esc_html( sprintf( __( 'Rated %s out of 5', 'another-blocks-for-dokan' ), $rating ) ); ?>
+					<?php echo esc_html( sprintf( __( 'Rated %s out of 5', 'theanother-blocks-for-dokan' ), $rating ) ); ?>
 				</span>
 			</div>
 			<?php if ( $show_count ) : ?>

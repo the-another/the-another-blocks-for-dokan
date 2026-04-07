@@ -7,7 +7,7 @@
 	"icon": "menu",
 	"description": "Display store navigation tabs with active state.",
 	"keywords": [ "dokan", "vendor", "store", "tabs", "navigation" ],
-	"textdomain": "another-blocks-for-dokan",
+	"textdomain": "theanother-blocks-for-dokan",
 	"usesContext": [ "dokan/vendor" ],
 	"supports": {
 		"html": false,

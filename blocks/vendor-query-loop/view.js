@@ -17,6 +17,13 @@
 		);
 		var current =
 			parseInt( wrapper.getAttribute( 'data-current-page' ), 10 ) || 1;
+		var scrollOffset = parseInt(
+			wrapper.getAttribute( 'data-scroll-offset' ),
+			10
+		);
+		if ( isNaN( scrollOffset ) || scrollOffset < 0 ) {
+			scrollOffset = 400;
+		}
 		var attrsRaw = wrapper.getAttribute( 'data-attributes' );
 		var filtersRaw = wrapper.getAttribute( 'data-filters' );
 		var attributes;
@@ -48,6 +55,9 @@
 				return;
 			}
 			loading = true;
+			if ( status ) {
+				status.textContent = 'Loading';
+			}
 			var nextPage = current + 1;
 
 			var apiFetch = window.wp && window.wp.apiFetch;
@@ -91,22 +101,16 @@
 						'data-current-page',
 						String( current )
 					);
-					if ( status ) {
-						status.textContent =
-							'Loaded page ' + current + ' of ' + totalPages;
-					}
 					if ( res && res.hasMore === false ) {
 						observer.disconnect();
 					}
 				} )
-				.catch( function () {
-					if ( status ) {
-						status.textContent =
-							'Failed to load more vendors. Scroll to retry.';
-					}
-				} )
+				.catch( function () {} )
 				.finally( function () {
 					loading = false;
+					if ( status ) {
+						status.textContent = '';
+					}
 				} );
 		}
 
@@ -118,7 +122,7 @@
 					}
 				} );
 			},
-			{ rootMargin: '400px 0px' }
+			{ rootMargin: scrollOffset + 'px 0px' }
 		);
 		observer.observe( sentinel );
 	}

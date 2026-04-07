@@ -23,7 +23,7 @@ abstract class Abstract_Dokan_Template {
 	 *
 	 * @var string
 	 */
-	const PLUGIN_SLUG = 'another-blocks-for-dokan';
+	const PLUGIN_SLUG = 'theanother-blocks-for-dokan';
 
 	/**
 	 * Template slug.

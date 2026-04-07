@@ -1,10 +1,10 @@
-=== Dokan Blocks ===
+=== Another Blocks for Dokan ===
 Contributors: theanother
-Tags: dokan, woocommerce, multivendor, blocks, fse, full-site-editing, gutenberg
+Tags: dokan, woocommerce, multivendor, blocks, gutenberg
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 8.3
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,6 +41,16 @@ PHP 8.3 or higher is required.
 
 
 
+
+
+= 1.0.9 - 2026-04-07 =
+* Fix: Plugin Check compliance — text domain renamed to `theanother-blocks-for-dokan` across all PHP and block.json files; added missing `languages/` directory; added direct-access guard to `functions/functions.php`; bumped main plugin header `Requires PHP` to 8.3 to match readme
+* Fix: Vendor Query Loop infinite-scroll status box now shows a centered animated "Loading…" indicator only while fetching, instead of announcing the loaded page number
+* Add: Configurable infinite-scroll trigger offset (px) on the Vendor Query Loop block — controls how far from the bottom the next page begins loading (default 400)
+* Fix: Vendor Search and Vendor Query Pagination editor previews — JSX now uses the `theabd--*` class names so the existing styles apply inside Gutenberg
+* Add: `core/paragraph`, `core/separator`, and `core/spacer` are now allowed inside the Vendor Query Loop block and rendered before or after the loop based on their position relative to the Vendor Card
+* Fix: readme.txt plugin name and tag count to satisfy WordPress.org plugin guidelines
+* Docs: New user-facing `README.md`; previous developer guide moved to `CONTRIBUTING.md`
 
 = 1.0.8 - 2026-04-07 =
 * Add: Opt-in infinite scroll for the Vendor Query Loop block — auto-loads next page near the bottom without changing the URL (off by default)

@@ -104,7 +104,7 @@ function theabd_render_more_from_seller_block( array $attributes, string $conten
 		?>
 		<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<h2 class="theabd--more-from-vendor-title">
-				<?php echo esc_html__( 'More from this seller', 'another-blocks-for-dokan' ); ?>
+				<?php echo esc_html__( 'More from this seller', 'theanother-blocks-for-dokan' ); ?>
 			</h2>
 
 			<div class="woocommerce theabd--more-from-vendor-grid">
@@ -126,8 +126,8 @@ function theabd_render_more_from_seller_block( array $attributes, string $conten
 						echo esc_html(
 							sprintf(
 								// translators: %s is the vendor store name.
-								__( 'View all products from %s', 'another-blocks-for-dokan' ),
-								$vendor_data['shop_name'] ?? __( 'this vendor', 'another-blocks-for-dokan' )
+								__( 'View all products from %s', 'theanother-blocks-for-dokan' ),
+								$vendor_data['shop_name'] ?? __( 'this vendor', 'theanother-blocks-for-dokan' )
 							)
 						);
 						?>
@@ -140,7 +140,7 @@ function theabd_render_more_from_seller_block( array $attributes, string $conten
 		?>
 		<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<p class="theabd--more-from-vendor-empty">
-				<?php echo esc_html__( 'No other products found from this seller.', 'another-blocks-for-dokan' ); ?>
+				<?php echo esc_html__( 'No other products found from this seller.', 'theanother-blocks-for-dokan' ); ?>
 			</p>
 		</div>
 		<?php

@@ -1,113 +1,96 @@
-# Dokan Blocks
+# Another Blocks for Dokan
 
-FSE-compatible Gutenberg blocks for Dokan multi-vendor marketplace. Convert Dokan templates into dynamic blocks for Full Site Editing.
+FSE-compatible Gutenberg blocks for the [Dokan](https://wordpress.org/plugins/dokan-lite/) multi-vendor marketplace. Convert traditional Dokan PHP templates into dynamic, reusable blocks so you can build vendor store pages and listings directly in the Site Editor.
+
+- **Author:** [The Another](https://theanother.org)
+- **License:** GPL v2 or later
+- **Plugin URI:** https://theanother.org/plugin/another-blocks-for-dokan/
 
 ## Requirements
 
-- WordPress 6.0+
-- WooCommerce 7.0+
-- Dokan (latest stable version)
-- PHP 7.4+
+| Software     | Version  |
+| ------------ | -------- |
+| WordPress    | 6.0+     |
+| PHP          | 8.3+     |
+| WooCommerce  | 10.0.0+  |
+| Dokan Lite   | 4.0.0+   |
+
+A block-based (FSE) theme is recommended to take full advantage of the included templates.
 
 ## Installation
 
-1. Clone or download this plugin
-2. Place it in your WordPress plugins directory
-3. Install dependencies:
-   ```bash
-   composer install
-   npm install
-   ```
-4. Build blocks:
-   ```bash
-   npm run build
-   ```
-5. Activate the plugin through WordPress admin
+1. Download the latest release ZIP from the [Releases page](https://github.com/the-another/another-blocks-for-dokan/releases).
+2. In WordPress admin, go to **Plugins → Add New → Upload Plugin** and upload the ZIP.
+3. Activate **Another Blocks for Dokan**.
+4. Make sure WooCommerce and Dokan Lite are installed and active.
 
-## Development
+## What's Included
 
-### Build Blocks
+### FSE Templates
 
-```bash
-npm run build
-```
+When using a block theme, these templates automatically replace Dokan's PHP templates:
 
-### Watch for Changes
+- **Single Vendor Store** (`store.html`)
+- **Vendor Listing** (`store-lists.html`)
+- **Store Terms & Conditions** (`store-toc.html`)
 
-```bash
-npm start
-```
+You can edit them in **Appearance → Editor → Templates**.
 
-### Run Tests
+### Blocks
 
-```bash
-composer test
-```
+#### Store Profile
 
-### Run Code Standards Check
+- **Vendor Store Header** — banner, avatar, name, contact
+- **Vendor Store Banner** — store cover image
+- **Vendor Avatar** — store logo / avatar
+- **Vendor Store Name** — store name with optional link
+- **Vendor Store Address** — physical address
+- **Vendor Store Phone** — phone number
+- **Vendor Rating** — star rating display
+- **Vendor Store Status** — open / closed indicator
+- **Vendor Store Tabs** — store navigation
+- **Vendor Store Sidebar** — sidebar with widgets
 
-```bash
-composer lint
-```
+#### Listings & Query
 
-### Fix Code Standards Issues
+- **Vendor Query Loop** — grid/list of vendors with layout, ordering, and **opt-in infinite scroll** (configurable trigger offset, no URL changes)
+- **Vendor Query Pagination** — paginate the query loop
+- **Vendor Card** — single vendor card used inside the loop
+- **Vendor Search** — search and filter by name, location, rating, and category
 
-```bash
-composer lint-fix
-```
+#### Widgets
 
-## Available Blocks
+- **Vendor Contact Form** — front-end contact form
+- **Vendor Store Location** — map of the store location
+- **Vendor Store Hours** — opening hours table
+- **Vendor Store Terms & Conditions** — terms content
 
-### Store Profile Blocks
-- **Vendor Store Header** (`the-another/blocks-for-dokan-vendor-store-header`) - Display vendor store header
-- **Store Products** (`the-another/blocks-for-dokan-store-products`) - Display vendor products
-- **Vendor Store Sidebar** (`the-another/blocks-for-dokan-vendor-store-sidebar`) - Store sidebar with widgets
-- **Vendor Store Tabs** (`the-another/blocks-for-dokan-vendor-store-tabs`) - Store navigation tabs
+#### Product Integration
 
-### Vendor Listing Blocks
-- **Vendor Query Loop** (`the-another/blocks-for-dokan-vendor-query-loop`) - Grid/list of vendor stores
-- **Vendor Card** (`the-another/blocks-for-dokan-vendor-card`) - Individual vendor store card
-- **Vendor Search** (`the-another/blocks-for-dokan-vendor-search`) - Search and filter stores
+- **Product Vendor Info** — vendor info on single product pages
+- **More from Seller** — additional products from the same vendor
 
-### Product Integration Blocks
-- **Product Vendor Info** (`the-another/blocks-for-dokan-product-vendor-info`) - Vendor info on product pages
-- **More from Seller** (`the-another/blocks-for-dokan-more-from-seller`) - More products from same vendor
+#### Account
 
-### Account/Registration Blocks
-- **Become Vendor CTA** (`the-another/blocks-for-dokan-become-vendor-cta`) - Call-to-action to become a vendor
+- **Become Vendor CTA** — call-to-action to register as a vendor
 
-### Widget Blocks
-- **Vendor Contact Form** (`the-another/blocks-for-dokan-vendor-contact-form`) - Contact vendor form
-- **Vendor Store Location** (`the-another/blocks-for-dokan-vendor-store-location`) - Store location map
-- **Vendor Store Hours** (`the-another/blocks-for-dokan-vendor-store-hours`) - Store opening hours
+## Highlights
 
-## FSE Templates
+- **Fully dynamic** — every block is server-rendered and respects Dokan's privacy and visibility settings.
+- **Theme-friendly** — uses native WordPress block supports (spacing, colors, typography) and `wp-element-button` styling so buttons inherit your theme palette.
+- **Infinite scroll** — opt-in for the Vendor Query Loop, with a centered animated "Loading…" indicator and a configurable trigger offset.
+- **Translation-ready** — text domain `theanother-blocks-for-dokan`, translation files live in `/languages`.
+- **REST-powered pagination** — `POST /another-blocks-for-dokan/v1/vendor-query-loop` reuses the same render helpers as the initial page so paginated results match.
 
-The plugin provides FSE block templates:
+## Support
 
-- `templates/store.html` - Single vendor store page
-- `templates/store-lists.html` - Vendor listing page
+- Issues: https://github.com/the-another/another-blocks-for-dokan/issues
+- Homepage: https://theanother.org/plugin/another-blocks-for-dokan/
 
-These templates automatically replace PHP templates in block themes.
+## Contributing
 
-## Testing
-
-Tests run without requiring WordPress/Dokan installation using Brain Monkey and Mockery for mocking.
-
-```bash
-# Run all tests
-composer test
-
-# Run unit tests only
-composer test:unit
-
-# Run integration tests only
-composer test:integration
-
-# Generate coverage report
-composer test:coverage
-```
+Development setup, build commands, coding standards, and the testing workflow are documented in [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
-GPL v2 or later
+This plugin is released under the [GPL v2 or later](https://www.gnu.org/licenses/gpl-2.0.html).

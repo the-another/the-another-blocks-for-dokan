@@ -7,7 +7,7 @@
 	"icon": "format-image",
 	"description": "Display the vendor store banner as a background container with customizable content.",
 	"keywords": [ "dokan", "vendor", "store", "banner", "cover", "image", "container" ],
-	"textdomain": "another-blocks-for-dokan",
+	"textdomain": "theanother-blocks-for-dokan",
 	"usesContext": [ "dokan/vendor" ],
 	"supports": {
 		"html": false,

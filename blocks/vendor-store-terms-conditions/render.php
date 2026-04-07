@@ -71,7 +71,7 @@ function theabd_render_vendor_store_terms_conditions_block( array $attributes, s
 			<div id="theabd--store-toc">
 				<?php if ( $show_title ) : ?>
 					<<?php echo esc_attr( $title_tag ); ?> class="theabd--store-toc-title theabd--headline">
-						<?php esc_html_e( 'Terms and Conditions', 'another-blocks-for-dokan' ); ?>
+						<?php esc_html_e( 'Terms and Conditions', 'theanother-blocks-for-dokan' ); ?>
 					</<?php echo esc_attr( $title_tag ); ?>>
 				<?php endif; ?>
 				<div class="theabd--store-toc-content">

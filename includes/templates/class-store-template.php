@@ -99,8 +99,8 @@ class Store_Template extends Abstract_Dokan_Template {
 		register_block_template(
 			$template_name,
 			array(
-				'title'       => __( 'Vendor Terms & Conditions', 'another-blocks-for-dokan' ),
-				'description' => __( 'Displays a vendor\'s terms and conditions page.', 'another-blocks-for-dokan' ),
+				'title'       => __( 'Vendor Terms & Conditions', 'theanother-blocks-for-dokan' ),
+				'description' => __( 'Displays a vendor\'s terms and conditions page.', 'theanother-blocks-for-dokan' ),
 				'plugin'      => self::PLUGIN_SLUG,
 				'content'     => false !== $content ? $content : '',
 			)
@@ -273,11 +273,11 @@ class Store_Template extends Abstract_Dokan_Template {
 	 */
 	private function get_template_title_for_slug( string $slug ): string {
 		$titles = array(
-			self::SLUG     => __( 'Single Vendor Store', 'another-blocks-for-dokan' ),
-			self::SLUG_TOC => __( 'Vendor Terms & Conditions', 'another-blocks-for-dokan' ),
+			self::SLUG     => __( 'Single Vendor Store', 'theanother-blocks-for-dokan' ),
+			self::SLUG_TOC => __( 'Vendor Terms & Conditions', 'theanother-blocks-for-dokan' ),
 		);
 
-		return $titles[ $slug ] ?? __( 'Vendor Store', 'another-blocks-for-dokan' );
+		return $titles[ $slug ] ?? __( 'Vendor Store', 'theanother-blocks-for-dokan' );
 	}
 
 	/**
@@ -288,11 +288,11 @@ class Store_Template extends Abstract_Dokan_Template {
 	 */
 	private function get_template_description_for_slug( string $slug ): string {
 		$descriptions = array(
-			self::SLUG     => __( 'Displays a single vendor store page with products and information.', 'another-blocks-for-dokan' ),
-			self::SLUG_TOC => __( 'Displays a vendor\'s terms and conditions page.', 'another-blocks-for-dokan' ),
+			self::SLUG     => __( 'Displays a single vendor store page with products and information.', 'theanother-blocks-for-dokan' ),
+			self::SLUG_TOC => __( 'Displays a vendor\'s terms and conditions page.', 'theanother-blocks-for-dokan' ),
 		);
 
-		return $descriptions[ $slug ] ?? __( 'Vendor store template.', 'another-blocks-for-dokan' );
+		return $descriptions[ $slug ] ?? __( 'Vendor store template.', 'theanother-blocks-for-dokan' );
 	}
 
 	/**
@@ -310,7 +310,7 @@ class Store_Template extends Abstract_Dokan_Template {
 	 * @return string
 	 */
 	public function get_template_title(): string {
-		return __( 'Single Vendor Store', 'another-blocks-for-dokan' );
+		return __( 'Single Vendor Store', 'theanother-blocks-for-dokan' );
 	}
 
 	/**
@@ -319,6 +319,6 @@ class Store_Template extends Abstract_Dokan_Template {
 	 * @return string
 	 */
 	public function get_template_description(): string {
-		return __( 'Displays a single vendor store page with products and information.', 'another-blocks-for-dokan' );
+		return __( 'Displays a single vendor store page with products and information.', 'theanother-blocks-for-dokan' );
 	}
 }

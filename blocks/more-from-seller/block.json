@@ -7,7 +7,7 @@
 	"icon": "products",
 	"description": "Display more products from the same vendor.",
 	"keywords": [ "dokan", "vendor", "products", "seller" ],
-	"textdomain": "another-blocks-for-dokan",
+	"textdomain": "theanother-blocks-for-dokan",
 	"supports": {
 		"html": false,
 		"align": [ "wide", "full" ],

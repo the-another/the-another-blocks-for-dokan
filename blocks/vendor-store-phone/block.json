@@ -8,7 +8,7 @@
 	"icon": "phone",
 	"description": "Display the vendor store phone number.",
 	"keywords": [ "dokan", "vendor", "store", "phone", "contact", "telephone" ],
-	"textdomain": "another-blocks-for-dokan",
+	"textdomain": "theanother-blocks-for-dokan",
 	"usesContext": [ "dokan/vendor" ],
 	"supports": {
 		"html": false,

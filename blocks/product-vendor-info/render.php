@@ -44,7 +44,7 @@ function theabd_render_product_vendor_info_block( array $attributes, string $con
 			<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 				<div class="theabd--product-vendor-info-placeholder">
 					<p style="padding: 1rem; background: #f0f0f0; border-radius: 4px; font-size: 0.875rem; color: #666;">
-						<?php echo esc_html__( 'Product Vendor Info: Add this block to a product page or specify a product ID in the block settings.', 'another-blocks-for-dokan' ); ?>
+						<?php echo esc_html__( 'Product Vendor Info: Add this block to a product page or specify a product ID in the block settings.', 'theanother-blocks-for-dokan' ); ?>
 					</p>
 				</div>
 			</div>

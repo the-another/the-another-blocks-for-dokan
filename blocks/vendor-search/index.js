@@ -31,7 +31,7 @@ import './style.scss';
  */
 function Edit( { attributes, setAttributes } ) {
 	const blockProps = useBlockProps( {
-		className: 'dokan-vendor-search',
+		className: 'theabd--vendor-search',
 	} );
 
 	// Get theme colors for the color palette.
@@ -220,11 +220,11 @@ function Edit( { attributes, setAttributes } ) {
 			</InspectorControls>
 
 			<div { ...blockProps }>
-				<div className="dokan-vendor-query-looping-filter-wrap">
-					<div className="dokan-store-filter-row">
-						<div className="dokan-store-filter-row-inner">
-							<div className="dokan-store-filter-left">
-								<p className="item store-count">
+				<div className="theabd--vendor-query-looping-filter-wrap">
+					<div className="theabd--store-filter-row">
+						<div className="theabd--store-filter-row-inner">
+							<div className="theabd--store-filter-left">
+								<p className="theabd--item theabd--store-count">
 									{ storeCountLabel.includes( '%s' )
 										? storeCountLabel.replace( '%s', '1' )
 										: storeCountLabel + ' 1' }
@@ -232,17 +232,17 @@ function Edit( { attributes, setAttributes } ) {
 							</div>
 
 							{ enableSearch && (
-								<div className="dokan-store-filter-right-item">
-									<div className="item">
-										<div className="dokan-icons">
-											<div className="dokan-icon-div"></div>
-											<div className="dokan-icon-div"></div>
-											<div className="dokan-icon-div"></div>
+								<div className="theabd--store-filter-right-item">
+									<div className="theabd--item">
+										<div className="theabd--icons">
+											<div className="theabd--icon-div"></div>
+											<div className="theabd--icon-div"></div>
+											<div className="theabd--icon-div"></div>
 										</div>
 										<button
 											type="button"
 											className={
-												'dokan-vendor-query-loop-filter-button ' +
+												'theabd--vendor-query-loop-filter-button ' +
 												buttonClasses.join( ' ' )
 											}
 											style={
@@ -253,7 +253,7 @@ function Edit( { attributes, setAttributes } ) {
 											}
 											disabled
 										>
-											<span className="dokan-btn-text">
+											<span className="theabd--btn-text">
 												{ __(
 													'Filter',
 													'dokan-blocks'
@@ -266,10 +266,10 @@ function Edit( { attributes, setAttributes } ) {
 						</div>
 
 						{ enableSortBy && (
-							<div className="dokan-store-filter-row-inner dokan-store-filter-row-sort">
+							<div className="theabd--store-filter-row-inner theabd--store-filter-row-sort">
 								<form
 									name="stores_sorting"
-									className="sort-by item"
+									className="theabd--sort-by theabd--item"
 								>
 									<label htmlFor="stores_orderby">
 										{ sortByLabel }
@@ -307,21 +307,21 @@ function Edit( { attributes, setAttributes } ) {
 						method="get"
 						name="dokan_store_lists_filter_form"
 						id="dokan-vendor-query-looping-filter-form-wrap"
-						className="dokan-vendor-search-filter-form"
+						className="theabd--vendor-search-filter-form"
 						style={ { display: 'block' } }
 					>
-						<div className="dokan-vendor-search-filter-row">
-							<div className="store-search grid-item">
+						<div className="theabd--vendor-search-filter-row">
+							<div className="theabd--vendor-search theabd--grid-item">
 								<input
 									type="search"
-									className="store-search-input dokan-vendor-search-input"
+									className="theabd--form-control theabd--vendor-search-input"
 									name="dokan_seller_search"
 									placeholder={ searchPlaceholder }
 									disabled
 								/>
 							</div>
 
-							<div className="apply-filter">
+							<div className="theabd--apply-filter">
 								<button
 									id="cancel-filter-btn"
 									type="button"
@@ -333,7 +333,7 @@ function Edit( { attributes, setAttributes } ) {
 									}
 									disabled
 								>
-									<span className="dokan-btn-text">
+									<span className="theabd--btn-text">
 										{ __( 'Cancel', 'dokan-blocks' ) }
 									</span>
 								</button>
@@ -348,7 +348,7 @@ function Edit( { attributes, setAttributes } ) {
 									}
 									disabled
 								>
-									<span className="dokan-btn-text">
+									<span className="theabd--btn-text">
 										{ buttonText }
 									</span>
 								</button>
@@ -358,9 +358,9 @@ function Edit( { attributes, setAttributes } ) {
 						{ ( enableLocationFilter ||
 							enableRatingFilter ||
 							enableCategoryFilter ) && (
-							<div className="dokan-store-advanced-filters">
+							<div className="theabd--store-advanced-filters">
 								{ enableLocationFilter && (
-									<div className="dokan-store-filter-field">
+									<div className="theabd--store-filter-field">
 										<label htmlFor="dokan_store_location">
 											{ __(
 												'Location:',
@@ -370,7 +370,7 @@ function Edit( { attributes, setAttributes } ) {
 										<select
 											name="dokan_store_location"
 											id="dokan_store_location"
-											className="dokan-store-filter-select"
+											className="theabd--form-control theabd--store-filter-select"
 											disabled
 										>
 											<option value="">
@@ -384,7 +384,7 @@ function Edit( { attributes, setAttributes } ) {
 								) }
 
 								{ enableRatingFilter && (
-									<div className="dokan-store-filter-field">
+									<div className="theabd--store-filter-field">
 										<label htmlFor="dokan_store_rating">
 											{ __(
 												'Minimum Rating:',
@@ -394,7 +394,7 @@ function Edit( { attributes, setAttributes } ) {
 										<select
 											name="dokan_store_rating"
 											id="dokan_store_rating"
-											className="dokan-store-filter-select"
+											className="theabd--form-control theabd--store-filter-select"
 											disabled
 										>
 											<option value="">
@@ -429,7 +429,7 @@ function Edit( { attributes, setAttributes } ) {
 								) }
 
 								{ enableCategoryFilter && (
-									<div className="dokan-store-filter-field">
+									<div className="theabd--store-filter-field">
 										<label htmlFor="dokan_store_category">
 											{ __(
 												'Category:',
@@ -439,7 +439,7 @@ function Edit( { attributes, setAttributes } ) {
 										<select
 											name="dokan_store_category"
 											id="dokan_store_category"
-											className="dokan-store-filter-select"
+											className="theabd--form-control theabd--store-filter-select"
 											disabled
 										>
 											<option value="">

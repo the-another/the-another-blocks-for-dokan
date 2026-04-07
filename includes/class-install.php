@@ -57,13 +57,13 @@ class Install {
 		if ( ! $wc_version ) {
 			$missing_dependencies[] = sprintf(
 				/* translators: %s: minimum WooCommerce version */
-				__( 'WooCommerce %s or higher is not installed.', 'another-blocks-for-dokan' ),
+				__( 'WooCommerce %s or higher is not installed.', 'theanother-blocks-for-dokan' ),
 				ANOTHER_BLOCKS_FOR_DOKAN_MIN_WOOCOMMERCE_VERSION
 			);
 		} elseif ( version_compare( $wc_version, ANOTHER_BLOCKS_FOR_DOKAN_MIN_WOOCOMMERCE_VERSION, '<' ) ) {
 			$missing_dependencies[] = sprintf(
 				/* translators: 1: installed version, 2: minimum required version */
-				__( 'WooCommerce %1$s is installed, but version %2$s or higher is required.', 'another-blocks-for-dokan' ),
+				__( 'WooCommerce %1$s is installed, but version %2$s or higher is required.', 'theanother-blocks-for-dokan' ),
 				$wc_version,
 				ANOTHER_BLOCKS_FOR_DOKAN_MIN_WOOCOMMERCE_VERSION
 			);
@@ -80,13 +80,13 @@ class Install {
 		if ( ! $dokan_version ) {
 			$missing_dependencies[] = sprintf(
 				/* translators: %s: minimum Dokan version */
-				__( 'Dokan Lite %s or higher is not installed.', 'another-blocks-for-dokan' ),
+				__( 'Dokan Lite %s or higher is not installed.', 'theanother-blocks-for-dokan' ),
 				ANOTHER_BLOCKS_FOR_DOKAN_MIN_DOKAN_VERSION
 			);
 		} elseif ( version_compare( $dokan_version, ANOTHER_BLOCKS_FOR_DOKAN_MIN_DOKAN_VERSION, '<' ) ) {
 			$missing_dependencies[] = sprintf(
 				/* translators: 1: installed version, 2: minimum required version */
-				__( 'Dokan Lite %1$s is installed, but version %2$s or higher is required.', 'another-blocks-for-dokan' ),
+				__( 'Dokan Lite %1$s is installed, but version %2$s or higher is required.', 'theanother-blocks-for-dokan' ),
 				$dokan_version,
 				ANOTHER_BLOCKS_FOR_DOKAN_MIN_DOKAN_VERSION
 			);
@@ -109,18 +109,18 @@ class Install {
 			// Deactivate the plugin immediately.
 			deactivate_plugins( ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_BASENAME );
 
-			$error_message  = '<h3>' . esc_html__( 'Another Blocks for Dokan - Activation Failed', 'another-blocks-for-dokan' ) . '</h3>';
-			$error_message .= '<p>' . esc_html__( 'The following requirements are not met:', 'another-blocks-for-dokan' ) . '</p>';
+			$error_message  = '<h3>' . esc_html__( 'Another Blocks for Dokan - Activation Failed', 'theanother-blocks-for-dokan' ) . '</h3>';
+			$error_message .= '<p>' . esc_html__( 'The following requirements are not met:', 'theanother-blocks-for-dokan' ) . '</p>';
 			$error_message .= '<ul style="list-style: disc; padding-left: 20px;">';
 			foreach ( $missing_dependencies as $dependency ) {
 				$error_message .= '<li>' . esc_html( $dependency ) . '</li>';
 			}
 			$error_message .= '</ul>';
-			$error_message .= '<p>' . esc_html__( 'Please install and activate the required plugins, then try again.', 'another-blocks-for-dokan' ) . '</p>';
+			$error_message .= '<p>' . esc_html__( 'Please install and activate the required plugins, then try again.', 'theanother-blocks-for-dokan' ) . '</p>';
 
 			wp_die(
 				wp_kses_post( $error_message ),
-				esc_html__( 'Plugin Activation Failed', 'another-blocks-for-dokan' ),
+				esc_html__( 'Plugin Activation Failed', 'theanother-blocks-for-dokan' ),
 				array( 'back_link' => true )
 			);
 		}
@@ -141,8 +141,8 @@ class Install {
 				function () use ( $runtime_missing_dependencies ) {
 					?>
 					<div class="notice notice-error">
-						<p><strong><?php echo esc_html__( 'Another Blocks for Dokan is disabled.', 'another-blocks-for-dokan' ); ?></strong></p>
-						<p><?php echo esc_html__( 'The following requirements are not met:', 'another-blocks-for-dokan' ); ?></p>
+						<p><strong><?php echo esc_html__( 'Another Blocks for Dokan is disabled.', 'theanother-blocks-for-dokan' ); ?></strong></p>
+						<p><?php echo esc_html__( 'The following requirements are not met:', 'theanother-blocks-for-dokan' ); ?></p>
 						<ul style="list-style: disc; padding-left: 20px;">
 							<?php foreach ( $runtime_missing_dependencies as $dependency ) : ?>
 								<li><?php echo esc_html( $dependency ); ?></li>
