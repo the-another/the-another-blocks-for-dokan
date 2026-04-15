@@ -213,6 +213,7 @@ Rather than tracking individual line numbers (which shift as we edit), the imple
 | Transient names | `tanbfd_` | `tanbfd_store_listing_random_orderby` |
 | CSS classes | `tanbfd--` | `tanbfd--vendor-store-header` |
 | Namespace | `The_Another\Plugin\Blocks_Dokan` | unchanged |
+| Text domain | `the-another-blocks-for-dokan` | `__( 'text', 'the-another-blocks-for-dokan' )` |
 | Class methods | unchanged | unchanged |
 
 ### Identifiers to rename
@@ -290,6 +291,18 @@ Global find-and-replace `theabd--` → `tanbfd--` across all `.php`, `.scss`, `.
 
 **Important**: After renaming, `dist/` files must be rebuilt with `npm run build`. The built CSS/JS files in `dist/` will be regenerated automatically — do not manually edit them.
 
+**J. Text domain: `theanother-blocks-for-dokan` → `the-another-blocks-for-dokan`** (~104 references):
+
+Global find-and-replace across all `.php` and `block.json` files (excluding `vendor/`, `node_modules/`, `dist/`).
+
+**Key locations**:
+- `another-blocks-for-dokan.php` — plugin header `Text Domain:` field
+- `blocks/*/block.json` — `"textdomain"` field in every block metadata file
+- All `render.php` files — translation function calls (`__()`, `_e()`, `esc_html__()`, `esc_attr__()`, `_n()`, etc.)
+- `languages/` directory — rename any `.po`/`.mo` files if they exist
+
+**Important**: After renaming, rebuild with `npm run build` since `block.json` files are bundled into `dist/`.
+
 ### Already correct (no changes needed)
 - `The_Another\Plugin\Blocks_Dokan` namespace (brand name argument)
 - Dokan core hooks like `dokan_is_store_open` (external API, not our prefix)
@@ -300,7 +313,7 @@ Global find-and-replace `theabd--` → `tanbfd--` across all `.php`, `.scss`, `.
 ## Out of Scope
 
 - No changes to the block registration names (`the-another/blocks-for-dokan-*`) — these are the published block names and changing them would break existing content.
-- No changes to the text domain `theanother-blocks-for-dokan`.
+- Text domain rename covered in Issue 6J below.
 - No architectural changes.
 
 ---
