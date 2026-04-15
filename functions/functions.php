@@ -13,6 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 use The_Another\Plugin\Blocks_For_Dokan\Blocks;
 use The_Another\Plugin\Blocks_For_Dokan\Container\Container;
 use The_Another\Plugin\Blocks_For_Dokan\Container\Hook_Manager;
+use The_Another\Plugin\Blocks_For_Dokan\Helpers\Context_Detector;
 
 /**
  * Get the Another Blocks for Dokan instance.
@@ -39,6 +40,19 @@ function tanbfd_container(): Container {
  */
 function tanbfd_hooks(): Hook_Manager {
 	return tanbfd_plugin()->get_hook_manager();
+}
+
+/**
+ * Get vendor ID from current context.
+ *
+ * Public API for other plugins to detect the current vendor without
+ * referencing internal class names. Returns null if the vendor cannot
+ * be determined.
+ *
+ * @return int|null Vendor ID or null if not found.
+ */
+function tanbfd_get_vendor_id(): ?int {
+	return Context_Detector::get_vendor_id();
 }
 
 /**
