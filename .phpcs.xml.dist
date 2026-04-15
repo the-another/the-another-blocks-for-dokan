@@ -61,7 +61,7 @@
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" type="array">
-				<element value="theanother-blocks-for-dokan"/>
+				<element value="the-another-blocks-for-dokan"/>
 			</property>
 		</properties>
 	</rule>
@@ -69,9 +69,8 @@
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<property name="prefixes" type="array">
-				<element value="theabd"/>
-				<element value="another_blocks_for_dokan"/>
-				<element value="The_Another\Plugin\Blocks_Dokan"/>
+				<element value="tanbfd"/>
+				<element value="The_Another\Plugin\Blocks_For_Dokan"/>
 			</property>
 		</properties>
 	</rule>
