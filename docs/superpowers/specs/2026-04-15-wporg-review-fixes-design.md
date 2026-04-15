@@ -200,7 +200,7 @@ Rather than tracking individual line numbers (which shift as we edit), the imple
 2. `another_blocks_for` prefix — 7 elements (these are the `ANOTHER_BLOCKS_FOR_DOKAN_*` constants)
 3. `the_another_plugin` prefix — 7 elements
 
-**Decision**: We will **not** rename the `The_Another\Plugin\Blocks_Dokan` namespace. "The Another" is a proper brand name, not a generic "the" prefix. We'll note this in the review response.
+**Decision**: Keep the `The_Another` vendor namespace — it's a proper brand name, not a generic "the" prefix. We'll note this in the review response. However, rename `Blocks_Dokan` → `Blocks_For_Dokan` for clarity and consistency with the plugin name.
 
 ### Prefix strategy
 
@@ -212,7 +212,7 @@ Rather than tracking individual line numbers (which shift as we edit), the imple
 | Script/style handles | `tanbfd-` | `tanbfd-blocks-frontend` |
 | Transient names | `tanbfd_` | `tanbfd_store_listing_random_orderby` |
 | CSS classes | `tanbfd--` | `tanbfd--vendor-store-header` |
-| Namespace | `The_Another\Plugin\Blocks_Dokan` | unchanged |
+| Namespace | `The_Another\Plugin\Blocks_For_Dokan` | `The_Another\Plugin\Blocks_For_Dokan\Templates` |
 | Text domain | `the-another-blocks-for-dokan` | `__( 'text', 'the-another-blocks-for-dokan' )` |
 | Class methods | unchanged | unchanged |
 
@@ -303,8 +303,13 @@ Global find-and-replace across all `.php` and `block.json` files (excluding `ven
 
 **Important**: After renaming, rebuild with `npm run build` since `block.json` files are bundled into `dist/`.
 
+**K. Namespace: `The_Another\Plugin\Blocks_Dokan` → `The_Another\Plugin\Blocks_For_Dokan`** (~75 references):
+
+Global find-and-replace `Blocks_Dokan` → `Blocks_For_Dokan` in namespace declarations and `use` statements across all `.php` files (excluding `vendor/`).
+
+Also update `composer.json` PSR-4 autoload mapping to point the new namespace to the correct directory.
+
 ### Already correct (no changes needed)
-- `The_Another\Plugin\Blocks_Dokan` namespace (brand name argument)
 - Dokan core hooks like `dokan_is_store_open` (external API, not our prefix)
 - `$_wp_current_template_content` (WordPress core global, already has phpcs:ignore)
 
