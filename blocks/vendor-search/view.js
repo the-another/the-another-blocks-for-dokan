@@ -2,11 +2,12 @@
  * Vendor search block frontend script.
  *
  * Handles filter form toggle and sort-by auto-submit.
+ * Loaded in the footer via wp_enqueue_script — DOM is already available.
  *
  * @package AnotherBlocksForDokan
  */
 
-document.addEventListener( 'DOMContentLoaded', function () {
+( function () {
 	var filterButton = document.querySelector( '.tanbfd--vendor-query-loop-filter-button' );
 	var filterForm = document.getElementById( 'tanbfd--vendor-query-looping-filter-form-wrap' );
 	var cancelButton = document.getElementById( 'cancel-filter-btn' );
@@ -44,4 +45,4 @@ document.addEventListener( 'DOMContentLoaded', function () {
 			}
 		} );
 	}
-} );
+} )();
