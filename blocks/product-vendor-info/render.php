@@ -159,11 +159,11 @@ function tanbfd_render_product_vendor_info_block( array $attributes, string $con
 					$inner_block->parsed_block,
 					array( 'dokan/vendor' => $vendor_data )
 				);
-				echo wp_kses_post( $inner_block_instance->render() );
+				echo tanbfd_kses_block( $inner_block_instance->render() );
 			}
 		} elseif ( ! empty( $content ) ) {
 			// Fallback to pre-rendered content if no inner blocks.
-			echo wp_kses_post( $content );
+			echo tanbfd_kses_block( $content );
 		} else {
 			// No inner blocks and no content - show minimal default.
 			?>

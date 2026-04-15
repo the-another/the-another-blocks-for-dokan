@@ -77,6 +77,15 @@
 	</rule>
 
 
+	<!-- Register tanbfd_kses_block as a custom escaping function (extends wp_kses for block output). -->
+	<rule ref="WordPress.Security.EscapeOutput">
+		<properties>
+			<property name="customEscapingFunctions" type="array">
+				<element value="tanbfd_kses_block"/>
+			</property>
+		</properties>
+	</rule>
+
 	<!--
 	#############################################################################
 	SELECTIVE EXCLUSIONS

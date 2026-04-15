@@ -223,7 +223,7 @@ function tanbfd_vendor_query_loop_render_items( array $sellers, array $template_
 				foreach ( $template_blocks as $template_block ) {
 					$parsed   = is_array( $template_block ) ? $template_block : $template_block->parsed_block;
 					$instance = new \WP_Block( $parsed, $vendor_context );
-					echo wp_kses_post( $instance->render() );
+					echo tanbfd_kses_block( $instance->render() );
 				}
 			} else {
 				if ( function_exists( 'tanbfd_render_vendor_avatar_block' ) ) {
@@ -237,7 +237,7 @@ function tanbfd_vendor_query_loop_render_items( array $sellers, array $template_
 						),
 						array( 'dokan/vendor' => $vendor_data )
 					);
-					echo wp_kses_post( $avatar_block->render() );
+					echo tanbfd_kses_block( $avatar_block->render() );
 				}
 
 				if ( function_exists( 'tanbfd_render_vendor_store_name_block' ) ) {
@@ -248,7 +248,7 @@ function tanbfd_vendor_query_loop_render_items( array $sellers, array $template_
 						),
 						array( 'dokan/vendor' => $vendor_data )
 					);
-					echo wp_kses_post( $name_block->render() );
+					echo tanbfd_kses_block( $name_block->render() );
 				}
 			}
 			?>
@@ -425,19 +425,19 @@ function tanbfd_render_vendor_query_loop_block( array $attributes, string $conte
 						$search_block->parsed_block,
 						$block->context
 					);
-					echo wp_kses_post( $search_block_instance->render() );
+					echo tanbfd_kses_block( $search_block_instance->render() );
 				}
 			}
 
 			// Render generic blocks (paragraph/separator/spacer) placed before the vendor-card.
 			foreach ( $extras_before_blocks as $extra_block ) {
 				$extra_block_instance = new WP_Block( $extra_block->parsed_block, $block->context );
-				echo wp_kses_post( $extra_block_instance->render() );
+				echo tanbfd_kses_block( $extra_block_instance->render() );
 			}
 			?>
 			<ul class="tanbfd--vendor-wrap <?php echo esc_attr( $grid_classes ); ?>">
 				<?php
-				echo wp_kses_post( tanbfd_vendor_query_loop_render_items( $sellers, $template_blocks, $block->context ) );
+				echo tanbfd_kses_block( tanbfd_vendor_query_loop_render_items( $sellers, $template_blocks, $block->context ) );
 				?>
 			</ul>
 
@@ -445,7 +445,7 @@ function tanbfd_render_vendor_query_loop_block( array $attributes, string $conte
 			// Render generic blocks (paragraph/separator/spacer) placed after the vendor-card.
 			foreach ( $extras_after_blocks as $extra_block ) {
 				$extra_block_instance = new WP_Block( $extra_block->parsed_block, $block->context );
-				echo wp_kses_post( $extra_block_instance->render() );
+				echo tanbfd_kses_block( $extra_block_instance->render() );
 			}
 
 			if ( $enable_infinite_scroll ) {
@@ -462,7 +462,7 @@ function tanbfd_render_vendor_query_loop_block( array $attributes, string $conte
 							$pagination_block->parsed_block,
 							$block->context
 						);
-						echo wp_kses_post( $pagination_block_instance->render() );
+						echo tanbfd_kses_block( $pagination_block_instance->render() );
 						$pagination_rendered = true;
 						break; // Only render first pagination block.
 					}
@@ -502,7 +502,7 @@ function tanbfd_render_vendor_query_loop_block( array $attributes, string $conte
 						$search_block->parsed_block,
 						$block->context
 					);
-					echo wp_kses_post( $search_block_instance->render() );
+					echo tanbfd_kses_block( $search_block_instance->render() );
 				}
 			}
 			?>
