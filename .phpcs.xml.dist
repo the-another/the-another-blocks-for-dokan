@@ -70,6 +70,7 @@
 		<properties>
 			<property name="prefixes" type="array">
 				<element value="tanbfd"/>
+				<element value="THE_ANOTHER_BLOCKS_FOR_DOKAN"/>
 				<element value="The_Another\Plugin\Blocks_For_Dokan"/>
 			</property>
 		</properties>

@@ -295,8 +295,6 @@ function tanbfd_render_vendor_search_block( array $attributes, string $content, 
 
 		</div>
 	<?php
-
-	<?php
 	wp_enqueue_script( 'tanbfd-vendor-search-view' );
 
 	return ob_get_clean();
