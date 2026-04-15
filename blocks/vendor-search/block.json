@@ -8,7 +8,7 @@
 	"icon": "search",
 	"description": "Search and filter vendor stores.",
 	"keywords": [ "dokan", "vendor", "store", "search" ],
-	"textdomain": "theanother-blocks-for-dokan",
+	"textdomain": "the-another-blocks-for-dokan",
 	"usesContext": [ "dokan/queryId", "dokan/query" ],
 	"supports": {
 		"html": false,

@@ -73,8 +73,8 @@ function tanbfd_render_vendor_query_pagination_block( array $attributes, string 
 					'current'   => $current_page,
 					'total'     => $total_pages,
 					'mid_size'  => $mid_size,
-					'prev_text' => ( 'arrow' === $pagination_arrow ? '&larr; ' : '' ) . ( $show_label ? __( 'Previous', 'theanother-blocks-for-dokan' ) : '' ),
-					'next_text' => ( $show_label ? __( 'Next', 'theanother-blocks-for-dokan' ) : '' ) . ( 'arrow' === $pagination_arrow ? ' &rarr;' : '' ),
+					'prev_text' => ( 'arrow' === $pagination_arrow ? '&larr; ' : '' ) . ( $show_label ? __( 'Previous', 'the-another-blocks-for-dokan' ) : '' ),
+					'next_text' => ( $show_label ? __( 'Next', 'the-another-blocks-for-dokan' ) : '' ) . ( 'arrow' === $pagination_arrow ? ' &rarr;' : '' ),
 					'type'      => 'plain',
 				)
 			)

@@ -8,7 +8,7 @@
 	"icon": "location",
 	"description": "Display the vendor store address.",
 	"keywords": [ "dokan", "vendor", "store", "address", "location" ],
-	"textdomain": "theanother-blocks-for-dokan",
+	"textdomain": "the-another-blocks-for-dokan",
 	"usesContext": [ "dokan/vendor" ],
 	"supports": {
 		"html": false,

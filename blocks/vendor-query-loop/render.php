@@ -478,8 +478,8 @@ function tanbfd_render_vendor_query_loop_block( array $attributes, string $conte
 								array(
 									'total'     => $total_pages,
 									'current'   => $paged,
-									'prev_text' => __( '&larr; Previous', 'theanother-blocks-for-dokan' ),
-									'next_text' => __( 'Next &rarr;', 'theanother-blocks-for-dokan' ),
+									'prev_text' => __( '&larr; Previous', 'the-another-blocks-for-dokan' ),
+									'next_text' => __( 'Next &rarr;', 'the-another-blocks-for-dokan' ),
 								)
 							)
 						);
@@ -507,7 +507,7 @@ function tanbfd_render_vendor_query_loop_block( array $attributes, string $conte
 			}
 			?>
 			<p class="tanbfd--vendor-query-loop-empty">
-				<?php echo esc_html__( 'No vendors found.', 'theanother-blocks-for-dokan' ); ?>
+				<?php echo esc_html__( 'No vendors found.', 'the-another-blocks-for-dokan' ); ?>
 			</p>
 		</div>
 		<?php

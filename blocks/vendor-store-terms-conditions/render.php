@@ -71,7 +71,7 @@ function tanbfd_render_vendor_store_terms_conditions_block( array $attributes, s
 			<div id="tanbfd--store-toc">
 				<?php if ( $show_title ) : ?>
 					<<?php echo esc_attr( $title_tag ); ?> class="tanbfd--store-toc-title tanbfd--headline">
-						<?php esc_html_e( 'Terms and Conditions', 'theanother-blocks-for-dokan' ); ?>
+						<?php esc_html_e( 'Terms and Conditions', 'the-another-blocks-for-dokan' ); ?>
 					</<?php echo esc_attr( $title_tag ); ?>>
 				<?php endif; ?>
 				<div class="tanbfd--store-toc-content">

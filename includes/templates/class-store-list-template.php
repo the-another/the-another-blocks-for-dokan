@@ -70,7 +70,7 @@ class Store_List_Template extends Abstract_Dokan_Template {
 	 * @return string
 	 */
 	public function get_template_title(): string {
-		return __( 'Vendor Listing', 'theanother-blocks-for-dokan' );
+		return __( 'Vendor Listing', 'the-another-blocks-for-dokan' );
 	}
 
 	/**
@@ -79,6 +79,6 @@ class Store_List_Template extends Abstract_Dokan_Template {
 	 * @return string
 	 */
 	public function get_template_description(): string {
-		return __( 'Displays a listing of all vendor stores.', 'theanother-blocks-for-dokan' );
+		return __( 'Displays a listing of all vendor stores.', 'the-another-blocks-for-dokan' );
 	}
 }

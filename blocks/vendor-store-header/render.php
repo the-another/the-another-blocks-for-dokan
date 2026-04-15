@@ -108,9 +108,9 @@ function tanbfd_render_vendor_store_header_block( array $attributes, string $con
 							<i class="fas fa-clock"></i>
 							<?php
 							if ( \The_Another\Plugin\Blocks_For_Dokan\Renderers\Vendor_Renderer::is_store_open( $vendor_id ) ) {
-								echo '<span class="tanbfd--store-open">' . esc_html__( 'Store Open', 'theanother-blocks-for-dokan' ) . '</span>';
+								echo '<span class="tanbfd--store-open">' . esc_html__( 'Store Open', 'the-another-blocks-for-dokan' ) . '</span>';
 							} else {
-								echo '<span class="tanbfd--store-closed">' . esc_html__( 'Store Closed', 'theanother-blocks-for-dokan' ) . '</span>';
+								echo '<span class="tanbfd--store-closed">' . esc_html__( 'Store Closed', 'the-another-blocks-for-dokan' ) . '</span>';
 							}
 							?>
 						</li>

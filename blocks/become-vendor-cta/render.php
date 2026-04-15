@@ -26,9 +26,9 @@ function tanbfd_render_become_vendor_cta_block( array $attributes, string $conte
 	}
 
 	// Extract attributes with defaults.
-	$heading     = isset( $attributes['heading'] ) ? sanitize_text_field( $attributes['heading'] ) : __( 'Become a Vendor', 'theanother-blocks-for-dokan' );
-	$description = isset( $attributes['description'] ) ? sanitize_textarea_field( $attributes['description'] ) : __( 'Vendors can sell products and manage a store with a vendor dashboard.', 'theanother-blocks-for-dokan' );
-	$button_text = isset( $attributes['buttonText'] ) ? sanitize_text_field( $attributes['buttonText'] ) : __( 'Become a Vendor', 'theanother-blocks-for-dokan' );
+	$heading     = isset( $attributes['heading'] ) ? sanitize_text_field( $attributes['heading'] ) : __( 'Become a Vendor', 'the-another-blocks-for-dokan' );
+	$description = isset( $attributes['description'] ) ? sanitize_textarea_field( $attributes['description'] ) : __( 'Vendors can sell products and manage a store with a vendor dashboard.', 'the-another-blocks-for-dokan' );
+	$button_text = isset( $attributes['buttonText'] ) ? sanitize_text_field( $attributes['buttonText'] ) : __( 'Become a Vendor', 'the-another-blocks-for-dokan' );
 	$button_link = isset( $attributes['buttonLink'] ) ? esc_url_raw( $attributes['buttonLink'] ) : '';
 
 	// Get default link if not provided.
