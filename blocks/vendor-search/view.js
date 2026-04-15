@@ -6,7 +6,7 @@
  * @package AnotherBlocksForDokan
  */
 
-( function () {
+document.addEventListener( 'DOMContentLoaded', function () {
 	var filterButton = document.querySelector( '.tanbfd--vendor-query-loop-filter-button' );
 	var filterForm = document.getElementById( 'tanbfd--vendor-query-looping-filter-form-wrap' );
 	var cancelButton = document.getElementById( 'cancel-filter-btn' );
@@ -44,4 +44,4 @@
 			}
 		} );
 	}
-} )();
+} );
