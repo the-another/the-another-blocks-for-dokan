@@ -4,7 +4,7 @@ Tags: dokan, woocommerce, multivendor, blocks, gutenberg
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 8.3
-Stable tag: 1.0.9
+Stable tag: 1.0.10
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,6 +64,20 @@ The Vendor Store Location block can alternatively display an interactive embedde
 
 
 
+
+
+= 1.0.10 - 2026-04-15 =
+* Fix: Corrected Author URI and Plugin URI domain (the-another.org)
+* Fix: Extracted inline script in Vendor Search block to properly enqueued view.js
+* Fix: Replaced hardcoded WP_PLUGIN_DIR paths with WordPress get_plugins() API
+* Fix: Escaped all block output with wp_kses_post() — removed 45 phpcs:ignore suppressions
+* Refactor: Renamed function prefix from theabd_ to tanbfd_ for uniqueness
+* Refactor: Renamed constants prefix to THE_ANOTHER_BLOCKS_FOR_DOKAN_
+* Refactor: Renamed namespace to The_Another\Plugin\Blocks_For_Dokan
+* Refactor: Renamed CSS class prefix from theabd-- to tanbfd--
+* Refactor: Renamed text domain to the-another-blocks-for-dokan
+* Refactor: Renamed script/style handles and transients to use tanbfd- prefix
+* Docs: Added External Services disclosure for Mapbox and Google Maps in readme
 
 = 1.0.9 - 2026-04-07 =
 * Fix: Plugin Check compliance — text domain renamed to `theanother-blocks-for-dokan` across all PHP and block.json files; added missing `languages/` directory; added direct-access guard to `functions/functions.php`; bumped main plugin header `Requires PHP` to 8.3 to match readme
