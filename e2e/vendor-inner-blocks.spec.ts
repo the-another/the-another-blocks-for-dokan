@@ -91,18 +91,18 @@ test.describe( 'Vendor inner blocks – rendering inside query loop', () => {
 	} ) => {
 		await page.goto( pages[ 0 ].link );
 
-		const card = page.locator( '.theabd--single-vendor' ).first();
+		const card = page.locator( '.tanbfd--single-vendor' ).first();
 		await expect( card ).toBeVisible();
 
 		// --- Avatar ---
-		const avatar = card.locator( '.theabd--vendor-avatar' );
+		const avatar = card.locator( '.tanbfd--vendor-avatar' );
 		await expect( avatar ).toBeVisible();
-		const avatarImg = avatar.locator( '.theabd--vendor-avatar-image' );
+		const avatarImg = avatar.locator( '.tanbfd--vendor-avatar-image' );
 		await expect( avatarImg ).toBeVisible();
 		await expect( avatarImg ).toHaveAttribute( 'src', /.+/ );
 
 		// --- Store name (H3, linked) ---
-		const nameBlock = card.locator( '.theabd--vendor-store-name' );
+		const nameBlock = card.locator( '.tanbfd--vendor-store-name' );
 		await expect( nameBlock ).toBeVisible();
 		expect(
 			await nameBlock.evaluate( ( el ) => el.tagName )
@@ -117,7 +117,7 @@ test.describe( 'Vendor inner blocks – rendering inside query loop', () => {
 		}
 
 		// --- Address with icon ---
-		const addressBlock = card.locator( '.theabd--vendor-store-address' );
+		const addressBlock = card.locator( '.tanbfd--vendor-store-address' );
 		const addressCount = await addressBlock.count();
 		if ( addressCount > 0 ) {
 			await expect( addressBlock ).toBeVisible();
@@ -127,7 +127,7 @@ test.describe( 'Vendor inner blocks – rendering inside query loop', () => {
 		}
 
 		// --- Phone with icon and link ---
-		const phoneBlock = card.locator( '.theabd--vendor-store-phone' );
+		const phoneBlock = card.locator( '.tanbfd--vendor-store-phone' );
 		await expect( phoneBlock ).toBeVisible();
 		await expect(
 			phoneBlock.locator( '.dashicons-phone' )
@@ -136,17 +136,17 @@ test.describe( 'Vendor inner blocks – rendering inside query loop', () => {
 		await expect( telLink ).toBeVisible();
 
 		// --- Rating (may be visually empty for vendors with zero reviews) ---
-		const ratingBlock = card.locator( '.theabd--vendor-rating' );
+		const ratingBlock = card.locator( '.tanbfd--vendor-rating' );
 		expect( await ratingBlock.count() ).toBeGreaterThan( 0 );
 
 		// --- Status (open or closed) ---
-		const statusBlock = card.locator( '.theabd--vendor-store-status' );
+		const statusBlock = card.locator( '.tanbfd--vendor-store-status' );
 		await expect( statusBlock ).toBeVisible();
 		// Should have either open or closed class.
 		const statusClass = await statusBlock.getAttribute( 'class' );
 		expect(
-			statusClass?.includes( 'theabd--store-open' ) ||
-				statusClass?.includes( 'theabd--store-closed' )
+			statusClass?.includes( 'tanbfd--store-open' ) ||
+				statusClass?.includes( 'tanbfd--store-closed' )
 		).toBe( true );
 	} );
 
@@ -155,10 +155,10 @@ test.describe( 'Vendor inner blocks – rendering inside query loop', () => {
 	} ) => {
 		await page.goto( pages[ 1 ].link );
 
-		const card = page.locator( '.theabd--single-vendor' ).first();
+		const card = page.locator( '.tanbfd--single-vendor' ).first();
 		await expect( card ).toBeVisible();
 
-		const phoneBlock = card.locator( '.theabd--vendor-store-phone' );
+		const phoneBlock = card.locator( '.tanbfd--vendor-store-phone' );
 		await expect( phoneBlock ).toBeVisible();
 
 		// Should NOT contain a link.
@@ -172,10 +172,10 @@ test.describe( 'Vendor inner blocks – rendering inside query loop', () => {
 	} ) => {
 		await page.goto( pages[ 2 ].link );
 
-		const card = page.locator( '.theabd--single-vendor' ).first();
+		const card = page.locator( '.tanbfd--single-vendor' ).first();
 		await expect( card ).toBeVisible();
 
-		const nameBlock = card.locator( '.theabd--vendor-store-name' );
+		const nameBlock = card.locator( '.tanbfd--vendor-store-name' );
 		expect(
 			await nameBlock.evaluate( ( el ) => el.tagName )
 		).toBe( 'P' );

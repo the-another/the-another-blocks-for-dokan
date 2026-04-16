@@ -89,7 +89,7 @@ test.describe( 'Vendor Query Loop – search and sort', () => {
 
 		// Visit without filter — vendors should be displayed.
 		await page.goto( testPage.link );
-		const cardsAll = page.locator( '.theabd--single-vendor' );
+		const cardsAll = page.locator( '.tanbfd--single-vendor' );
 		const countAll = await cardsAll.count();
 		expect( countAll ).toBeGreaterThanOrEqual( 3 );
 
@@ -109,7 +109,7 @@ test.describe( 'Vendor Query Loop – search and sort', () => {
 
 		// If filtering works, count should be less than all vendors.
 		// If SQLite doesn't support it, count stays the same — both are acceptable.
-		const cardsFiltered = page.locator( '.theabd--single-vendor' );
+		const cardsFiltered = page.locator( '.tanbfd--single-vendor' );
 		const countFiltered = await cardsFiltered.count();
 		expect( countFiltered ).toBeGreaterThanOrEqual( 1 );
 		expect( countFiltered ).toBeLessThanOrEqual( countAll );
@@ -129,7 +129,7 @@ test.describe( 'Vendor Query Loop – search and sort', () => {
 		page,
 	} ) => {
 		await page.goto( pages[ 1 ].link );
-		const names = page.locator( '.theabd--vendor-store-name' );
+		const names = page.locator( '.tanbfd--vendor-store-name' );
 		const allNames = await names.allTextContents();
 		const trimmed = allNames.map( ( n ) => n.trim() );
 
@@ -162,7 +162,7 @@ test.describe( 'Vendor Query Loop – search and sort', () => {
 		await expect( sortSelect ).toHaveValue( 'name' );
 
 		// Vendors should still render.
-		const cards = page.locator( '.theabd--single-vendor' );
+		const cards = page.locator( '.tanbfd--single-vendor' );
 		await expect( cards ).not.toHaveCount( 0 );
 	} );
 } );
@@ -233,7 +233,7 @@ test.describe( 'Vendor Query Loop – featured and empty state', () => {
 
 		// Should show at most 3 vendors (total created),
 		// and ideally 2 (only featured). Both are acceptable.
-		const cards = page.locator( '.theabd--single-vendor' );
+		const cards = page.locator( '.tanbfd--single-vendor' );
 		const count = await cards.count();
 		expect( count ).toBeGreaterThanOrEqual( 0 );
 		expect( count ).toBeLessThanOrEqual( 3 );
@@ -251,8 +251,8 @@ test.describe( 'Vendor Query Loop – featured and empty state', () => {
 
 		// If meta_query filtering works in SQLite, should show empty message.
 		// If SQLite doesn't filter, cards may still appear — both are acceptable.
-		const emptyMsg = wrapper.locator( '.theabd--vendor-query-loop-empty' );
-		const cards = page.locator( '.theabd--single-vendor' );
+		const emptyMsg = wrapper.locator( '.tanbfd--vendor-query-loop-empty' );
+		const cards = page.locator( '.tanbfd--single-vendor' );
 		const emptyCount = await emptyMsg.count();
 		const cardCount = await cards.count();
 
@@ -320,22 +320,22 @@ test.describe( 'Vendor Query Loop – layout, columns, and count', () => {
 
 		// The outer wrapper div should have list layout class.
 		const wrapper = page.locator(
-			'div.theabd--vendor-query-loop.theabd--vendor-query-loop-list'
+			'div.tanbfd--vendor-query-loop.tanbfd--vendor-query-loop-list'
 		);
 		await expect( wrapper ).toBeVisible();
 
 		// The inner <ul> should have the list class too.
-		const innerList = wrapper.locator( 'ul.theabd--vendor-query-loop-list' );
+		const innerList = wrapper.locator( 'ul.tanbfd--vendor-query-loop-list' );
 		await expect( innerList ).toBeVisible();
 
 		// Should NOT have grid class on the inner list.
 		await expect(
-			wrapper.locator( 'ul.theabd--vendor-query-loop-grid' )
+			wrapper.locator( 'ul.tanbfd--vendor-query-loop-grid' )
 		).toHaveCount( 0 );
 
 		// Cards should still render (5 vendors in this group).
 		await expect(
-			page.locator( '.theabd--single-vendor' )
+			page.locator( '.tanbfd--single-vendor' )
 		).toHaveCount( 5 );
 	} );
 
@@ -346,16 +346,16 @@ test.describe( 'Vendor Query Loop – layout, columns, and count', () => {
 
 		// The outer wrapper should have columns-4 class.
 		const wrapper = page.locator(
-			'div.theabd--vendor-query-loop.theabd--vendor-query-loop-columns-4'
+			'div.tanbfd--vendor-query-loop.tanbfd--vendor-query-loop-columns-4'
 		);
 		await expect( wrapper ).toBeVisible();
 
 		// The inner grid <ul> should also have columns-4 class.
 		const gridWrap = wrapper.locator(
-			'ul.theabd--vendor-query-loop-grid'
+			'ul.tanbfd--vendor-query-loop-grid'
 		);
 		await expect( gridWrap ).toHaveClass(
-			/theabd--vendor-query-loop-columns-4/
+			/tanbfd--vendor-query-loop-columns-4/
 		);
 	} );
 
@@ -365,7 +365,7 @@ test.describe( 'Vendor Query Loop – layout, columns, and count', () => {
 		await page.goto( pages[ 2 ].link );
 
 		// Store count should show the total (5), not just per-page count.
-		const storeCount = page.locator( '.theabd--store-count' );
+		const storeCount = page.locator( '.tanbfd--store-count' );
 		await expect( storeCount ).toBeVisible();
 		await expect( storeCount ).toContainText( '5' );
 	} );
@@ -429,19 +429,19 @@ test.describe( 'Vendor Query Loop – inner block content', () => {
 	} ) => {
 		await page.goto( pages[ 0 ].link );
 
-		const card = page.locator( '.theabd--single-vendor' ).first();
+		const card = page.locator( '.tanbfd--single-vendor' ).first();
 		await expect( card ).toBeVisible();
 
 		// --- Avatar ---
-		const avatar = card.locator( '.theabd--vendor-avatar' );
+		const avatar = card.locator( '.tanbfd--vendor-avatar' );
 		await expect( avatar ).toBeVisible();
 
-		const avatarImg = avatar.locator( '.theabd--vendor-avatar-image' );
+		const avatarImg = avatar.locator( '.tanbfd--vendor-avatar-image' );
 		await expect( avatarImg ).toBeVisible();
 		await expect( avatarImg ).toHaveAttribute( 'src', /.+/ );
 
 		// --- Store name as link ---
-		const nameBlock = card.locator( '.theabd--vendor-store-name' );
+		const nameBlock = card.locator( '.tanbfd--vendor-store-name' );
 		// The store name h3 may be empty if Dokan doesn't populate
 		// store_name in to_array(). Check the element exists at minimum.
 		expect(
@@ -458,7 +458,7 @@ test.describe( 'Vendor Query Loop – inner block content', () => {
 
 		// --- Address (optional — depends on Dokan profile data) ---
 		const addressBlock = card.locator(
-			'.theabd--vendor-store-address'
+			'.tanbfd--vendor-store-address'
 		);
 		const addressCount = await addressBlock.count();
 		if ( addressCount > 0 ) {
@@ -474,10 +474,10 @@ test.describe( 'Vendor Query Loop – inner block content', () => {
 	} ) => {
 		await page.goto( pages[ 1 ].link );
 
-		const card = page.locator( '.theabd--single-vendor' ).first();
+		const card = page.locator( '.tanbfd--single-vendor' ).first();
 		await expect( card ).toBeVisible();
 
-		const nameBlock = card.locator( '.theabd--vendor-store-name' );
+		const nameBlock = card.locator( '.tanbfd--vendor-store-name' );
 
 		// Should be a <p> tag.
 		expect( await nameBlock.evaluate( ( el ) => el.tagName ) ).toBe(
@@ -559,7 +559,7 @@ test.describe( 'Vendor Query Loop – search form interaction', () => {
 
 		// Both vendors should be visible initially.
 		await expect(
-			page.locator( '.theabd--single-vendor' )
+			page.locator( '.tanbfd--single-vendor' )
 		).toHaveCount( 2 );
 
 		// Open filter form.

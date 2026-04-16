@@ -73,19 +73,19 @@ test.describe( 'Product context blocks – frontend rendering', () => {
 	} ) => {
 		await page.goto( pages[ 0 ].link );
 
-		const infoBlock = page.locator( '.theabd--product-vendor-info' );
+		const infoBlock = page.locator( '.tanbfd--product-vendor-info' );
 		await expect( infoBlock ).toBeVisible();
 
 		// Inner blocks should render with vendor context.
-		const nameBlock = infoBlock.locator( '.theabd--vendor-store-name' );
+		const nameBlock = infoBlock.locator( '.tanbfd--vendor-store-name' );
 		await expect( nameBlock ).toBeVisible();
 		await expect( nameBlock ).not.toBeEmpty();
 		await expect( nameBlock.locator( 'a' ) ).toBeVisible();
 
-		const avatar = infoBlock.locator( '.theabd--vendor-avatar' );
+		const avatar = infoBlock.locator( '.tanbfd--vendor-avatar' );
 		await expect( avatar ).toBeVisible();
 		await expect(
-			avatar.locator( '.theabd--vendor-avatar-image' )
+			avatar.locator( '.tanbfd--vendor-avatar-image' )
 		).toHaveAttribute( 'src', /.+/ );
 	} );
 
@@ -94,12 +94,12 @@ test.describe( 'Product context blocks – frontend rendering', () => {
 	} ) => {
 		await page.goto( pages[ 1 ].link );
 
-		const moreBlock = page.locator( '.theabd--more-from-vendor' );
+		const moreBlock = page.locator( '.tanbfd--more-from-vendor' );
 		await expect( moreBlock ).toBeVisible();
 
 		// Title should be present.
 		await expect(
-			moreBlock.locator( '.theabd--more-from-vendor-title' )
+			moreBlock.locator( '.tanbfd--more-from-vendor-title' )
 		).toContainText( 'More from this seller' );
 
 		// Should show other products (at least 1, ideally 2).
@@ -109,7 +109,7 @@ test.describe( 'Product context blocks – frontend rendering', () => {
 
 		// Footer link to vendor store should be present.
 		const footerLink = moreBlock.locator(
-			'.theabd--more-from-vendor-footer a'
+			'.tanbfd--more-from-vendor-footer a'
 		);
 		await expect( footerLink ).toBeVisible();
 		await expect( footerLink ).toContainText(
@@ -122,12 +122,12 @@ test.describe( 'Product context blocks – frontend rendering', () => {
 	} ) => {
 		await page.goto( pages[ 2 ].link );
 
-		const moreBlock = page.locator( '.theabd--more-from-vendor' );
+		const moreBlock = page.locator( '.tanbfd--more-from-vendor' );
 		await expect( moreBlock ).toBeVisible();
 
 		// Should show empty state.
 		await expect(
-			moreBlock.locator( '.theabd--more-from-vendor-empty' )
+			moreBlock.locator( '.tanbfd--more-from-vendor-empty' )
 		).toContainText( 'No other products found from this seller' );
 	} );
 } );
