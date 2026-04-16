@@ -4,7 +4,7 @@ Tags: dokan, woocommerce, multivendor, blocks, gutenberg
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 8.3
-Stable tag: 1.0.11
+Stable tag: 1.0.12
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -66,6 +66,10 @@ The Vendor Store Location block can alternatively display an interactive embedde
 
 
 
+
+
+= 1.0.12 - 2026-04-16 =
+* Version bump
 
 = 1.0.11 - 2026-04-17 =
 * Fix: Release workflow now uploads both versioned and unversioned ZIP to GitHub releases
