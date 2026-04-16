@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace The_Another\Plugin\Blocks_Dokan\Exceptions;
+namespace The_Another\Plugin\Blocks_For_Dokan\Exceptions;
 
 use Exception;
 

@@ -5,16 +5,16 @@
  * @since 1.0.0
  */
 
-.theabd--vendor-contact-form {
+.tanbfd--vendor-contact-form {
 	// Form list styling
-	.theabd--form-list,
+	.tanbfd--form-list,
 	ul {
 		list-style: none;
 		margin: 0;
 		padding: 0;
 	}
 
-	.theabd--form-group {
+	.tanbfd--form-group {
 		margin-bottom: 1em;
 	}
 
@@ -61,7 +61,7 @@
 	}
 
 	// Privacy policy text.
-	.theabd--privacy-policy-text {
+	.tanbfd--privacy-policy-text {
 		margin: 1em 0;
 		padding: 10px;
 		background-color: #f9f9f9;
@@ -70,27 +70,27 @@
 		color: #666;
 	}
 
-	.theabd--right {
+	.tanbfd--right {
 		float: right;
 	}
 
 	// Ajax response area
-	.theabd--ajax-response {
+	.tanbfd--ajax-response {
 		margin-bottom: 1em;
 
-		.theabd--alert {
+		.tanbfd--alert {
 			padding: 10px 15px;
 			border-radius: 4px;
 			margin-bottom: 10px;
 		}
 
-		.theabd--alert-success {
+		.tanbfd--alert-success {
 			background-color: #d4edda;
 			color: #155724;
 			border: 1px solid #c3e6cb;
 		}
 
-		.theabd--alert-danger {
+		.tanbfd--alert-danger {
 			background-color: #f8d7da;
 			color: #721c24;
 			border: 1px solid #f5c6cb;
@@ -98,7 +98,7 @@
 	}
 
 	// Clearfix
-	.theabd--clearfix::after {
+	.tanbfd--clearfix::after {
 		content: "";
 		display: table;
 		clear: both;
@@ -108,9 +108,9 @@
 // Editor-specific styles
 .editor-styles-wrapper {
 
-	.theabd--vendor-contact-form {
+	.tanbfd--vendor-contact-form {
 
-		.theabd--vendor-form {
+		.tanbfd--vendor-form {
 			padding: 0;
 		}
 
@@ -131,7 +131,7 @@
 			margin-bottom: 0;
 		}
 
-		.theabd--privacy-policy-preview {
+		.tanbfd--privacy-policy-preview {
 			font-style: italic;
 		}
 

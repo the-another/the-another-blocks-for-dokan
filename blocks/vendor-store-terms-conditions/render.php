@@ -19,12 +19,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param WP_Block             $block      Block instance.
  * @return string Rendered HTML.
  */
-function theabd_render_vendor_store_terms_conditions_block( array $attributes, string $content, WP_Block $block ): string {
+function tanbfd_render_vendor_store_terms_conditions_block( array $attributes, string $content, WP_Block $block ): string {
 	// Get vendor ID from attributes or context.
 	$vendor_id = ! empty( $attributes['vendorId'] ) ? absint( $attributes['vendorId'] ) : 0;
 
 	if ( ! $vendor_id ) {
-		$vendor_id = \The_Another\Plugin\Blocks_Dokan\Helpers\Context_Detector::get_vendor_id();
+		$vendor_id = tanbfd_get_vendor_id();
 	}
 
 	if ( ! $vendor_id || ! dokan_is_user_seller( $vendor_id ) ) {
@@ -60,21 +60,21 @@ function theabd_render_vendor_store_terms_conditions_block( array $attributes, s
 	// Get wrapper attributes.
 	$wrapper_attributes = get_block_wrapper_attributes(
 		array(
-			'class' => 'theabd--vendor-store-terms-conditions',
+			'class' => 'tanbfd--vendor-store-terms-conditions',
 		)
 	);
 
 	ob_start();
 	?>
-	<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-		<div id="theabd--store-toc-wrapper">
-			<div id="theabd--store-toc">
+	<div <?php echo wp_kses_post( $wrapper_attributes ); ?>>
+		<div id="tanbfd--store-toc-wrapper">
+			<div id="tanbfd--store-toc">
 				<?php if ( $show_title ) : ?>
-					<<?php echo esc_attr( $title_tag ); ?> class="theabd--store-toc-title theabd--headline">
-						<?php esc_html_e( 'Terms and Conditions', 'theanother-blocks-for-dokan' ); ?>
+					<<?php echo esc_attr( $title_tag ); ?> class="tanbfd--store-toc-title tanbfd--headline">
+						<?php esc_html_e( 'Terms and Conditions', 'the-another-blocks-for-dokan' ); ?>
 					</<?php echo esc_attr( $title_tag ); ?>>
 				<?php endif; ?>
-				<div class="theabd--store-toc-content">
+				<div class="tanbfd--store-toc-content">
 					<?php echo wp_kses_post( wpautop( wptexturize( $tnc_content ) ) ); ?>
 				</div>
 			</div>

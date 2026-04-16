@@ -7,8 +7,7 @@
  */
 
 // Exit if accessed directly.
-use The_Another\Plugin\Blocks_Dokan\Helpers\Context_Detector;
-use The_Another\Plugin\Blocks_Dokan\Renderers\Vendor_Renderer;
+use The_Another\Plugin\Blocks_For_Dokan\Renderers\Vendor_Renderer;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -22,12 +21,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param WP_Block             $block      Block instance.
  * @return string Rendered HTML.
  */
-function theabd_render_product_vendor_info_block( array $attributes, string $content, WP_Block $block ): string {
+function tanbfd_render_product_vendor_info_block( array $attributes, string $content, WP_Block $block ): string {
 	// Get product ID from attributes or context.
 	$product_id = ! empty( $attributes['productId'] ) ? absint( $attributes['productId'] ) : 0;
 
 	if ( ! $product_id ) {
-		$product_id = Context_Detector::get_product_id();
+		$product_id = tanbfd_get_product_id();
 	}
 
 	if ( ! $product_id ) {
@@ -35,16 +34,16 @@ function theabd_render_product_vendor_info_block( array $attributes, string $con
 		if ( is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
 			$wrapper_attributes = get_block_wrapper_attributes(
 				array(
-					'class' => 'theabd--product-vendor-info',
+					'class' => 'tanbfd--product-vendor-info',
 				)
 			);
 
 			ob_start();
 			?>
-			<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-				<div class="theabd--product-vendor-info-placeholder">
+			<div <?php echo wp_kses_post( $wrapper_attributes ); ?>>
+				<div class="tanbfd--product-vendor-info-placeholder">
 					<p style="padding: 1rem; background: #f0f0f0; border-radius: 4px; font-size: 0.875rem; color: #666;">
-						<?php echo esc_html__( 'Product Vendor Info: Add this block to a product page or specify a product ID in the block settings.', 'theanother-blocks-for-dokan' ); ?>
+						<?php echo esc_html__( 'Product Vendor Info: Add this block to a product page or specify a product ID in the block settings.', 'the-another-blocks-for-dokan' ); ?>
 					</p>
 				</div>
 			</div>
@@ -73,7 +72,7 @@ function theabd_render_product_vendor_info_block( array $attributes, string $con
 	}
 
 	// Build wrapper classes.
-	$wrapper_classes = array( 'theabd--product-vendor-info' );
+	$wrapper_classes = array( 'tanbfd--product-vendor-info' );
 
 	// Initialize inline styles array.
 	$inline_styles = array();
@@ -148,7 +147,7 @@ function theabd_render_product_vendor_info_block( array $attributes, string $con
 	// Render the product vendor info with inner blocks.
 	ob_start();
 	?>
-	<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+	<div <?php echo wp_kses_post( $wrapper_attributes ); ?><?php echo wp_kses_post( $style_attr ); ?>>
 		<?php
 		// Render inner blocks with vendor context.
 		if ( ! empty( $block->inner_blocks ) && $vendor_data ) {
@@ -159,15 +158,15 @@ function theabd_render_product_vendor_info_block( array $attributes, string $con
 					$inner_block->parsed_block,
 					array( 'dokan/vendor' => $vendor_data )
 				);
-				echo $inner_block_instance->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo tanbfd_kses_block( $inner_block_instance->render() );
 			}
 		} elseif ( ! empty( $content ) ) {
 			// Fallback to pre-rendered content if no inner blocks.
-			echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo tanbfd_kses_block( $content );
 		} else {
 			// No inner blocks and no content - show minimal default.
 			?>
-			<div class="theabd--product-vendor-info-default">
+			<div class="tanbfd--product-vendor-info-default">
 				<?php if ( ! empty( $vendor_data['shop_name'] ) ) : ?>
 					<h3>
 						<a href="<?php echo esc_url( $vendor_data['shop_url'] ); ?>">

@@ -6,10 +6,20 @@
  * @since 1.0.0
  */
 
-namespace The_Another\Plugin\Blocks_Dokan\Helpers;
+namespace The_Another\Plugin\Blocks_For_Dokan\Helpers;
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
- * Context detector class.
+ * Context detector — detects the current vendor, product, and page type
+ * from WordPress query vars and Dokan state.
+ *
+ * Registered as a singleton in the Container. External consumers should
+ * use the public API functions (tanbfd_get_vendor_id, etc.) instead of
+ * referencing this class directly.
  */
 class Context_Detector {
 
@@ -18,7 +28,7 @@ class Context_Detector {
 	 *
 	 * @return int|null Vendor ID or null if not found.
 	 */
-	public static function get_vendor_id(): ?int {
+	public function get_vendor_id(): ?int {
 		// Try Dokan's store object.
 		if ( function_exists( 'dokan' ) && method_exists( dokan(), 'get_store_info' ) ) {
 			$store = dokan()->vendor->get( get_query_var( 'author' ) );
@@ -62,7 +72,7 @@ class Context_Detector {
 	 *
 	 * @return int|null Product ID or null if not found.
 	 */
-	public static function get_product_id(): ?int {
+	public function get_product_id(): ?int {
 		global $post;
 
 		if ( isset( $post ) && 'product' === $post->post_type ) {
@@ -83,22 +93,16 @@ class Context_Detector {
 	 *
 	 * @return bool
 	 */
-	public static function is_store_page(): bool {
-		// If we're on a single product page, we're NOT on a store page.
-		// This prevents auction/item products from being treated as store pages.
+	public function is_store_page(): bool {
+		// Product pages within a store have the 'store' query var set,
+		// so dokan_is_store_page() returns true for them. Exclude those
+		// since a product page is not a store listing.
 		if ( is_singular( 'product' ) ) {
 			return false;
 		}
 
-		// First, try Dokan's native function if available.
-		if ( function_exists( 'dokan_is_store_page' ) && dokan_is_store_page() ) {
-			return true;
-		}
-
-		// Check query vars.
-		$store_name = get_query_var( 'store', '' );
-		if ( ! empty( $store_name ) ) {
-			return true;
+		if ( function_exists( 'dokan_is_store_page' ) ) {
+			return dokan_is_store_page();
 		}
 
 		return false;
@@ -109,7 +113,7 @@ class Context_Detector {
 	 *
 	 * @return bool
 	 */
-	public static function is_product_page(): bool {
+	public function is_product_page(): bool {
 		return is_singular( 'product' );
 	}
 
@@ -118,7 +122,7 @@ class Context_Detector {
 	 *
 	 * @return bool
 	 */
-	public static function is_store_list_page(): bool {
+	public function is_store_list_page(): bool {
 		return is_page( get_option( 'dokan_pages', array() )['store_listing'] ?? 0 );
 	}
 }

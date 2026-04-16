@@ -6,11 +6,11 @@
  */
 
 .wp-block-the-another-blocks-for-dokan-vendor-search,
-.theabd--vendor-search {
+.tanbfd--vendor-search {
 	margin-bottom: 0;
 
 	// Top filter row - always visible.
-	.theabd--vendor-query-looping-filter-wrap {
+	.tanbfd--vendor-query-looping-filter-wrap {
 		margin-bottom: 1rem;
 		padding: 1rem;
 		background: #fff;
@@ -18,7 +18,7 @@
 		border-radius: 8px;
 		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 
-		.theabd--store-filter-row {
+		.tanbfd--store-filter-row {
 			// Desktop: all in one row
 			display: flex;
 			align-items: center;
@@ -26,16 +26,16 @@
 			gap: 1rem;
 			flex-wrap: nowrap;
 
-			.theabd--store-filter-row-inner {
+			.tanbfd--store-filter-row-inner {
 				display: flex;
 				align-items: center;
 				gap: 1rem;
 
-				&.theabd--store-filter-row-sort {
+				&.tanbfd--store-filter-row-sort {
 					flex: 0 0 auto;
 				}
 
-				.theabd--store-filter-left {
+				.tanbfd--store-filter-left {
 					flex: 0 0 auto;
 
 					.item.store-count {
@@ -47,7 +47,7 @@
 					}
 				}
 
-				.theabd--store-filter-right-item {
+				.tanbfd--store-filter-right-item {
 					flex: 0 0 auto;
 
 					.item {
@@ -55,12 +55,12 @@
 						align-items: center;
 						gap: 0.5rem;
 
-						.theabd--icons {
+						.tanbfd--icons {
 							display: flex;
 							gap: 3px;
 							margin-right: 0.5rem;
 
-							.theabd--icon-div {
+							.tanbfd--icon-div {
 								width: 4px;
 								height: 4px;
 								background: #666;
@@ -68,7 +68,7 @@
 							}
 						}
 
-						.theabd--vendor-query-loop-filter-button {
+						.tanbfd--vendor-query-loop-filter-button {
 							display: flex;
 							align-items: center;
 							gap: 0.5rem;
@@ -78,7 +78,7 @@
 			}
 
 			/* stylelint-disable-next-line no-duplicate-selectors */
-			.theabd--store-filter-row-inner.theabd--store-filter-row-sort {
+			.tanbfd--store-filter-row-inner.tanbfd--store-filter-row-sort {
 
 				.item.sort-by {
 					display: flex;
@@ -105,15 +105,15 @@
 		// Mobile: two rows
 		@media (max-width: 768px) {
 
-			.theabd--store-filter-row {
+			.tanbfd--store-filter-row {
 				flex-direction: column;
 				align-items: stretch;
 				gap: 0.75rem;
 
-				.theabd--store-filter-row-inner {
+				.tanbfd--store-filter-row-inner {
 					justify-content: space-between;
 
-					&.theabd--store-filter-row-sort {
+					&.tanbfd--store-filter-row-sort {
 						justify-content: flex-start;
 					}
 				}
@@ -122,7 +122,7 @@
 	}
 
 	// Collapsible filter form.
-	.theabd--vendor-search-filter-form {
+	.tanbfd--vendor-search-filter-form {
 		margin-top: 0;
 		margin-bottom: 1rem;
 		padding: 1.5rem;
@@ -144,17 +144,17 @@
 			border-bottom: 8px solid #fff;
 		}
 
-		.theabd--vendor-search-filter-row {
+		.tanbfd--vendor-search-filter-row {
 			display: flex;
 			align-items: center;
 			gap: 1rem;
 			flex-wrap: wrap;
 
-			.theabd--vendor-search {
+			.tanbfd--vendor-search {
 				flex: 1 1 300px;
 				min-width: 200px;
 
-				.theabd--vendor-search-input {
+				.tanbfd--vendor-search-input {
 					width: 100%;
 
 					&::placeholder {
@@ -163,14 +163,14 @@
 				}
 			}
 
-			.theabd--apply-filter {
+			.tanbfd--apply-filter {
 				display: flex;
 				gap: 0.75rem;
 				flex: 0 0 auto;
 			}
 		}
 
-		.theabd--store-advanced-filters {
+		.tanbfd--store-advanced-filters {
 			display: flex;
 			flex-wrap: wrap;
 			gap: 1.5rem;
@@ -178,7 +178,7 @@
 			padding-top: 1.5rem;
 			border-top: 1px solid #e0e0e0;
 
-			.theabd--store-filter-field {
+			.tanbfd--store-filter-field {
 				flex: 0 1 auto;
 				min-width: 180px;
 
@@ -191,7 +191,7 @@
 					color: #333;
 				}
 
-				.theabd--store-filter-select {
+				.tanbfd--store-filter-select {
 					width: 100%;
 					background: #fff;
 				}

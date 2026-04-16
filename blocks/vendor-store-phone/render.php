@@ -19,9 +19,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param WP_Block             $block      Block instance.
  * @return string Rendered HTML.
  */
-function theabd_render_vendor_store_phone_block( array $attributes, string $content, WP_Block $block ): string {
+function tanbfd_render_vendor_store_phone_block( array $attributes, string $content, WP_Block $block ): string {
 	// Get vendor data from context, falling back to page context detection.
-	$vendor = \The_Another\Plugin\Blocks_Dokan\Renderers\Vendor_Renderer::resolve_vendor_from_context(
+	$vendor = \The_Another\Plugin\Blocks_For_Dokan\Renderers\Vendor_Renderer::resolve_vendor_from_context(
 		$block->context['dokan/vendor'] ?? null,
 		array(
 			'phone' => 'phone',
@@ -29,7 +29,7 @@ function theabd_render_vendor_store_phone_block( array $attributes, string $cont
 	);
 
 	if ( empty( $vendor ) || empty( $vendor['id'] ) ) {
-		return '<p class="theabd--vendor-store-phone">+1 234 567 8900</p>';
+		return '<p class="tanbfd--vendor-store-phone">+1 234 567 8900</p>';
 	}
 
 	$phone     = $vendor['phone'] ?? '';
@@ -44,7 +44,7 @@ function theabd_render_vendor_store_phone_block( array $attributes, string $cont
 	// Get wrapper attributes.
 	$wrapper_attributes = get_block_wrapper_attributes(
 		array(
-			'class' => 'theabd--vendor-store-phone',
+			'class' => 'tanbfd--vendor-store-phone',
 		)
 	);
 
@@ -53,7 +53,7 @@ function theabd_render_vendor_store_phone_block( array $attributes, string $cont
 
 	ob_start();
 	?>
-	<p <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+	<p <?php echo wp_kses_post( $wrapper_attributes ); ?>>
 		<?php if ( $show_icon ) : ?>
 			<span class="dashicons dashicons-phone" aria-hidden="true"></span>
 		<?php endif; ?>

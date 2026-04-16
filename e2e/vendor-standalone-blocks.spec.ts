@@ -84,23 +84,23 @@ test.describe( 'Vendor standalone blocks – frontend rendering', () => {
 	test( 'renders compact layout with status section', async ( { page } ) => {
 		await page.goto( pages[ 0 ].link );
 
-		const hoursBlock = page.locator( '.theabd--vendor-store-hours' );
+		const hoursBlock = page.locator( '.tanbfd--vendor-store-hours' );
 		await expect( hoursBlock ).toBeVisible();
 
 		// Should have compact layout class.
 		await expect( hoursBlock ).toHaveClass(
-			/theabd--vendor-store-hours-compact/
+			/tanbfd--vendor-store-hours-compact/
 		);
 
 		// Status section should be present.
 		const status = hoursBlock.locator(
-			'.theabd--vendor-store-hours-status'
+			'.tanbfd--vendor-store-hours-status'
 		);
 		await expect( status ).toBeVisible();
 
 		// Should show either open or closed.
-		const openBadge = status.locator( '.theabd--store-open' );
-		const closedBadge = status.locator( '.theabd--store-closed' );
+		const openBadge = status.locator( '.tanbfd--store-open' );
+		const closedBadge = status.locator( '.tanbfd--store-closed' );
 		const openCount = await openBadge.count();
 		const closedCount = await closedBadge.count();
 		expect( openCount + closedCount ).toBe( 1 );
@@ -110,31 +110,31 @@ test.describe( 'Vendor standalone blocks – frontend rendering', () => {
 	test( 'renders detailed layout with 7 days and today marker', async ( { page } ) => {
 		await page.goto( pages[ 1 ].link );
 
-		const hoursBlock = page.locator( '.theabd--vendor-store-hours' );
+		const hoursBlock = page.locator( '.tanbfd--vendor-store-hours' );
 		await expect( hoursBlock ).toBeVisible();
 
 		// Should have detailed layout class.
 		await expect( hoursBlock ).toHaveClass(
-			/theabd--vendor-store-hours-detailed/
+			/tanbfd--vendor-store-hours-detailed/
 		);
 
 		// Should have 7 day items.
 		const dayItems = hoursBlock.locator(
-			'li.theabd--vendor-store-hours-day'
+			'li.tanbfd--vendor-store-hours-day'
 		);
 		await expect( dayItems ).toHaveCount( 7 );
 
 		// Exactly one day should be marked as today.
-		const todayItems = hoursBlock.locator( 'li.theabd--today' );
+		const todayItems = hoursBlock.locator( 'li.tanbfd--today' );
 		await expect( todayItems ).toHaveCount( 1 );
 
 		// Each day should have a name and hours.
 		const firstDay = dayItems.first();
 		await expect(
-			firstDay.locator( '.theabd--day-name' )
+			firstDay.locator( '.tanbfd--day-name' )
 		).toBeVisible();
 		await expect(
-			firstDay.locator( '.theabd--day-hours' )
+			firstDay.locator( '.tanbfd--day-hours' )
 		).toBeVisible();
 	} );
 
@@ -143,12 +143,12 @@ test.describe( 'Vendor standalone blocks – frontend rendering', () => {
 		await page.goto( pages[ 2 ].link );
 
 		const tncBlock = page.locator(
-			'.theabd--vendor-store-terms-conditions'
+			'.tanbfd--vendor-store-terms-conditions'
 		);
 		await expect( tncBlock ).toBeVisible();
 
 		// Title should be visible as H2.
-		const title = tncBlock.locator( '.theabd--store-toc-title' );
+		const title = tncBlock.locator( '.tanbfd--store-toc-title' );
 		await expect( title ).toBeVisible();
 		expect(
 			await title.evaluate( ( el ) => el.tagName )
@@ -156,7 +156,7 @@ test.describe( 'Vendor standalone blocks – frontend rendering', () => {
 		await expect( title ).toContainText( 'Terms and Conditions' );
 
 		// Content should contain our test text.
-		const tncContent = tncBlock.locator( '.theabd--store-toc-content' );
+		const tncContent = tncBlock.locator( '.tanbfd--store-toc-content' );
 		await expect( tncContent ).toContainText( TNC_TEXT );
 	} );
 
@@ -165,18 +165,18 @@ test.describe( 'Vendor standalone blocks – frontend rendering', () => {
 		await page.goto( pages[ 3 ].link );
 
 		const tncBlock = page.locator(
-			'.theabd--vendor-store-terms-conditions'
+			'.tanbfd--vendor-store-terms-conditions'
 		);
 		await expect( tncBlock ).toBeVisible();
 
 		// Title should NOT be present.
 		await expect(
-			tncBlock.locator( '.theabd--store-toc-title' )
+			tncBlock.locator( '.tanbfd--store-toc-title' )
 		).toHaveCount( 0 );
 
 		// Content should still render.
 		await expect(
-			tncBlock.locator( '.theabd--store-toc-content' )
+			tncBlock.locator( '.tanbfd--store-toc-content' )
 		).toContainText( TNC_TEXT );
 	} );
 
@@ -184,10 +184,10 @@ test.describe( 'Vendor standalone blocks – frontend rendering', () => {
 	test( 'renders tab items when Dokan rewrite rules are active', async ( { page } ) => {
 		await page.goto( pages[ 4 ].link );
 
-		const tabsBlock = page.locator( '.theabd--vendor-store-tabs' );
+		const tabsBlock = page.locator( '.tanbfd--vendor-store-tabs' );
 		await expect( tabsBlock ).toBeVisible();
 
-		const tabItems = tabsBlock.locator( '.theabd--store-tab-item' );
+		const tabItems = tabsBlock.locator( '.tanbfd--store-tab-item' );
 		expect( await tabItems.count() ).toBeGreaterThan( 0 );
 
 		const firstTab = tabItems.first();

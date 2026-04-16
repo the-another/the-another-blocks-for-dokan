@@ -6,9 +6,9 @@
  * @since 1.0.3
  */
 
-namespace The_Another\Plugin\Blocks_Dokan\Tests\Unit\Renderers;
+namespace The_Another\Plugin\Blocks_For_Dokan\Tests\Unit\Renderers;
 
-use The_Another\Plugin\Blocks_Dokan\Renderers\Vendor_Renderer;
+use The_Another\Plugin\Blocks_For_Dokan\Renderers\Vendor_Renderer;
 use PHPUnit\Framework\TestCase;
 use Brain\Monkey;
 use Brain\Monkey\Functions;

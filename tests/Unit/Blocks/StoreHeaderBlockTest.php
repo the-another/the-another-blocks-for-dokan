@@ -6,13 +6,13 @@
  * @since 1.0.0
  */
 
-namespace The_Another\Plugin\Blocks_Dokan\Blocks\Tests\Unit\Blocks;
+namespace The_Another\Plugin\Blocks_For_Dokan\Blocks\Tests\Unit\Blocks;
 
 use PHPUnit\Framework\TestCase;
 use Brain\Monkey;
 use Brain\Monkey\Functions;
 use Mockery;
-use The_Another\Plugin\Blocks_Dokan\Blocks\Tests\Factories\VendorFactory;
+use The_Another\Plugin\Blocks_For_Dokan\Blocks\Tests\Factories\VendorFactory;
 
 /**
  * Store header block test class.
@@ -62,7 +62,7 @@ class StoreHeaderBlockTest extends TestCase {
 		Functions\when( 'dokan_get_seller_short_address' )->justReturn( '123 Main St' );
 
 		Functions\when( 'get_block_wrapper_attributes' )
-			->justReturn( 'class="wp-block-the-another-blocks-for-dokan-vendor-store-header theabd--vendor-store-header theabd--vendor-store-header-default"' );
+			->justReturn( 'class="wp-block-the-another-blocks-for-dokan-vendor-store-header tanbfd--vendor-store-header tanbfd--vendor-store-header-default"' );
 
 		Functions\when( 'dokan_is_vendor_info_hidden' )->justReturn( false );
 		Functions\when( 'dokan_get_readable_seller_rating' )->justReturn( '<div class="rating">4.5</div>' );
@@ -96,12 +96,12 @@ class StoreHeaderBlockTest extends TestCase {
 		$block_mock = Mockery::mock( 'WP_Block' );
 
 		// Load render function.
-		require_once ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'blocks/vendor-store-header/render.php';
+		require_once THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'blocks/vendor-store-header/render.php';
 
-		$output = theabd_render_vendor_store_header_block( $attributes, '', $block_mock );
+		$output = tanbfd_render_vendor_store_header_block( $attributes, '', $block_mock );
 
 		$this->assertNotEmpty( $output );
-		$this->assertStringContainsString( 'theabd--vendor-store-header', $output );
+		$this->assertStringContainsString( 'tanbfd--vendor-store-header', $output );
 		$this->assertStringContainsString( 'Test Store', $output );
 	}
 
@@ -155,12 +155,12 @@ class StoreHeaderBlockTest extends TestCase {
 		Functions\when( 'esc_html' )->alias( $escape_fn );
 		Functions\when( 'esc_attr' )->alias( $escape_fn );
 
-		require_once ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'blocks/vendor-store-header/render.php';
+		require_once THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'blocks/vendor-store-header/render.php';
 
 		$attributes = array( 'vendorId' => $vendor_id );
 		$block_mock = Mockery::mock( 'WP_Block' );
 
-		$output = theabd_render_vendor_store_header_block( $attributes, '', $block_mock );
+		$output = tanbfd_render_vendor_store_header_block( $attributes, '', $block_mock );
 
 		$this->assertStringNotContainsString( '<script>', $output );
 		$this->assertStringContainsString( '&lt;script&gt;', $output );
@@ -184,12 +184,12 @@ class StoreHeaderBlockTest extends TestCase {
 			}
 		);
 
-		require_once ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'blocks/vendor-store-header/render.php';
+		require_once THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'blocks/vendor-store-header/render.php';
 
 		$attributes = array( 'vendorId' => 0 );
 		$block_mock = Mockery::mock( 'WP_Block' );
 
-		$output = theabd_render_vendor_store_header_block( $attributes, '', $block_mock );
+		$output = tanbfd_render_vendor_store_header_block( $attributes, '', $block_mock );
 
 		$this->assertEmpty( $output );
 	}

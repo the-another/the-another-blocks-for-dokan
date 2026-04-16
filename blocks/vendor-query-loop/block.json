@@ -7,7 +7,7 @@
 	"icon": "grid-view",
 	"description": "Display grid/list of vendor stores with customizable layout.",
 	"keywords": [ "dokan", "vendor", "store", "list", "query", "loop" ],
-	"textdomain": "theanother-blocks-for-dokan",
+	"textdomain": "the-another-blocks-for-dokan",
 	"providesContext": {
 		"dokan/vendor": "previewVendor"
 	},

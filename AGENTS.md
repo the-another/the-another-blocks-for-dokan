@@ -9,10 +9,10 @@ This document provides comprehensive information about the **Another Blocks for 
 ### Key Information
 - **Plugin Name**: Another Blocks for Dokan
 - **Version**: 1.0.3
-- **Namespace**: `The_Another\Plugin\Blocks_Dokan`
-- **Text Domain**: `theanother-blocks-for-dokan`
-- **Prefix**: `theabd` (for render functions: `theabd_render_*_block()`)
-- **CSS Prefix**: `theabd--` (BEM-like: `theabd--vendor-store-header`)
+- **Namespace**: `The_Another\Plugin\Blocks_For_Dokan`
+- **Text Domain**: `the-another-blocks-for-dokan`
+- **Prefix**: `tanbfd` (for render functions: `tanbfd_render_*_block()`)
+- **CSS Prefix**: `tanbfd--` (BEM-like: `tanbfd--vendor-store-header`)
 - **Author**: The Another
 - **License**: GPL v2 or later
 
@@ -30,8 +30,8 @@ The plugin includes DDEV configuration for local development with a complete Wor
 ## Project Structure
 
 ```
-another-blocks-for-dokan/
-├── another-blocks-for-dokan.php    # Main plugin file
+the-another-blocks-for-dokan/
+├── the-another-blocks-for-dokan.php    # Main plugin file
 ├── blocks/                          # Block definitions
 │   ├── [block-name]/
 │   │   ├── block.json              # Block metadata (API v3)
@@ -100,8 +100,8 @@ another-blocks-for-dokan/
 - Follow **WordPress Coding Standards** (WordPress-Extra ruleset)
 - Use **WordPress-Docs** for documentation
 - Minimum supported WordPress version: 6.0
-- Text domain: `theanother-blocks-for-dokan`
-- All render functions must use `theabd` prefix (e.g., `theabd_render_*_block()`)
+- Text domain: `the-another-blocks-for-dokan`
+- All render functions must use `tanbfd` prefix (e.g., `tanbfd_render_*_block()`)
 
 #### PHP Version Features
 - Target PHP 8.3+ — use modern PHP features (typed properties, arrow functions, null coalescing, union types, named arguments, match expressions, nullsafe operator, constructor property promotion, readonly properties, enums, fibers, etc.)
@@ -119,7 +119,7 @@ another-blocks-for-dokan/
    }
    ```
 
-2. **Namespace Usage**: All classes use the namespace `The_Another\Plugin\Blocks_Dokan`
+2. **Namespace Usage**: All classes use the namespace `The_Another\Plugin\Blocks_For_Dokan`
 
 3. **Separation of Concerns**:
    - `includes/` - Core PHP classes
@@ -181,7 +181,7 @@ Blocks use **Block API v3** with `block.json` metadata:
     "name": "the-another/blocks-for-dokan-block-name",
     "title": "Block Title",
     "category": "dokan",
-    "textdomain": "theanother-blocks-for-dokan"
+    "textdomain": "the-another-blocks-for-dokan"
 }
 ```
 
@@ -198,12 +198,12 @@ Each block consists of:
 All blocks use server-side rendering via `render.php`:
 
 ```php
-function theabd_render_block_name_block( array $attributes, string $content, WP_Block $block ): string {
+function tanbfd_render_block_name_block( array $attributes, string $content, WP_Block $block ): string {
     // 1. Get vendor ID from attributes or context
     $vendor_id = $attributes['vendorId'] ?? 0;
 
     if ( ! $vendor_id ) {
-        $vendor_id = \The_Another\Plugin\Blocks_Dokan\Helpers\Context_Detector::get_vendor_id();
+        $vendor_id = \The_Another\Plugin\Blocks_For_Dokan\Helpers\Context_Detector::get_vendor_id();
     }
 
     // 2. Validate vendor
@@ -212,7 +212,7 @@ function theabd_render_block_name_block( array $attributes, string $content, WP_
     }
 
     // 3. Get vendor data
-    $vendor_data = \The_Another\Plugin\Blocks_Dokan\Renderers\Vendor_Renderer::get_vendor_data( $vendor_id );
+    $vendor_data = \The_Another\Plugin\Blocks_For_Dokan\Renderers\Vendor_Renderer::get_vendor_data( $vendor_id );
 
     // 4. Extract attributes with defaults
     $show_something = $attributes['showSomething'] ?? true;
@@ -251,10 +251,10 @@ function theabd_render_block_name_block( array $attributes, string $content, WP_
 
 #### BEM-like Naming Convention
 ```css
-.theabd--vendor-store-header { }
-.theabd--vendor-store-header-default { }
-.theabd--vendor-store-header__element { }
-.theabd--vendor-store-header--modifier { }
+.tanbfd--vendor-store-header { }
+.tanbfd--vendor-store-header-default { }
+.tanbfd--vendor-store-header__element { }
+.tanbfd--vendor-store-header--modifier { }
 ```
 
 ### Testing
@@ -339,11 +339,11 @@ This will:
 
 The plugin defines these constants:
 ```php
-ANOTHER_BLOCKS_DOKAN_VERSION         // Plugin version
-ANOTHER_BLOCKS_DOKAN_PLUGIN_FILE    // Main plugin file path
-ANOTHER_BLOCKS_DOKAN_PLUGIN_DIR     // Plugin directory path
-ANOTHER_BLOCKS_DOKAN_PLUGIN_URL     // Plugin URL
-ANOTHER_BLOCKS_DOKAN_PLUGIN_BASENAME // Plugin basename
+THE_ANOTHER_BLOCKS_FOR_DOKAN_VERSION         // Plugin version
+THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_FILE    // Main plugin file path
+THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR     // Plugin directory path
+THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_URL     // Plugin URL
+THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_BASENAME // Plugin basename
 ```
 
 ## FSE Templates
@@ -371,7 +371,7 @@ These templates automatically replace PHP templates when using block themes.
     "category": "dokan",
     "icon": "store",
     "description": "Block description",
-    "textdomain": "theanother-blocks-for-dokan",
+    "textdomain": "the-another-blocks-for-dokan",
     "supports": {
         "html": false
     },
@@ -393,7 +393,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-function theabd_render_new_block_block( array $attributes, string $content, WP_Block $block ): string {
+function tanbfd_render_new_block_block( array $attributes, string $content, WP_Block $block ): string {
     // Implementation
 }
 ```
@@ -434,7 +434,7 @@ The block will be automatically registered by `Block_Registry`.
 Use the `Vendor_Renderer` class:
 
 ```php
-use The_Another\Plugin\Blocks_Dokan\Renderers\Vendor_Renderer;
+use The_Another\Plugin\Blocks_For_Dokan\Renderers\Vendor_Renderer;
 
 $vendor_data = Vendor_Renderer::get_vendor_data( $vendor_id );
 
@@ -455,7 +455,7 @@ $vendor_data = Vendor_Renderer::get_vendor_data( $vendor_id );
 Automatically detect vendor ID in different contexts:
 
 ```php
-use The_Another\Plugin\Blocks_Dokan\Helpers\Context_Detector;
+use The_Another\Plugin\Blocks_For_Dokan\Helpers\Context_Detector;
 
 $vendor_id = Context_Detector::get_vendor_id();
 ```
@@ -499,10 +499,10 @@ define( 'SCRIPT_DEBUG', true );
 
 All strings must be translatable:
 ```php
-esc_html__( 'Text', 'theanother-blocks-for-dokan' )
-esc_html_e( 'Text', 'theanother-blocks-for-dokan' )
-esc_attr__( 'Text', 'theanother-blocks-for-dokan' )
-_n( 'Singular', 'Plural', $count, 'theanother-blocks-for-dokan' )
+esc_html__( 'Text', 'the-another-blocks-for-dokan' )
+esc_html_e( 'Text', 'the-another-blocks-for-dokan' )
+esc_attr__( 'Text', 'the-another-blocks-for-dokan' )
+_n( 'Singular', 'Plural', $count, 'the-another-blocks-for-dokan' )
 ```
 
 Translation files location: `languages/`
@@ -520,9 +520,9 @@ Translation files location: `languages/`
 
 ## Support & Resources
 
-- **Issues**: https://github.com/theanother/blocks-for-dokan/issues
-- **Source**: https://github.com/theanother/blocks-for-dokan
-- **Homepage**: https://theanother.org/plugin/blocks-for-dokan/
+- **Issues**: https://github.com/the-another/blocks-for-dokan/issues
+- **Source**: https://github.com/the-another/blocks-for-dokan
+- **Homepage**: https://the-another.org/plugin/blocks-for-dokan/
 
 ## Important Notes for AI Agents
 

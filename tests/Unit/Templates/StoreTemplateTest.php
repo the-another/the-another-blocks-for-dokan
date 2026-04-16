@@ -6,12 +6,12 @@
  * @since 1.0.0
  */
 
-namespace The_Another\Plugin\Blocks_Dokan\Blocks\Tests\Unit\Templates;
+namespace The_Another\Plugin\Blocks_For_Dokan\Blocks\Tests\Unit\Templates;
 
 use PHPUnit\Framework\TestCase;
 use Brain\Monkey;
 use Brain\Monkey\Functions;
-use The_Another\Plugin\Blocks_Dokan\Templates\Store_Template;
+use The_Another\Plugin\Blocks_For_Dokan\Templates\Store_Template;
 
 /**
  * Store template test class.

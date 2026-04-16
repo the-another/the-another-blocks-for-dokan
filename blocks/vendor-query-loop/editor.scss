@@ -6,7 +6,7 @@
  */
 
 .wp-block-the-another-blocks-for-dokan-vendor-query-loop,
-.theabd--vendor-query-loop {
+.tanbfd--vendor-query-loop {
 	// Display inner blocks in a clean layout
 	> .block-editor-inner-blocks > .block-editor-block-list__layout {
 		display: flex;
@@ -15,8 +15,8 @@
 	}
 
 	// Remove bullets from list items in editor
-	.theabd--vendor-wrap,
-	.theabd--vendor-query-loop-wrap {
+	.tanbfd--vendor-wrap,
+	.tanbfd--vendor-query-loop-wrap {
 		list-style: none;
 		margin: 0;
 		padding: 0;
@@ -28,7 +28,7 @@
 		}
 	}
 
-	.theabd--vendor-query-loop-placeholder {
+	.tanbfd--vendor-query-loop-placeholder {
 		padding: 2rem;
 		text-align: center;
 		background: #f0f0f0;
@@ -82,9 +82,9 @@
 }
 
 // Style inner blocks in the template
-.theabd--vendor-query-loop-item {
+.tanbfd--vendor-query-loop-item {
 	// Store name block
-	.theabd--vendor-store-name {
+	.tanbfd--vendor-store-name {
 		margin: 0.5rem 0;
 
 		a {
@@ -98,7 +98,7 @@
 	}
 
 	// Store avatar block
-	.theabd--vendor-avatar {
+	.tanbfd--vendor-avatar {
 		display: inline-block;
 
 		img {
@@ -112,24 +112,24 @@
 	}
 
 	// Store rating block
-	.theabd--vendor-rating {
+	.tanbfd--vendor-rating {
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
 		margin: 0.5rem 0;
 
-		.theabd--vendor-rating-stars {
+		.tanbfd--vendor-rating-stars {
 
-			.theabd--star {
+			.tanbfd--star {
 				color: #ffb900;
 				font-size: 1rem;
 			}
 
-			.theabd--star-empty {
+			.tanbfd--star-empty {
 				color: #ddd;
 			}
 
-			.theabd--star-half {
+			.tanbfd--star-half {
 				background: linear-gradient(90deg, #ffb900 50%, #ddd 50%);
 				-webkit-background-clip: text;
 				background-clip: text;
@@ -137,27 +137,27 @@
 			}
 		}
 
-		.theabd--vendor-rating-count {
+		.tanbfd--vendor-rating-count {
 			color: #666;
 			font-size: 0.9em;
 		}
 	}
 
 	// Store address block
-	.theabd--vendor-store-address {
+	.tanbfd--vendor-store-address {
 		display: flex;
 		align-items: flex-start;
 		gap: 0.5rem;
 		margin: 0.5rem 0;
 		color: #666;
 
-		.theabd--vendor-store-address-icon {
+		.tanbfd--vendor-store-address-icon {
 			flex-shrink: 0;
 		}
 	}
 
 	// Store phone block
-	.theabd--vendor-store-phone {
+	.tanbfd--vendor-store-phone {
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
@@ -175,26 +175,26 @@
 	}
 
 	// Store status block
-	.theabd--vendor-store-status {
+	.tanbfd--vendor-store-status {
 		display: inline-block;
 		padding: 0.25rem 0.75rem;
 		border-radius: 4px;
 		font-size: 0.85em;
 		font-weight: 500;
 
-		&.theabd--vendor-store-status-open,
-		&.theabd--store-open {
+		&.tanbfd--vendor-store-status-open,
+		&.tanbfd--store-open {
 			background: #d4edda;
 			color: #155724;
 		}
 
-		&.theabd--vendor-store-status-closed,
-		&.theabd--store-closed {
+		&.tanbfd--vendor-store-status-closed,
+		&.tanbfd--store-closed {
 			background: #f8d7da;
 			color: #721c24;
 		}
 
-		&.theabd--vendor-store-status-disabled {
+		&.tanbfd--vendor-store-status-disabled {
 			background: #f0f0f0;
 			color: #666;
 			font-style: italic;
@@ -202,7 +202,7 @@
 	}
 
 	// Store banner block
-	.theabd--vendor-store-banner {
+	.tanbfd--vendor-store-banner {
 		margin: 0.5rem 0;
 		border-radius: 4px;
 		overflow: hidden;

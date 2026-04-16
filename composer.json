@@ -1,13 +1,13 @@
 {
-	"name": "theanother/blocks-for-dokan",
+	"name": "the-another/blocks-for-dokan",
 	"description": "FSE-compatible Gutenberg blocks for Dokan multi-vendor marketplace",
 	"type": "wordpress-plugin",
 	"license": "GPL-2.0-or-later",
-	"version": "1.0.9",
+	"version": "1.0.10",
 	"author": {
 		"name": "The Another",
-		"email": "hello@theanother.org",
-		"url": "https://theanother.org"
+		"email": "hello@the-another.org",
+		"url": "https://the-another.org"
 	},
 	"keywords": [
 		"wordpress",
@@ -18,10 +18,10 @@
 		"fse",
 		"gutenberg"
 	],
-	"homepage": "https://theanother.org/plugin/blocks-for-dokan/",
+	"homepage": "https://the-another.org/plugin/blocks-for-dokan/",
 	"support": {
-		"issues": "https://github.com/theanother/blocks-for-dokan/issues",
-		"source": "https://github.com/theanother/blocks-for-dokan"
+		"issues": "https://github.com/the-another/blocks-for-dokan/issues",
+		"source": "https://github.com/the-another/blocks-for-dokan"
 	},
 	"require": {
 		"php": ">=7.4"
@@ -46,7 +46,7 @@
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"The_Another\\Plugin\\Blocks_Dokan\\Blocks\\Tests\\": "tests/"
+			"The_Another\\Plugin\\Blocks_For_Dokan\\Blocks\\Tests\\": "tests/"
 		}
 	},
 	"config": {
@@ -74,10 +74,10 @@
 	},
 	"extra": {
 		"mozart": {
-			"dep_namespace": "The_Another\\Plugin\\Blocks_Dokan\\Blocks\\Dependencies\\",
+			"dep_namespace": "The_Another\\Plugin\\Blocks_For_Dokan\\Blocks\\Dependencies\\",
 			"dep_directory": "/dependencies/",
 			"classmap_directory": "/includes/classes/",
-			"classmap_prefix": "TheAnother_Plugin_Blocks_Dokan_",
+			"classmap_prefix": "TheAnother_Plugin_Blocks_For_Dokan_",
 			"packages": [],
 			"delete_vendor_directories": true
 		}

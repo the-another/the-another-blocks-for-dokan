@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param array<string, mixed> $attrs   Parsed block attributes.
  * @return string
  */
-function theabd_vendor_query_loop_compute_query_id( int $post_id, array $attrs ): string {
+function tanbfd_vendor_query_loop_compute_query_id( int $post_id, array $attrs ): string {
 	if ( ! empty( $attrs['queryId'] ) ) {
 		return 'store-query-' . sanitize_key( (string) $attrs['queryId'] );
 	}
@@ -39,7 +39,7 @@ function theabd_vendor_query_loop_compute_query_id( int $post_id, array $attrs )
  * @param array<string, string>|null $filters   Optional explicit filters; defaults to $_GET reads.
  * @return array<string, mixed>
  */
-function theabd_vendor_query_loop_build_query_args( array $attributes, int $paged, ?array $filters = null ): array {
+function tanbfd_vendor_query_loop_build_query_args( array $attributes, int $paged, ?array $filters = null ): array {
 	$per_page           = isset( $attributes['perPage'] ) ? absint( $attributes['perPage'] ) : 12;
 	$order_by           = isset( $attributes['orderBy'] ) ? sanitize_text_field( $attributes['orderBy'] ) : 'name';
 	$show_featured_only = isset( $attributes['showFeaturedOnly'] ) && $attributes['showFeaturedOnly'];
@@ -130,7 +130,7 @@ function theabd_vendor_query_loop_build_query_args( array $attributes, int $page
 	 * @param array<string, mixed> $user_args  User query arguments.
 	 * @param array<string, mixed> $attributes Block attributes.
 	 */
-	return apply_filters( 'theabd_store_list_query_args', $user_args, $attributes );
+	return apply_filters( 'tanbfd_store_list_query_args', $user_args, $attributes );
 }
 
 /**
@@ -139,7 +139,7 @@ function theabd_vendor_query_loop_build_query_args( array $attributes, int $page
  * @param array<string, mixed> $user_args Args from build_query_args().
  * @return \WP_User_Query
  */
-function theabd_vendor_query_loop_run_query( array $user_args ): \WP_User_Query {
+function tanbfd_vendor_query_loop_run_query( array $user_args ): \WP_User_Query {
 	$wp_orderby = isset( $user_args['orderby'] ) ? (string) $user_args['orderby'] : '';
 	$callback   = null;
 
@@ -167,10 +167,10 @@ function theabd_vendor_query_loop_run_query( array $user_args ): \WP_User_Query 
 					'user_nicename, ID',
 				);
 
-				$selected_orderby = get_transient( 'dokan_store_listing_random_orderby' );
+				$selected_orderby = get_transient( 'tanbfd_store_listing_random_orderby' );
 				if ( false === $selected_orderby ) {
 					$selected_orderby = $order_by_options[ array_rand( $order_by_options, 1 ) ];
-					set_transient( 'dokan_store_listing_random_orderby', $selected_orderby, MINUTE_IN_SECONDS * 5 );
+					set_transient( 'tanbfd_store_listing_random_orderby', $selected_orderby, MINUTE_IN_SECONDS * 5 );
 				}
 
 				$query->query_orderby = "ORDER BY $selected_orderby";
@@ -197,7 +197,7 @@ function theabd_vendor_query_loop_run_query( array $user_args ): \WP_User_Query 
  * @param array<string, mixed>                       $base_context    Block context (will be merged with vendor data per item).
  * @return string
  */
-function theabd_vendor_query_loop_render_items( array $sellers, array $template_blocks, array $base_context ): string {
+function tanbfd_vendor_query_loop_render_items( array $sellers, array $template_blocks, array $base_context ): string {
 	if ( empty( $sellers ) ) {
 		return '';
 	}
@@ -217,16 +217,16 @@ function theabd_vendor_query_loop_render_items( array $sellers, array $template_
 		$vendor_data    = $vendor->to_array();
 		$vendor_context = array_merge( $base_context, array( 'dokan/vendor' => $vendor_data ) );
 		?>
-		<li class="theabd--single-vendor">
+		<li class="tanbfd--single-vendor">
 			<?php
 			if ( ! empty( $template_blocks ) ) {
 				foreach ( $template_blocks as $template_block ) {
 					$parsed   = is_array( $template_block ) ? $template_block : $template_block->parsed_block;
 					$instance = new \WP_Block( $parsed, $vendor_context );
-					echo $instance->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo tanbfd_kses_block( $instance->render() );
 				}
 			} else {
-				if ( function_exists( 'theabd_render_vendor_avatar_block' ) ) {
+				if ( function_exists( 'tanbfd_render_vendor_avatar_block' ) ) {
 					$avatar_block = new \WP_Block(
 						array(
 							'blockName' => 'the-another/blocks-for-dokan-vendor-avatar',
@@ -237,10 +237,10 @@ function theabd_vendor_query_loop_render_items( array $sellers, array $template_
 						),
 						array( 'dokan/vendor' => $vendor_data )
 					);
-					echo $avatar_block->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo tanbfd_kses_block( $avatar_block->render() );
 				}
 
-				if ( function_exists( 'theabd_render_vendor_store_name_block' ) ) {
+				if ( function_exists( 'tanbfd_render_vendor_store_name_block' ) ) {
 					$name_block = new \WP_Block(
 						array(
 							'blockName' => 'the-another/blocks-for-dokan-vendor-store-name',
@@ -248,7 +248,7 @@ function theabd_vendor_query_loop_render_items( array $sellers, array $template_
 						),
 						array( 'dokan/vendor' => $vendor_data )
 					);
-					echo $name_block->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo tanbfd_kses_block( $name_block->render() );
 				}
 			}
 			?>
@@ -266,7 +266,7 @@ function theabd_vendor_query_loop_render_items( array $sellers, array $template_
  * @param WP_Block             $block      Block instance.
  * @return string Rendered HTML.
  */
-function theabd_render_vendor_query_loop_block( array $attributes, string $content, WP_Block $block ): string {
+function tanbfd_render_vendor_query_loop_block( array $attributes, string $content, WP_Block $block ): string {
 	// Extract attributes with defaults.
 	$columns                = isset( $attributes['columns'] ) ? absint( $attributes['columns'] ) : 3;
 	$display_layout         = isset( $attributes['displayLayout'] ) ? sanitize_text_field( $attributes['displayLayout'] ) : 'grid';
@@ -277,9 +277,9 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 	// Get current page for pagination.
 	$paged = get_query_var( 'paged' ) ? absint( get_query_var( 'paged' ) ) : 1;
 
-	$user_args  = theabd_vendor_query_loop_build_query_args( $attributes, $paged );
+	$user_args  = tanbfd_vendor_query_loop_build_query_args( $attributes, $paged );
 	$per_page   = (int) $user_args['number'];
-	$user_query = theabd_vendor_query_loop_run_query( $user_args );
+	$user_query = tanbfd_vendor_query_loop_run_query( $user_args );
 	$sellers    = $user_query->get_results();
 
 	// Calculate pagination info.
@@ -290,12 +290,12 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 	$count_filter_callback = function ( $count ) use ( $total_users ) {
 		return $total_users;
 	};
-	add_filter( 'theabd_store_search_block_count', $count_filter_callback, 10, 1 );
+	add_filter( 'tanbfd_store_search_block_count', $count_filter_callback, 10, 1 );
 
 	// Compute deterministic query ID so the transient template cache key is stable across requests.
 	$current_id        = get_the_ID();
 	$post_id_for_query = $current_id ? (int) $current_id : 0;
-	$query_id          = theabd_vendor_query_loop_compute_query_id(
+	$query_id          = tanbfd_vendor_query_loop_compute_query_id(
 		$post_id_for_query,
 		isset( $block->parsed_block['attrs'] ) && is_array( $block->parsed_block['attrs'] ) ? $block->parsed_block['attrs'] : array()
 	);
@@ -346,13 +346,13 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 	}
 
 	// Persist the inner-block template so the REST endpoint can re-render subsequent pages.
-	if ( $enable_infinite_scroll && ! empty( $template_blocks ) && class_exists( '\\The_Another\\Plugin\\Blocks_Dokan\\Rest\\Vendor_Query_Loop_Controller' ) ) {
+	if ( $enable_infinite_scroll && ! empty( $template_blocks ) && class_exists( '\\The_Another\\Plugin\\Blocks_For_Dokan\\Rest\\Vendor_Query_Loop_Controller' ) ) {
 		$template_block_arrays = array_map(
 			static fn( $b ) => $b->parsed_block,
 			$template_blocks
 		);
 		set_transient(
-			\The_Another\Plugin\Blocks_Dokan\Rest\Vendor_Query_Loop_Controller::template_cache_key( $query_id ),
+			\The_Another\Plugin\Blocks_For_Dokan\Rest\Vendor_Query_Loop_Controller::template_cache_key( $query_id ),
 			$template_block_arrays,
 			HOUR_IN_SECONDS
 		);
@@ -360,7 +360,7 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 
 	// Get wrapper attributes.
 	$wrapper_args = array(
-		'class' => "theabd--vendor-query-loop theabd--vendor-query-loop-{$display_layout} theabd--vendor-query-loop-columns-{$columns}",
+		'class' => "tanbfd--vendor-query-loop tanbfd--vendor-query-loop-{$display_layout} tanbfd--vendor-query-loop-columns-{$columns}",
 	);
 
 	if ( $enable_infinite_scroll ) {
@@ -379,7 +379,7 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 		/**
 		 * Filter the request-time context forwarded to the infinite-scroll REST endpoint.
 		 *
-		 * Integrations that inject query args via the `theabd_store_list_query_args`
+		 * Integrations that inject query args via the `tanbfd_store_list_query_args`
 		 * filter based on `get_query_var()` should add their query var values here so
 		 * the REST handler can re-set them before re-running the query.
 		 *
@@ -387,7 +387,7 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 		 *
 		 * @param array<string, string> $active_filters Active filter values.
 		 */
-		$active_filters                  = apply_filters( 'theabd_vendor_query_loop_infinite_filters', $active_filters );
+		$active_filters                  = apply_filters( 'tanbfd_vendor_query_loop_infinite_filters', $active_filters );
 		$wrapper_args['data-filters']    = (string) wp_json_encode( $active_filters );
 		$wrapper_args['data-attributes'] = (string) wp_json_encode(
 			array(
@@ -399,7 +399,7 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 			)
 		);
 
-		wp_enqueue_script( 'theabd-vendor-query-loop-view' );
+		wp_enqueue_script( 'tanbfd-vendor-query-loop-view' );
 	}
 
 	$wrapper_attributes = get_block_wrapper_attributes( $wrapper_args );
@@ -408,15 +408,15 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 
 	if ( ! empty( $sellers ) ) {
 		// Generate class for grid layout (columns handled via CSS media queries).
-		$grid_classes = 'theabd--vendor-query-loop-wrap';
+		$grid_classes = 'tanbfd--vendor-query-loop-wrap';
 		if ( 'grid' === $display_layout ) {
-			$grid_classes .= ' theabd--vendor-query-loop-grid theabd--vendor-query-loop-columns-' . absint( $columns );
+			$grid_classes .= ' tanbfd--vendor-query-loop-grid tanbfd--vendor-query-loop-columns-' . absint( $columns );
 		} elseif ( 'list' === $display_layout ) {
-			$grid_classes .= ' theabd--vendor-query-loop-list';
+			$grid_classes .= ' tanbfd--vendor-query-loop-list';
 		}
 
 		?>
-		<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<div <?php echo wp_kses_post( $wrapper_attributes ); ?>>
 			<?php
 			// Render search blocks before the loop.
 			if ( ! empty( $search_blocks ) ) {
@@ -425,19 +425,19 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 						$search_block->parsed_block,
 						$block->context
 					);
-					echo $search_block_instance->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo tanbfd_kses_block( $search_block_instance->render() );
 				}
 			}
 
 			// Render generic blocks (paragraph/separator/spacer) placed before the vendor-card.
 			foreach ( $extras_before_blocks as $extra_block ) {
 				$extra_block_instance = new WP_Block( $extra_block->parsed_block, $block->context );
-				echo $extra_block_instance->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo tanbfd_kses_block( $extra_block_instance->render() );
 			}
 			?>
-			<ul class="theabd--vendor-wrap <?php echo esc_attr( $grid_classes ); ?>">
+			<ul class="tanbfd--vendor-wrap <?php echo esc_attr( $grid_classes ); ?>">
 				<?php
-				echo theabd_vendor_query_loop_render_items( $sellers, $template_blocks, $block->context ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo tanbfd_kses_block( tanbfd_vendor_query_loop_render_items( $sellers, $template_blocks, $block->context ) );
 				?>
 			</ul>
 
@@ -445,12 +445,12 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 			// Render generic blocks (paragraph/separator/spacer) placed after the vendor-card.
 			foreach ( $extras_after_blocks as $extra_block ) {
 				$extra_block_instance = new WP_Block( $extra_block->parsed_block, $block->context );
-				echo $extra_block_instance->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo tanbfd_kses_block( $extra_block_instance->render() );
 			}
 
 			if ( $enable_infinite_scroll ) {
-				echo '<div class="theabd--vendor-query-loop-sentinel" aria-hidden="true"></div>';
-				echo '<div class="theabd--vendor-query-loop-status" role="status" aria-live="polite"></div>';
+				echo '<div class="tanbfd--vendor-query-loop-sentinel" aria-hidden="true"></div>';
+				echo '<div class="tanbfd--vendor-query-loop-status" role="status" aria-live="polite"></div>';
 			}
 
 			if ( ! $enable_infinite_scroll ) :
@@ -462,7 +462,7 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 							$pagination_block->parsed_block,
 							$block->context
 						);
-						echo $pagination_block_instance->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo tanbfd_kses_block( $pagination_block_instance->render() );
 						$pagination_rendered = true;
 						break; // Only render first pagination block.
 					}
@@ -471,15 +471,15 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 				// Fallback: Show default pagination if no pagination block is present and pages > 1.
 				if ( ! $pagination_rendered && $total_pages > 1 ) :
 					?>
-					<nav class="theabd--vendor-query-loop-pagination" data-testid="vendor-pagination">
+					<nav class="tanbfd--vendor-query-loop-pagination" data-testid="vendor-pagination">
 						<?php
 						echo wp_kses_post(
 							paginate_links(
 								array(
 									'total'     => $total_pages,
 									'current'   => $paged,
-									'prev_text' => __( '&larr; Previous', 'theanother-blocks-for-dokan' ),
-									'next_text' => __( 'Next &rarr;', 'theanother-blocks-for-dokan' ),
+									'prev_text' => __( '&larr; Previous', 'the-another-blocks-for-dokan' ),
+									'next_text' => __( 'Next &rarr;', 'the-another-blocks-for-dokan' ),
 								)
 							)
 						);
@@ -493,7 +493,7 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 		<?php
 	} else {
 		?>
-		<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<div <?php echo wp_kses_post( $wrapper_attributes ); ?>>
 			<?php
 			// Render search blocks even when no results.
 			if ( ! empty( $search_blocks ) ) {
@@ -502,12 +502,12 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 						$search_block->parsed_block,
 						$block->context
 					);
-					echo $search_block_instance->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo tanbfd_kses_block( $search_block_instance->render() );
 				}
 			}
 			?>
-			<p class="theabd--vendor-query-loop-empty">
-				<?php echo esc_html__( 'No vendors found.', 'theanother-blocks-for-dokan' ); ?>
+			<p class="tanbfd--vendor-query-loop-empty">
+				<?php echo esc_html__( 'No vendors found.', 'the-another-blocks-for-dokan' ); ?>
 			</p>
 		</div>
 		<?php
@@ -517,7 +517,7 @@ function theabd_render_vendor_query_loop_block( array $attributes, string $conte
 
 	// Remove the filter after rendering is complete.
 	if ( isset( $count_filter_callback ) ) {
-		remove_filter( 'theabd_store_search_block_count', $count_filter_callback, 10 );
+		remove_filter( 'tanbfd_store_search_block_count', $count_filter_callback, 10 );
 	}
 
 	return $output;

@@ -19,9 +19,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param WP_Block             $block      Block instance.
  * @return string Rendered HTML.
  */
-function theabd_render_vendor_rating_block( array $attributes, string $content, WP_Block $block ): string {
+function tanbfd_render_vendor_rating_block( array $attributes, string $content, WP_Block $block ): string {
 	// Get vendor data from context, falling back to page context detection.
-	$vendor = \The_Another\Plugin\Blocks_Dokan\Renderers\Vendor_Renderer::resolve_vendor_from_context(
+	$vendor = \The_Another\Plugin\Blocks_For_Dokan\Renderers\Vendor_Renderer::resolve_vendor_from_context(
 		$block->context['dokan/vendor'] ?? null,
 		array(
 			'rating' => 'rating',
@@ -29,7 +29,7 @@ function theabd_render_vendor_rating_block( array $attributes, string $content, 
 	);
 
 	if ( empty( $vendor ) || empty( $vendor['id'] ) ) {
-		return '<div class="theabd--vendor-rating">★★★★★ (0)</div>';
+		return '<div class="tanbfd--vendor-rating">★★★★★ (0)</div>';
 	}
 
 	$rating     = $vendor['rating']['rating'] ?? 0;
@@ -39,29 +39,29 @@ function theabd_render_vendor_rating_block( array $attributes, string $content, 
 	// Get wrapper attributes.
 	$wrapper_attributes = get_block_wrapper_attributes(
 		array(
-			'class' => 'theabd--vendor-rating',
+			'class' => 'tanbfd--vendor-rating',
 		)
 	);
 
 	ob_start();
 	?>
-	<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+	<div <?php echo wp_kses_post( $wrapper_attributes ); ?>>
 		<?php
 		if ( function_exists( 'dokan_generate_ratings' ) ) {
-			echo dokan_generate_ratings( $rating, $count ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses_post( dokan_generate_ratings( $rating, $count ) );
 		} else {
 			// Fallback rating display.
 			$percentage = ( $rating / 5 ) * 100;
 			?>
 			<?php /* translators: %s: rating value (e.g., 4.5) */ ?>
-			<div class="theabd--star-rating" role="img" aria-label="<?php echo esc_attr( sprintf( __( 'Rated %s out of 5', 'theanother-blocks-for-dokan' ), $rating ) ); ?>">
+			<div class="tanbfd--star-rating" role="img" aria-label="<?php echo esc_attr( sprintf( __( 'Rated %s out of 5', 'the-another-blocks-for-dokan' ), $rating ) ); ?>">
 				<span style="width:<?php echo esc_attr( $percentage ); ?>%">
 					<?php /* translators: %s: rating value (e.g., 4.5) */ ?>
-					<?php echo esc_html( sprintf( __( 'Rated %s out of 5', 'theanother-blocks-for-dokan' ), $rating ) ); ?>
+					<?php echo esc_html( sprintf( __( 'Rated %s out of 5', 'the-another-blocks-for-dokan' ), $rating ) ); ?>
 				</span>
 			</div>
 			<?php if ( $show_count ) : ?>
-				<span class="theabd--rating-count">(<?php echo esc_html( $count ); ?>)</span>
+				<span class="tanbfd--rating-count">(<?php echo esc_html( $count ); ?>)</span>
 			<?php endif; ?>
 			<?php
 		}

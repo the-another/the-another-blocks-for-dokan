@@ -31,7 +31,7 @@ function Edit( { attributes, setAttributes } ) {
 	} = attributes;
 
 	const blockProps = useBlockProps( {
-		className: 'theabd--become-vendor-cta',
+		className: 'tanbfd--become-vendor-cta',
 	} );
 
 	return (
@@ -74,23 +74,23 @@ function Edit( { attributes, setAttributes } ) {
 
 			<div { ...blockProps }>
 				<Disabled>
-					<ul className="theabd--account-migration-lists">
+					<ul className="tanbfd--account-migration-lists">
 						<li>
-							<div className="theabd--w8 theabd--left-content">
+							<div className="tanbfd--w8 tanbfd--left-content">
 								<p>
 									<strong>{ heading }</strong>
 								</p>
 								<p>{ description }</p>
 							</div>
-							<div className="theabd--w4 theabd--right-content">
+							<div className="tanbfd--w4 tanbfd--right-content">
 								<button
 									type="button"
-									className="wp-element-button theabd--btn"
+									className="wp-element-button tanbfd--btn"
 								>
 									{ buttonText }
 								</button>
 							</div>
-							<div className="theabd--clearfix"></div>
+							<div className="tanbfd--clearfix"></div>
 						</li>
 					</ul>
 				</Disabled>

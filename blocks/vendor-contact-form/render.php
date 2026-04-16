@@ -22,12 +22,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param WP_Block             $block      Block instance.
  * @return string Rendered HTML.
  */
-function theabd_render_vendor_contact_form_block( array $attributes, string $content, WP_Block $block ): string {
+function tanbfd_render_vendor_contact_form_block( array $attributes, string $content, WP_Block $block ): string {
 	// Get vendor ID from attributes or context.
 	$vendor_id = ! empty( $attributes['vendorId'] ) ? absint( $attributes['vendorId'] ) : 0;
 
 	if ( ! $vendor_id ) {
-		$vendor_id = \The_Another\Plugin\Blocks_Dokan\Helpers\Context_Detector::get_vendor_id();
+		$vendor_id = tanbfd_get_vendor_id();
 	}
 
 	if ( ! $vendor_id || ! dokan_is_user_seller( $vendor_id ) ) {
@@ -55,13 +55,13 @@ function theabd_render_vendor_contact_form_block( array $attributes, string $con
 	// Get wrapper attributes.
 	$wrapper_attributes = get_block_wrapper_attributes(
 		array(
-			'class' => 'theabd--vendor-contact-form',
+			'class' => 'tanbfd--vendor-contact-form',
 		)
 	);
 
 	ob_start();
 	?>
-	<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+	<div <?php echo wp_kses_post( $wrapper_attributes ); ?>>
 		<?php
 		// Use Dokan's contact form template for full compatibility.
 		if ( function_exists( 'dokan_get_template_part' ) ) {

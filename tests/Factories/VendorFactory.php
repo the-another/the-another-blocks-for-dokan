@@ -6,7 +6,7 @@
  * @since 1.0.0
  */
 
-namespace The_Another\Plugin\Blocks_Dokan\Blocks\Tests\Factories;
+namespace The_Another\Plugin\Blocks_For_Dokan\Blocks\Tests\Factories;
 
 use Mockery;
 use Mockery\MockInterface;

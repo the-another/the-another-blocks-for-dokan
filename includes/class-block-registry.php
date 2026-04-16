@@ -6,7 +6,7 @@
  * @since 1.0.0
  */
 
-namespace The_Another\Plugin\Blocks_Dokan;
+namespace The_Another\Plugin\Blocks_For_Dokan;
 
 /**
  * Block registry class.
@@ -62,27 +62,27 @@ class Block_Registry {
 			// Map block name to render function.
 			// Use the expected block name from our registry.
 			$render_function_map = array(
-				'the-another/blocks-for-dokan-vendor-store-header' => 'theabd_render_vendor_store_header_block',
-				'the-another/blocks-for-dokan-vendor-store-sidebar' => 'theabd_render_vendor_store_sidebar_block',
-				'the-another/blocks-for-dokan-vendor-store-tabs' => 'theabd_render_vendor_store_tabs_block',
-				'the-another/blocks-for-dokan-vendor-store-terms-conditions' => 'theabd_render_vendor_store_terms_conditions_block',
-				'the-another/blocks-for-dokan-vendor-query-loop' => 'theabd_render_vendor_query_loop_block',
-				'the-another/blocks-for-dokan-vendor-query-pagination' => 'theabd_render_vendor_query_pagination_block',
-				'the-another/blocks-for-dokan-vendor-card' => 'theabd_render_vendor_card_block',
-				'the-another/blocks-for-dokan-vendor-search' => 'theabd_render_vendor_search_block',
-				'the-another/blocks-for-dokan-vendor-store-name' => 'theabd_render_vendor_store_name_block',
-				'the-another/blocks-for-dokan-vendor-avatar' => 'theabd_render_vendor_avatar_block',
-				'the-another/blocks-for-dokan-vendor-rating' => 'theabd_render_vendor_rating_block',
-				'the-another/blocks-for-dokan-vendor-store-address' => 'theabd_render_vendor_store_address_block',
-				'the-another/blocks-for-dokan-vendor-store-phone' => 'theabd_render_vendor_store_phone_block',
-				'the-another/blocks-for-dokan-vendor-store-status' => 'theabd_render_vendor_store_status_block',
-				'the-another/blocks-for-dokan-vendor-store-banner' => 'theabd_render_vendor_store_banner_block',
-				'the-another/blocks-for-dokan-product-vendor-info' => 'theabd_render_product_vendor_info_block',
-				'the-another/blocks-for-dokan-more-from-seller' => 'theabd_render_more_from_seller_block',
-				'the-another/blocks-for-dokan-vendor-contact-form' => 'theabd_render_vendor_contact_form_block',
-				'the-another/blocks-for-dokan-vendor-store-location' => 'theabd_render_vendor_store_location_block',
-				'the-another/blocks-for-dokan-vendor-store-hours' => 'theabd_render_vendor_store_hours_block',
-				'the-another/blocks-for-dokan-become-vendor-cta' => 'theabd_render_become_vendor_cta_block',
+				'the-another/blocks-for-dokan-vendor-store-header' => 'tanbfd_render_vendor_store_header_block',
+				'the-another/blocks-for-dokan-vendor-store-sidebar' => 'tanbfd_render_vendor_store_sidebar_block',
+				'the-another/blocks-for-dokan-vendor-store-tabs' => 'tanbfd_render_vendor_store_tabs_block',
+				'the-another/blocks-for-dokan-vendor-store-terms-conditions' => 'tanbfd_render_vendor_store_terms_conditions_block',
+				'the-another/blocks-for-dokan-vendor-query-loop' => 'tanbfd_render_vendor_query_loop_block',
+				'the-another/blocks-for-dokan-vendor-query-pagination' => 'tanbfd_render_vendor_query_pagination_block',
+				'the-another/blocks-for-dokan-vendor-card' => 'tanbfd_render_vendor_card_block',
+				'the-another/blocks-for-dokan-vendor-search' => 'tanbfd_render_vendor_search_block',
+				'the-another/blocks-for-dokan-vendor-store-name' => 'tanbfd_render_vendor_store_name_block',
+				'the-another/blocks-for-dokan-vendor-avatar' => 'tanbfd_render_vendor_avatar_block',
+				'the-another/blocks-for-dokan-vendor-rating' => 'tanbfd_render_vendor_rating_block',
+				'the-another/blocks-for-dokan-vendor-store-address' => 'tanbfd_render_vendor_store_address_block',
+				'the-another/blocks-for-dokan-vendor-store-phone' => 'tanbfd_render_vendor_store_phone_block',
+				'the-another/blocks-for-dokan-vendor-store-status' => 'tanbfd_render_vendor_store_status_block',
+				'the-another/blocks-for-dokan-vendor-store-banner' => 'tanbfd_render_vendor_store_banner_block',
+				'the-another/blocks-for-dokan-product-vendor-info' => 'tanbfd_render_product_vendor_info_block',
+				'the-another/blocks-for-dokan-more-from-seller' => 'tanbfd_render_more_from_seller_block',
+				'the-another/blocks-for-dokan-vendor-contact-form' => 'tanbfd_render_vendor_contact_form_block',
+				'the-another/blocks-for-dokan-vendor-store-location' => 'tanbfd_render_vendor_store_location_block',
+				'the-another/blocks-for-dokan-vendor-store-hours' => 'tanbfd_render_vendor_store_hours_block',
+				'the-another/blocks-for-dokan-become-vendor-cta' => 'tanbfd_render_become_vendor_cta_block',
 			);
 
 			if ( isset( $render_function_map[ $block_name ] ) && function_exists( $render_function_map[ $block_name ] ) ) {
@@ -112,7 +112,7 @@ class Block_Registry {
 	 * @return void
 	 */
 	private function register_block_paths(): void {
-		$blocks_dir = ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'blocks/';
+		$blocks_dir = THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'blocks/';
 
 		// Vendor store profile blocks.
 		$this->blocks['the-another/blocks-for-dokan-vendor-store-header']           = $blocks_dir . 'vendor-store-header';
@@ -154,7 +154,7 @@ class Block_Registry {
 		 *
 		 * @param array<string, string> $blocks Block paths.
 		 */
-		$this->blocks = apply_filters( 'theabd_registered_blocks', $this->blocks );
+		$this->blocks = apply_filters( 'tanbfd_registered_blocks', $this->blocks );
 	}
 
 	/**

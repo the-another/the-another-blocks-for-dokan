@@ -34,7 +34,7 @@ export async function createVendor(
 		typeof options === 'number' ? { index: options } : options;
 	const result = await requestUtils.rest< { id: number } >( {
 		method: 'POST',
-		path: '/theabd-test/v1/create-vendor',
+		path: '/tanbfd-test/v1/create-vendor',
 		data,
 	} );
 	return result.id;
@@ -52,7 +52,7 @@ export async function createVendors(
 	);
 	const results = await requestUtils.rest< Array< { id: number } > >( {
 		method: 'POST',
-		path: '/theabd-test/v1/create-vendors',
+		path: '/tanbfd-test/v1/create-vendors',
 		data: { vendors: normalized },
 	} );
 	return results.map( ( r ) => r.id );
@@ -66,7 +66,7 @@ export async function deleteVendor(
 	try {
 		await requestUtils.rest( {
 			method: 'DELETE',
-			path: `/theabd-test/v1/delete-vendor/${ userId }`,
+			path: `/tanbfd-test/v1/delete-vendor/${ userId }`,
 		} );
 	} catch ( error ) {
 		console.warn( `[cleanup] Failed to delete vendor ${ userId }:`, error );
@@ -86,7 +86,7 @@ export async function deleteVendors(
 	try {
 		await requestUtils.rest( {
 			method: 'POST',
-			path: '/theabd-test/v1/delete-vendors',
+			path: '/tanbfd-test/v1/delete-vendors',
 			data: { ids: userIds },
 		} );
 	} catch ( error ) {
@@ -130,7 +130,7 @@ export async function createProduct(
 ): Promise< number > {
 	const result = await requestUtils.rest< { id: number } >( {
 		method: 'POST',
-		path: '/theabd-test/v1/create-product',
+		path: '/tanbfd-test/v1/create-product',
 		data: options,
 	} );
 	return result.id;
@@ -145,7 +145,7 @@ export async function createProducts(
 ): Promise< number[] > {
 	const results = await requestUtils.rest< Array< { id: number } > >( {
 		method: 'POST',
-		path: '/theabd-test/v1/create-products',
+		path: '/tanbfd-test/v1/create-products',
 		data: { products },
 	} );
 	return results.map( ( r ) => r.id );
@@ -159,7 +159,7 @@ export async function deleteProduct(
 	try {
 		await requestUtils.rest( {
 			method: 'DELETE',
-			path: `/theabd-test/v1/delete-product/${ productId }`,
+			path: `/tanbfd-test/v1/delete-product/${ productId }`,
 		} );
 	} catch ( error ) {
 		console.warn( `[cleanup] Failed to delete product ${ productId }:`, error );
@@ -179,7 +179,7 @@ export async function deleteProducts(
 	try {
 		await requestUtils.rest( {
 			method: 'POST',
-			path: '/theabd-test/v1/delete-products',
+			path: '/tanbfd-test/v1/delete-products',
 			data: { ids: productIds },
 		} );
 	} catch ( error ) {

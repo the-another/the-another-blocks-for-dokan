@@ -15,7 +15,7 @@ See [README.md](README.md) for an overview of what the plugin does and how to in
 
 ## Reporting Issues
 
-Please open issues at https://github.com/the-another/another-blocks-for-dokan/issues. Include:
+Please open issues at https://github.com/the-another/the-another-blocks-for-dokan/issues. Include:
 
 - Plugin version
 - WordPress, WooCommerce, and Dokan versions

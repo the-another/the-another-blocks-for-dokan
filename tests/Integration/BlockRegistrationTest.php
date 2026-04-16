@@ -6,12 +6,12 @@
  * @since 1.0.0
  */
 
-namespace The_Another\Plugin\Blocks_Dokan\Blocks\Tests\Integration;
+namespace The_Another\Plugin\Blocks_For_Dokan\Blocks\Tests\Integration;
 
 use PHPUnit\Framework\TestCase;
 use Brain\Monkey;
 use Brain\Monkey\Functions;
-use The_Another\Plugin\Blocks_Dokan\Block_Registry;
+use The_Another\Plugin\Blocks_For_Dokan\Block_Registry;
 
 /**
  * Block registration test class.
@@ -99,7 +99,7 @@ class BlockRegistrationTest extends TestCase {
 		Functions\when( 'register_block_type_from_metadata' )->justReturn( true );
 		Functions\when( 'apply_filters' )->alias(
 			function ( $filter, $value ) {
-				if ( 'theabd_registered_blocks' === $filter ) {
+				if ( 'tanbfd_registered_blocks' === $filter ) {
 					$value['the-another/blocks-for-dokan-custom-block'] = '/path/to/custom-block';
 				}
 				return $value;

@@ -7,7 +7,7 @@
 	"icon": "media-document",
 	"description": "Display vendor's terms and conditions content.",
 	"keywords": [ "dokan", "vendor", "store", "terms", "conditions", "toc", "policy" ],
-	"textdomain": "theanother-blocks-for-dokan",
+	"textdomain": "the-another-blocks-for-dokan",
 	"usesContext": [ "dokan/vendor" ],
 	"supports": {
 		"html": false,

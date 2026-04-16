@@ -6,7 +6,7 @@
  */
 
 .wp-block-the-another-blocks-for-dokan-vendor-card,
-.theabd--vendor-card {
+.tanbfd--vendor-card {
 	// Base card styles
 	position: relative;
 	padding: 1rem;
@@ -43,7 +43,7 @@
 	}
 
 	// Placeholder styles for editor
-	.theabd--vendor-card-placeholder {
+	.tanbfd--vendor-card-placeholder {
 		padding: 1.5rem;
 		min-height: 200px;
 	}
@@ -91,24 +91,24 @@
 	}
 
 	// Legacy styles for backward compatibility
-	.theabd--store-wrapper {
+	.tanbfd--store-wrapper {
 		display: flex;
 		flex-direction: column;
 		height: 100%;
 	}
 
-	.theabd--store-content {
+	.tanbfd--store-content {
 		flex: 1;
 		display: flex;
 		flex-direction: column;
 		padding: 1.5rem;
 	}
 
-	.theabd--store-data-container {
+	.tanbfd--store-data-container {
 		position: relative;
 		flex: 1;
 
-		.theabd--featured-label {
+		.tanbfd--featured-label {
 			position: absolute;
 			top: -1.5rem;
 			right: 0;
@@ -122,10 +122,10 @@
 		}
 	}
 
-	.theabd--store-data {
+	.tanbfd--store-data {
 		text-align: center;
 
-		.theabd--vendor-avatar {
+		.tanbfd--vendor-avatar {
 			margin: 0 auto 1rem;
 			width: 80px;
 			height: 80px;
@@ -153,11 +153,11 @@
 			}
 		}
 
-		.theabd--vendor-store-name-wrapper {
+		.tanbfd--vendor-store-name-wrapper {
 			margin: 0 0 0.75rem;
 			text-align: center;
 
-			.theabd--vendor-store-name {
+			.tanbfd--vendor-store-name {
 				font-size: 1rem;
 				line-height: 1.25;
 				font-weight: 600;
@@ -176,27 +176,27 @@
 			}
 		}
 
-		.theabd--vendor-rating {
+		.tanbfd--vendor-rating {
 			margin: 0 0 0.75rem;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
 
-			.theabd--rating {
+			.tanbfd--rating {
 				margin: 0.25rem 0 0;
 				font-size: 0.875rem;
 				color: #666;
 			}
 		}
 
-		.theabd--vendor-store-address {
+		.tanbfd--vendor-store-address {
 			margin: 0 0 0.5rem;
 			font-size: 0.875rem;
 			line-height: 1.5;
 			color: #666;
 		}
 
-		.theabd--vendor-store-phone {
+		.tanbfd--vendor-store-phone {
 			margin: 0;
 			font-size: 0.875rem;
 			line-height: 1.5;
@@ -209,7 +209,7 @@
 		}
 	}
 
-	.theabd--store-footer {
+	.tanbfd--store-footer {
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -217,7 +217,7 @@
 		border-top: 1px solid #e0e0e0;
 		background: #f9f9f9;
 
-		.theabd--btn-theme,
+		.tanbfd--btn-theme,
 		.wp-element-button {
 			display: flex;
 			align-items: center;

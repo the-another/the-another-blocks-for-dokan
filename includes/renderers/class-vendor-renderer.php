@@ -6,7 +6,7 @@
  * @since 1.0.0
  */
 
-namespace The_Another\Plugin\Blocks_Dokan\Renderers;
+namespace The_Another\Plugin\Blocks_For_Dokan\Renderers;
 
 /**
  * Vendor renderer class.
@@ -166,7 +166,7 @@ class Vendor_Renderer {
 		}
 
 		// Fall back to detecting vendor from page context.
-		$vendor_id = \The_Another\Plugin\Blocks_Dokan\Helpers\Context_Detector::get_vendor_id();
+		$vendor_id = tanbfd_get_vendor_id();
 
 		if ( $vendor_id <= 0 ) {
 			return null;

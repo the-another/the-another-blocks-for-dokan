@@ -6,7 +6,7 @@
  * @since 1.0.0
  */
 
-namespace The_Another\Plugin\Blocks_Dokan;
+namespace The_Another\Plugin\Blocks_For_Dokan;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -50,22 +50,25 @@ class Install {
 		if ( $use_constants && defined( 'WC_VERSION' ) ) {
 			$wc_version = WC_VERSION;
 		} else {
-			$wc_plugin_file = WP_PLUGIN_DIR . '/woocommerce/woocommerce.php';
-			$wc_version     = self::get_plugin_version( $wc_plugin_file );
+			if ( ! function_exists( 'get_plugins' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/plugin.php';
+			}
+			$all_plugins = get_plugins();
+			$wc_version  = $all_plugins['woocommerce/woocommerce.php']['Version'] ?? null;
 		}
 
 		if ( ! $wc_version ) {
 			$missing_dependencies[] = sprintf(
 				/* translators: %s: minimum WooCommerce version */
-				__( 'WooCommerce %s or higher is not installed.', 'theanother-blocks-for-dokan' ),
-				ANOTHER_BLOCKS_FOR_DOKAN_MIN_WOOCOMMERCE_VERSION
+				__( 'WooCommerce %s or higher is not installed.', 'the-another-blocks-for-dokan' ),
+				THE_ANOTHER_BLOCKS_FOR_DOKAN_MIN_WOOCOMMERCE_VERSION
 			);
-		} elseif ( version_compare( $wc_version, ANOTHER_BLOCKS_FOR_DOKAN_MIN_WOOCOMMERCE_VERSION, '<' ) ) {
+		} elseif ( version_compare( $wc_version, THE_ANOTHER_BLOCKS_FOR_DOKAN_MIN_WOOCOMMERCE_VERSION, '<' ) ) {
 			$missing_dependencies[] = sprintf(
 				/* translators: 1: installed version, 2: minimum required version */
-				__( 'WooCommerce %1$s is installed, but version %2$s or higher is required.', 'theanother-blocks-for-dokan' ),
+				__( 'WooCommerce %1$s is installed, but version %2$s or higher is required.', 'the-another-blocks-for-dokan' ),
 				$wc_version,
-				ANOTHER_BLOCKS_FOR_DOKAN_MIN_WOOCOMMERCE_VERSION
+				THE_ANOTHER_BLOCKS_FOR_DOKAN_MIN_WOOCOMMERCE_VERSION
 			);
 		}
 
@@ -73,22 +76,25 @@ class Install {
 		if ( $use_constants && defined( 'DOKAN_PLUGIN_VERSION' ) ) {
 			$dokan_version = DOKAN_PLUGIN_VERSION;
 		} else {
-			$dokan_plugin_file = WP_PLUGIN_DIR . '/dokan-lite/dokan.php';
-			$dokan_version     = self::get_plugin_version( $dokan_plugin_file );
+			if ( ! function_exists( 'get_plugins' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/plugin.php';
+			}
+			$all_plugins   = get_plugins();
+			$dokan_version = $all_plugins['dokan-lite/dokan.php']['Version'] ?? null;
 		}
 
 		if ( ! $dokan_version ) {
 			$missing_dependencies[] = sprintf(
 				/* translators: %s: minimum Dokan version */
-				__( 'Dokan Lite %s or higher is not installed.', 'theanother-blocks-for-dokan' ),
-				ANOTHER_BLOCKS_FOR_DOKAN_MIN_DOKAN_VERSION
+				__( 'Dokan Lite %s or higher is not installed.', 'the-another-blocks-for-dokan' ),
+				THE_ANOTHER_BLOCKS_FOR_DOKAN_MIN_DOKAN_VERSION
 			);
-		} elseif ( version_compare( $dokan_version, ANOTHER_BLOCKS_FOR_DOKAN_MIN_DOKAN_VERSION, '<' ) ) {
+		} elseif ( version_compare( $dokan_version, THE_ANOTHER_BLOCKS_FOR_DOKAN_MIN_DOKAN_VERSION, '<' ) ) {
 			$missing_dependencies[] = sprintf(
 				/* translators: 1: installed version, 2: minimum required version */
-				__( 'Dokan Lite %1$s is installed, but version %2$s or higher is required.', 'theanother-blocks-for-dokan' ),
+				__( 'Dokan Lite %1$s is installed, but version %2$s or higher is required.', 'the-another-blocks-for-dokan' ),
 				$dokan_version,
-				ANOTHER_BLOCKS_FOR_DOKAN_MIN_DOKAN_VERSION
+				THE_ANOTHER_BLOCKS_FOR_DOKAN_MIN_DOKAN_VERSION
 			);
 		}
 
@@ -107,20 +113,20 @@ class Install {
 
 		if ( ! empty( $missing_dependencies ) ) {
 			// Deactivate the plugin immediately.
-			deactivate_plugins( ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_BASENAME );
+			deactivate_plugins( THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_BASENAME );
 
-			$error_message  = '<h3>' . esc_html__( 'Another Blocks for Dokan - Activation Failed', 'theanother-blocks-for-dokan' ) . '</h3>';
-			$error_message .= '<p>' . esc_html__( 'The following requirements are not met:', 'theanother-blocks-for-dokan' ) . '</p>';
+			$error_message  = '<h3>' . esc_html__( 'Another Blocks for Dokan - Activation Failed', 'the-another-blocks-for-dokan' ) . '</h3>';
+			$error_message .= '<p>' . esc_html__( 'The following requirements are not met:', 'the-another-blocks-for-dokan' ) . '</p>';
 			$error_message .= '<ul style="list-style: disc; padding-left: 20px;">';
 			foreach ( $missing_dependencies as $dependency ) {
 				$error_message .= '<li>' . esc_html( $dependency ) . '</li>';
 			}
 			$error_message .= '</ul>';
-			$error_message .= '<p>' . esc_html__( 'Please install and activate the required plugins, then try again.', 'theanother-blocks-for-dokan' ) . '</p>';
+			$error_message .= '<p>' . esc_html__( 'Please install and activate the required plugins, then try again.', 'the-another-blocks-for-dokan' ) . '</p>';
 
 			wp_die(
 				wp_kses_post( $error_message ),
-				esc_html__( 'Plugin Activation Failed', 'theanother-blocks-for-dokan' ),
+				esc_html__( 'Plugin Activation Failed', 'the-another-blocks-for-dokan' ),
 				array( 'back_link' => true )
 			);
 		}
@@ -141,8 +147,8 @@ class Install {
 				function () use ( $runtime_missing_dependencies ) {
 					?>
 					<div class="notice notice-error">
-						<p><strong><?php echo esc_html__( 'Another Blocks for Dokan is disabled.', 'theanother-blocks-for-dokan' ); ?></strong></p>
-						<p><?php echo esc_html__( 'The following requirements are not met:', 'theanother-blocks-for-dokan' ); ?></p>
+						<p><strong><?php echo esc_html__( 'Another Blocks for Dokan is disabled.', 'the-another-blocks-for-dokan' ); ?></strong></p>
+						<p><?php echo esc_html__( 'The following requirements are not met:', 'the-another-blocks-for-dokan' ); ?></p>
 						<ul style="list-style: disc; padding-left: 20px;">
 							<?php foreach ( $runtime_missing_dependencies as $dependency ) : ?>
 								<li><?php echo esc_html( $dependency ); ?></li>

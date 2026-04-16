@@ -4,7 +4,7 @@ Tags: dokan, woocommerce, multivendor, blocks, gutenberg
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 8.3
-Stable tag: 1.0.9
+Stable tag: 1.0.10
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,28 @@ The latest stable version of Dokan is recommended.
 
 PHP 8.3 or higher is required.
 
+== External services ==
+
+= Mapbox Static Maps =
+
+The Vendor Store Location block can display a static map image using the Mapbox Static Images API. When a vendor has configured a Mapbox access token and store coordinates (latitude/longitude), the block loads a map image from Mapbox's servers.
+
+* **Data sent**: Store latitude, longitude, zoom level, and the site's Mapbox access token.
+* **When**: Each time the Vendor Store Location block renders on the frontend with Mapbox selected as the map provider.
+* **Service provider**: Mapbox, Inc.
+* [Mapbox Terms of Service](https://www.mapbox.com/tos/)
+* [Mapbox Privacy Policy](https://www.mapbox.com/privacy/)
+
+= Google Maps Embed =
+
+The Vendor Store Location block can alternatively display an interactive embedded map using the Google Maps Embed API. When a vendor has configured a Google Maps API key and store address, the block loads a map iframe from Google's servers.
+
+* **Data sent**: Store address, zoom level, and the site's Google Maps API key.
+* **When**: Each time the Vendor Store Location block renders on the frontend with Google Maps selected as the map provider.
+* **Service provider**: Google LLC.
+* [Google Maps Platform Terms of Service](https://cloud.google.com/maps-platform/terms)
+* [Google Privacy Policy](https://policies.google.com/privacy)
+
 == Changelog ==
 
 
@@ -42,6 +64,20 @@ PHP 8.3 or higher is required.
 
 
 
+
+
+= 1.0.10 - 2026-04-15 =
+* Fix: Corrected Author URI and Plugin URI domain (the-another.org)
+* Fix: Extracted inline script in Vendor Search block to properly enqueued view.js
+* Fix: Replaced hardcoded WP_PLUGIN_DIR paths with WordPress get_plugins() API
+* Fix: Escaped all block output with wp_kses_post() — removed 45 phpcs:ignore suppressions
+* Refactor: Renamed function prefix from theabd_ to tanbfd_ for uniqueness
+* Refactor: Renamed constants prefix to THE_ANOTHER_BLOCKS_FOR_DOKAN_
+* Refactor: Renamed namespace to The_Another\Plugin\Blocks_For_Dokan
+* Refactor: Renamed CSS class prefix from theabd-- to tanbfd--
+* Refactor: Renamed text domain to the-another-blocks-for-dokan
+* Refactor: Renamed script/style handles and transients to use tanbfd- prefix
+* Docs: Added External Services disclosure for Mapbox and Google Maps in readme
 
 = 1.0.9 - 2026-04-07 =
 * Fix: Plugin Check compliance — text domain renamed to `theanother-blocks-for-dokan` across all PHP and block.json files; added missing `languages/` directory; added direct-access guard to `functions/functions.php`; bumped main plugin header `Requires PHP` to 8.3 to match readme

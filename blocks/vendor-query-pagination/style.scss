@@ -10,8 +10,8 @@
 	margin-bottom: 2rem;
 }
 
-.theabd--vendor-query-pagination,
-.theabd--vendor-query-pagination-preview {
+.tanbfd--vendor-query-pagination,
+.tanbfd--vendor-query-pagination-preview {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -22,8 +22,8 @@
 	margin: 0;
 }
 
-.theabd--vendor-query-pagination .theabd--page-numbers,
-.theabd--vendor-query-pagination-preview .theabd--page-numbers {
+.tanbfd--vendor-query-pagination .tanbfd--page-numbers,
+.tanbfd--vendor-query-pagination-preview .tanbfd--page-numbers {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -37,21 +37,21 @@
 	cursor: pointer;
 }
 
-.theabd--vendor-query-pagination .theabd--page-numbers:hover,
-.theabd--vendor-query-pagination-preview .theabd--page-numbers:hover {
+.tanbfd--vendor-query-pagination .tanbfd--page-numbers:hover,
+.tanbfd--vendor-query-pagination-preview .tanbfd--page-numbers:hover {
 	opacity: 0.8;
 }
 
-.theabd--vendor-query-pagination .theabd--page-numbers.theabd--current,
-.theabd--vendor-query-pagination-preview .theabd--page-numbers.theabd--current {
+.tanbfd--vendor-query-pagination .tanbfd--page-numbers.tanbfd--current,
+.tanbfd--vendor-query-pagination-preview .tanbfd--page-numbers.tanbfd--current {
 	background-color: #1e1e1e;
 	color: #fff;
 	border-color: #1e1e1e;
 	font-weight: 600;
 }
 
-.theabd--vendor-query-pagination .theabd--page-numbers.theabd--dots,
-.theabd--vendor-query-pagination-preview .theabd--page-numbers.theabd--dots {
+.tanbfd--vendor-query-pagination .tanbfd--page-numbers.tanbfd--dots,
+.tanbfd--vendor-query-pagination-preview .tanbfd--page-numbers.tanbfd--dots {
 	border: none;
 	cursor: default;
 	min-width: auto;
@@ -61,14 +61,14 @@
 // Editor-specific styles
 .block-editor-block-list__block {
 
-	.theabd--vendor-query-pagination-preview {
+	.tanbfd--vendor-query-pagination-preview {
 		padding: 1rem;
 		background-color: #f8f9fa;
 		border: 1px dashed #c0c0c1;
 		border-radius: 4px;
 	}
 
-	.theabd--vendor-query-pagination-preview .theabd--page-numbers {
+	.tanbfd--vendor-query-pagination-preview .tanbfd--page-numbers {
 		pointer-events: none;
 		opacity: 0.9;
 	}

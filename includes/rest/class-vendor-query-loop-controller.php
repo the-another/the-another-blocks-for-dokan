@@ -6,7 +6,7 @@
  * @since 1.1.0
  */
 
-namespace The_Another\Plugin\Blocks_Dokan\Rest;
+namespace The_Another\Plugin\Blocks_For_Dokan\Rest;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -31,7 +31,7 @@ class Vendor_Query_Loop_Controller {
 	/**
 	 * Transient prefix used to cache parsed inner-block templates per query id.
 	 */
-	private const TPL_TRANSIENT_PREFIX = 'theabd_vql_tpl_';
+	private const TPL_TRANSIENT_PREFIX = 'tanbfd_vql_tpl_';
 
 	/**
 	 * Register REST routes.
@@ -127,8 +127,8 @@ class Vendor_Query_Loop_Controller {
 			return array();
 		}
 
-		if ( ! function_exists( 'theabd_vendor_query_loop_compute_query_id' ) ) {
-			$render_file = ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'blocks/vendor-query-loop/render.php';
+		if ( ! function_exists( 'tanbfd_vendor_query_loop_compute_query_id' ) ) {
+			$render_file = THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'blocks/vendor-query-loop/render.php';
 			if ( file_exists( $render_file ) ) {
 				require_once $render_file;
 			}
@@ -145,7 +145,7 @@ class Vendor_Query_Loop_Controller {
 				$name = isset( $node['blockName'] ) ? (string) $node['blockName'] : '';
 				if ( 'the-another/blocks-for-dokan-vendor-query-loop' === $name ) {
 					$attrs     = isset( $node['attrs'] ) && is_array( $node['attrs'] ) ? $node['attrs'] : array();
-					$candidate = theabd_vendor_query_loop_compute_query_id( $post_id, $attrs );
+					$candidate = tanbfd_vendor_query_loop_compute_query_id( $post_id, $attrs );
 					if ( $candidate === $query_id ) {
 						$inner = isset( $node['innerBlocks'] ) && is_array( $node['innerBlocks'] ) ? $node['innerBlocks'] : array();
 						foreach ( $inner as $child ) {
@@ -180,7 +180,7 @@ class Vendor_Query_Loop_Controller {
 		);
 
 		// Allow integrations to whitelist additional filter values forwarded from the
-		// `theabd_vendor_query_loop_infinite_filters` filter on the render side. Each
+		// `tanbfd_vendor_query_loop_infinite_filters` filter on the render side. Each
 		// extra value is sanitized as a plain string.
 		foreach ( $raw as $key => $value ) {
 			if ( isset( $known[ $key ] ) || ! is_string( $key ) ) {
@@ -208,15 +208,15 @@ class Vendor_Query_Loop_Controller {
 		$filters  = $this->sanitize_filters( (array) $request->get_param( 'filters' ) );
 
 		// Ensure the render-time helpers are loaded — they live in the block render.php file.
-		if ( ! function_exists( 'theabd_vendor_query_loop_build_query_args' ) ) {
-			$render_file = ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'blocks/vendor-query-loop/render.php';
+		if ( ! function_exists( 'tanbfd_vendor_query_loop_build_query_args' ) ) {
+			$render_file = THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'blocks/vendor-query-loop/render.php';
 			if ( file_exists( $render_file ) ) {
 				require_once $render_file;
 			}
 		}
 
 		// Re-inject forwarded values into the global query var bag so integrations
-		// hooked into `theabd_store_list_query_args` that read `get_query_var()`
+		// hooked into `tanbfd_store_list_query_args` that read `get_query_var()`
 		// (e.g., aucteeno-nexus location routes reading `location_slug`) still see
 		// the same context they did at first render.
 		$known_filter_keys = array(
@@ -231,8 +231,8 @@ class Vendor_Query_Loop_Controller {
 			set_query_var( $filter_key, $filter_value );
 		}
 
-		$user_args   = theabd_vendor_query_loop_build_query_args( $attrs, $page, $filters );
-		$user_query  = theabd_vendor_query_loop_run_query( $user_args );
+		$user_args   = tanbfd_vendor_query_loop_build_query_args( $attrs, $page, $filters );
+		$user_query  = tanbfd_vendor_query_loop_run_query( $user_args );
 		$sellers     = $user_query->get_results();
 		$total_users = (int) $user_query->get_total();
 		$total_pages = (int) ceil( $total_users / max( 1, (int) $user_args['number'] ) );
@@ -245,7 +245,7 @@ class Vendor_Query_Loop_Controller {
 			}
 		}
 
-		$items = theabd_vendor_query_loop_render_items(
+		$items = tanbfd_vendor_query_loop_render_items(
 			$sellers,
 			$template_blocks,
 			array( 'dokan/queryId' => $query_id )

@@ -19,12 +19,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param WP_Block             $block      Block instance.
  * @return string Rendered HTML.
  */
-function theabd_render_vendor_store_location_block( array $attributes, string $content, WP_Block $block ): string {
+function tanbfd_render_vendor_store_location_block( array $attributes, string $content, WP_Block $block ): string {
 	// Get vendor ID from attributes or context.
 	$vendor_id = ! empty( $attributes['vendorId'] ) ? absint( $attributes['vendorId'] ) : 0;
 
 	if ( ! $vendor_id ) {
-		$vendor_id = \The_Another\Plugin\Blocks_Dokan\Helpers\Context_Detector::get_vendor_id();
+		$vendor_id = tanbfd_get_vendor_id();
 	}
 
 	if ( ! $vendor_id || ! dokan_is_user_seller( $vendor_id ) ) {
@@ -73,7 +73,7 @@ function theabd_render_vendor_store_location_block( array $attributes, string $c
 	// Get wrapper attributes.
 	$wrapper_attributes = get_block_wrapper_attributes(
 		array(
-			'class' => "theabd--vendor-store-location theabd--vendor-store-location-{$map_provider}",
+			'class' => "tanbfd--vendor-store-location tanbfd--vendor-store-location-{$map_provider}",
 			'style' => "height: {$height}px;",
 		)
 	);
@@ -90,7 +90,7 @@ function theabd_render_vendor_store_location_block( array $attributes, string $c
 		);
 
 		?>
-		<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<div <?php echo wp_kses_post( $wrapper_attributes ); ?>>
 			<?php dokan_get_template_part( 'widgets/store-map', $map_provider, $template_args ); ?>
 		</div>
 		<?php
@@ -99,7 +99,7 @@ function theabd_render_vendor_store_location_block( array $attributes, string $c
 		$mapbox_token = get_option( 'dokan_mapbox_token', '' );
 		if ( ! empty( $mapbox_token ) ) {
 			?>
-			<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+			<div <?php echo wp_kses_post( $wrapper_attributes ); ?>>
 				<iframe
 					width="100%"
 					height="<?php echo esc_attr( $height ); ?>"
@@ -116,7 +116,7 @@ function theabd_render_vendor_store_location_block( array $attributes, string $c
 		$google_api_key  = get_option( 'dokan_google_api_key', '' );
 		$address_encoded = rawurlencode( $address );
 		?>
-		<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<div <?php echo wp_kses_post( $wrapper_attributes ); ?>>
 			<iframe
 				width="100%"
 				height="<?php echo esc_attr( $height ); ?>"

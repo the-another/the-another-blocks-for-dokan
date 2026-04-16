@@ -6,11 +6,11 @@
  * @since 1.0.0
  */
 
-namespace The_Another\Plugin\Blocks_Dokan\Container;
+namespace The_Another\Plugin\Blocks_For_Dokan\Container;
 
 // Exit if accessed directly.
 
-use The_Another\Plugin\Blocks_Dokan\Exceptions\Container_Exception;
+use The_Another\Plugin\Blocks_For_Dokan\Exceptions\Container_Exception;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

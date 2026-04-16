@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param WP_Block             $block      Block instance.
  * @return string Rendered HTML.
  */
-function theabd_render_vendor_query_pagination_block( array $attributes, string $content, WP_Block $block ): string {
+function tanbfd_render_vendor_query_pagination_block( array $attributes, string $content, WP_Block $block ): string {
 	// Get context from parent store query loop block.
 	$query_id = $block->context['dokan/queryId'] ?? null;
 	$query    = $block->context['dokan/query'] ?? null;
@@ -46,7 +46,7 @@ function theabd_render_vendor_query_pagination_block( array $attributes, string 
 	// Get wrapper attributes.
 	$wrapper_attributes = get_block_wrapper_attributes(
 		array(
-			'class'       => 'theabd--vendor-query-pagination',
+			'class'       => 'tanbfd--vendor-query-pagination',
 			'data-testid' => 'vendor-pagination',
 		)
 	);
@@ -63,7 +63,7 @@ function theabd_render_vendor_query_pagination_block( array $attributes, string 
 	ob_start();
 	?>
 
-	<nav <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+	<nav <?php echo wp_kses_post( $wrapper_attributes ); ?>>
 		<?php
 		echo wp_kses_post(
 			paginate_links(
@@ -73,8 +73,8 @@ function theabd_render_vendor_query_pagination_block( array $attributes, string 
 					'current'   => $current_page,
 					'total'     => $total_pages,
 					'mid_size'  => $mid_size,
-					'prev_text' => ( 'arrow' === $pagination_arrow ? '&larr; ' : '' ) . ( $show_label ? __( 'Previous', 'theanother-blocks-for-dokan' ) : '' ),
-					'next_text' => ( $show_label ? __( 'Next', 'theanother-blocks-for-dokan' ) : '' ) . ( 'arrow' === $pagination_arrow ? ' &rarr;' : '' ),
+					'prev_text' => ( 'arrow' === $pagination_arrow ? '&larr; ' : '' ) . ( $show_label ? __( 'Previous', 'the-another-blocks-for-dokan' ) : '' ),
+					'next_text' => ( $show_label ? __( 'Next', 'the-another-blocks-for-dokan' ) : '' ) . ( 'arrow' === $pagination_arrow ? ' &rarr;' : '' ),
 					'type'      => 'plain',
 				)
 			)

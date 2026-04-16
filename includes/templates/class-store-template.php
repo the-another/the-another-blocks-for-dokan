@@ -10,10 +10,9 @@
  * @since 1.0.0
  */
 
-namespace The_Another\Plugin\Blocks_Dokan\Templates;
+namespace The_Another\Plugin\Blocks_For_Dokan\Templates;
 
 // Exit if accessed directly.
-use The_Another\Plugin\Blocks_Dokan\Helpers\Context_Detector;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -88,7 +87,7 @@ class Store_Template extends Abstract_Dokan_Template {
 		}
 
 		$template_name = self::PLUGIN_SLUG . '//' . self::SLUG_TOC;
-		$template_path = ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'templates/store-toc.html';
+		$template_path = THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'templates/store-toc.html';
 
 		if ( ! file_exists( $template_path ) ) {
 			return;
@@ -99,8 +98,8 @@ class Store_Template extends Abstract_Dokan_Template {
 		register_block_template(
 			$template_name,
 			array(
-				'title'       => __( 'Vendor Terms & Conditions', 'theanother-blocks-for-dokan' ),
-				'description' => __( 'Displays a vendor\'s terms and conditions page.', 'theanother-blocks-for-dokan' ),
+				'title'       => __( 'Vendor Terms & Conditions', 'the-another-blocks-for-dokan' ),
+				'description' => __( 'Displays a vendor\'s terms and conditions page.', 'the-another-blocks-for-dokan' ),
 				'plugin'      => self::PLUGIN_SLUG,
 				'content'     => false !== $content ? $content : '',
 			)
@@ -117,7 +116,7 @@ class Store_Template extends Abstract_Dokan_Template {
 	 * @return string Modified template path.
 	 */
 	public function override_store_template( string $template ): string {
-		if ( ! Context_Detector::is_store_page() ) {
+		if ( ! tanbfd_is_store_page() ) {
 			return $template;
 		}
 
@@ -139,7 +138,7 @@ class Store_Template extends Abstract_Dokan_Template {
 		$template_slug = self::TAB_TEMPLATE_MAP[ $current_tab ];
 
 		// Allow other plugins to override the template.
-		$override_template = apply_filters( 'theabd_store_template_override', null, $template_slug, $current_tab );
+		$override_template = apply_filters( 'tanbfd_store_template_override', null, $template_slug, $current_tab );
 
 		$block_template = $override_template ? $override_template : $this->get_block_template_for_slug( $template_slug );
 
@@ -156,7 +155,7 @@ class Store_Template extends Abstract_Dokan_Template {
 
 		// Return path to WordPress block template canvas.
 		// This will trigger WordPress to render our registered block template.
-		$canvas_path = ABSPATH . WPINC . '/template-canvas.php';
+		$canvas_path = wp_normalize_path( ABSPATH . WPINC . '/template-canvas.php' );
 		if ( file_exists( $canvas_path ) ) {
 			return $canvas_path;
 		}
@@ -215,7 +214,7 @@ class Store_Template extends Abstract_Dokan_Template {
 
 		$template_file = $template_file_map[ $slug ] ?? $slug . '.html';
 
-		return ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'templates/' . $template_file;
+		return THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'templates/' . $template_file;
 	}
 
 	/**
@@ -273,11 +272,11 @@ class Store_Template extends Abstract_Dokan_Template {
 	 */
 	private function get_template_title_for_slug( string $slug ): string {
 		$titles = array(
-			self::SLUG     => __( 'Single Vendor Store', 'theanother-blocks-for-dokan' ),
-			self::SLUG_TOC => __( 'Vendor Terms & Conditions', 'theanother-blocks-for-dokan' ),
+			self::SLUG     => __( 'Single Vendor Store', 'the-another-blocks-for-dokan' ),
+			self::SLUG_TOC => __( 'Vendor Terms & Conditions', 'the-another-blocks-for-dokan' ),
 		);
 
-		return $titles[ $slug ] ?? __( 'Vendor Store', 'theanother-blocks-for-dokan' );
+		return $titles[ $slug ] ?? __( 'Vendor Store', 'the-another-blocks-for-dokan' );
 	}
 
 	/**
@@ -288,11 +287,11 @@ class Store_Template extends Abstract_Dokan_Template {
 	 */
 	private function get_template_description_for_slug( string $slug ): string {
 		$descriptions = array(
-			self::SLUG     => __( 'Displays a single vendor store page with products and information.', 'theanother-blocks-for-dokan' ),
-			self::SLUG_TOC => __( 'Displays a vendor\'s terms and conditions page.', 'theanother-blocks-for-dokan' ),
+			self::SLUG     => __( 'Displays a single vendor store page with products and information.', 'the-another-blocks-for-dokan' ),
+			self::SLUG_TOC => __( 'Displays a vendor\'s terms and conditions page.', 'the-another-blocks-for-dokan' ),
 		);
 
-		return $descriptions[ $slug ] ?? __( 'Vendor store template.', 'theanother-blocks-for-dokan' );
+		return $descriptions[ $slug ] ?? __( 'Vendor store template.', 'the-another-blocks-for-dokan' );
 	}
 
 	/**
@@ -301,7 +300,7 @@ class Store_Template extends Abstract_Dokan_Template {
 	 * @return bool
 	 */
 	protected function should_render_template(): bool {
-		return Context_Detector::is_store_page();
+		return tanbfd_is_store_page();
 	}
 
 	/**
@@ -310,7 +309,7 @@ class Store_Template extends Abstract_Dokan_Template {
 	 * @return string
 	 */
 	public function get_template_title(): string {
-		return __( 'Single Vendor Store', 'theanother-blocks-for-dokan' );
+		return __( 'Single Vendor Store', 'the-another-blocks-for-dokan' );
 	}
 
 	/**
@@ -319,6 +318,6 @@ class Store_Template extends Abstract_Dokan_Template {
 	 * @return string
 	 */
 	public function get_template_description(): string {
-		return __( 'Displays a single vendor store page with products and information.', 'theanother-blocks-for-dokan' );
+		return __( 'Displays a single vendor store page with products and information.', 'the-another-blocks-for-dokan' );
 	}
 }

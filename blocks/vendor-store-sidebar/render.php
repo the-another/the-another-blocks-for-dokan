@@ -19,12 +19,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param WP_Block             $block      Block instance.
  * @return string Rendered HTML.
  */
-function theabd_render_vendor_store_sidebar_block( array $attributes, string $content, WP_Block $block ): string {
+function tanbfd_render_vendor_store_sidebar_block( array $attributes, string $content, WP_Block $block ): string {
 	// Get vendor ID from attributes or context.
 	$vendor_id = ! empty( $attributes['vendorId'] ) ? absint( $attributes['vendorId'] ) : 0;
 
 	if ( ! $vendor_id ) {
-		$vendor_id = \The_Another\Plugin\Blocks_Dokan\Helpers\Context_Detector::get_vendor_id();
+		$vendor_id = tanbfd_get_vendor_id();
 	}
 
 	if ( ! $vendor_id || ! dokan_is_user_seller( $vendor_id ) ) {
@@ -32,7 +32,7 @@ function theabd_render_vendor_store_sidebar_block( array $attributes, string $co
 	}
 
 	// Get vendor data.
-	$vendor_data = \The_Another\Plugin\Blocks_Dokan\Renderers\Vendor_Renderer::get_vendor_data( $vendor_id );
+	$vendor_data = \The_Another\Plugin\Blocks_For_Dokan\Renderers\Vendor_Renderer::get_vendor_data( $vendor_id );
 	if ( ! $vendor_data ) {
 		return '';
 	}
@@ -42,8 +42,8 @@ function theabd_render_vendor_store_sidebar_block( array $attributes, string $co
 	// Get wrapper attributes.
 	$wrapper_attributes = get_block_wrapper_attributes(
 		array(
-			'class' => 'theabd--vendor-store-sidebar',
-			'id'    => 'theabd--secondary',
+			'class' => 'tanbfd--vendor-store-sidebar',
+			'id'    => 'tanbfd--secondary',
 			'role'  => 'complementary',
 		)
 	);
@@ -56,8 +56,8 @@ function theabd_render_vendor_store_sidebar_block( array $attributes, string $co
 	} else {
 		// Use Dokan sidebar widgets.
 		?>
-		<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-			<div class="theabd--widget-area theabd--widget-collapse">
+		<div <?php echo wp_kses_post( $wrapper_attributes ); ?>>
+			<div class="tanbfd--widget-area tanbfd--widget-collapse">
 				<?php
 				if ( ! dynamic_sidebar( 'sidebar-store' ) ) {
 					// Default widgets.

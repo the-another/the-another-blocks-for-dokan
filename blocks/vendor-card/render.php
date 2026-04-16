@@ -19,13 +19,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param WP_Block             $block      Block instance.
  * @return string Rendered HTML.
  */
-function theabd_render_vendor_card_block( array $attributes, string $content, WP_Block $block ): string {
+function tanbfd_render_vendor_card_block( array $attributes, string $content, WP_Block $block ): string {
 	// Extract attributes with defaults.
 	$use_banner_as_background = $attributes['useBannerAsBackground'] ?? false;
 	$background_overlay       = $attributes['backgroundOverlay'] ?? 0.5;
 
 	// Build wrapper classes.
-	$wrapper_classes = array( 'theabd--vendor-card' );
+	$wrapper_classes = array( 'tanbfd--vendor-card' );
 	if ( $use_banner_as_background ) {
 		$wrapper_classes[] = 'has-banner-background';
 	}
@@ -46,7 +46,7 @@ function theabd_render_vendor_card_block( array $attributes, string $content, WP
 		$vendor_id = ! empty( $attributes['vendorId'] ) ? absint( $attributes['vendorId'] ) : 0;
 
 		if ( $vendor_id && dokan_is_user_seller( $vendor_id ) ) {
-			$vendor_data = \The_Another\Plugin\Blocks_Dokan\Renderers\Vendor_Renderer::get_vendor_data( $vendor_id );
+			$vendor_data = \The_Another\Plugin\Blocks_For_Dokan\Renderers\Vendor_Renderer::get_vendor_data( $vendor_id );
 		}
 	}
 
@@ -137,15 +137,15 @@ function theabd_render_vendor_card_block( array $attributes, string $content, WP
 		if ( is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
 			ob_start();
 			?>
-			<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-				<div class="theabd--vendor-card-placeholder">
+			<div <?php echo wp_kses_post( $wrapper_attributes ); ?><?php echo wp_kses_post( $style_attr ); ?>>
+				<div class="tanbfd--vendor-card-placeholder">
 					<?php if ( ! $vendor_id ) : ?>
-						<p class="theabd--store-placeholder-notice" style="padding: 1rem; background: #f0f0f0; border-radius: 4px; font-size: 0.875rem; color: #666;">
-							<?php echo esc_html__( 'Please enter a valid Vendor ID in the block settings to display a store card.', 'theanother-blocks-for-dokan' ); ?>
+						<p class="tanbfd--store-placeholder-notice" style="padding: 1rem; background: #f0f0f0; border-radius: 4px; font-size: 0.875rem; color: #666;">
+							<?php echo esc_html__( 'Please enter a valid Vendor ID in the block settings to display a store card.', 'the-another-blocks-for-dokan' ); ?>
 						</p>
 					<?php else : ?>
-						<p class="theabd--store-placeholder-notice" style="padding: 1rem; background: #fff3cd; border-radius: 4px; font-size: 0.875rem; color: #856404;">
-							<?php echo esc_html__( 'Vendor ID not found or user is not a seller.', 'theanother-blocks-for-dokan' ); ?>
+						<p class="tanbfd--store-placeholder-notice" style="padding: 1rem; background: #fff3cd; border-radius: 4px; font-size: 0.875rem; color: #856404;">
+							<?php echo esc_html__( 'Vendor ID not found or user is not a seller.', 'the-another-blocks-for-dokan' ); ?>
 						</p>
 					<?php endif; ?>
 					<?php
@@ -157,10 +157,10 @@ function theabd_render_vendor_card_block( array $attributes, string $content, WP
 								$inner_block->parsed_block,
 								array()
 							);
-							echo $inner_block_instance->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo tanbfd_kses_block( $inner_block_instance->render() );
 						}
 					} elseif ( ! empty( $content ) ) {
-						echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo tanbfd_kses_block( $content );
 					}
 					?>
 				</div>
@@ -174,7 +174,7 @@ function theabd_render_vendor_card_block( array $attributes, string $content, WP
 	// Render the store card with inner blocks.
 	ob_start();
 	?>
-	<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $style_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+	<div <?php echo wp_kses_post( $wrapper_attributes ); ?><?php echo wp_kses_post( $style_attr ); ?>>
 		<?php
 		// Render inner blocks with vendor context.
 		if ( ! empty( $block->inner_blocks ) && $vendor_data ) {
@@ -185,11 +185,11 @@ function theabd_render_vendor_card_block( array $attributes, string $content, WP
 					$inner_block->parsed_block,
 					array( 'dokan/vendor' => $vendor_data )
 				);
-				echo $inner_block_instance->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo tanbfd_kses_block( $inner_block_instance->render() );
 			}
 		} else {
 			// Fallback to pre-rendered content if no vendor data or no inner blocks.
-			echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo tanbfd_kses_block( $content );
 		}
 		?>
 	</div>

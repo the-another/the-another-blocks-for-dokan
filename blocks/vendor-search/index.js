@@ -31,7 +31,7 @@ import './style.scss';
  */
 function Edit( { attributes, setAttributes } ) {
 	const blockProps = useBlockProps( {
-		className: 'theabd--vendor-search',
+		className: 'tanbfd--vendor-search',
 	} );
 
 	// Get theme colors for the color palette.
@@ -66,9 +66,9 @@ function Edit( { attributes, setAttributes } ) {
 	}
 
 	// Button classes — colors from wp-element-button / theme, sizes from CSS.
-	const buttonClasses = [ 'wp-element-button', 'theabd--btn' ];
+	const buttonClasses = [ 'wp-element-button', 'tanbfd--btn' ];
 	if ( buttonSize ) {
-		buttonClasses.push( 'theabd--btn-' + buttonSize );
+		buttonClasses.push( 'tanbfd--btn-' + buttonSize );
 	}
 
 	return (
@@ -220,11 +220,11 @@ function Edit( { attributes, setAttributes } ) {
 			</InspectorControls>
 
 			<div { ...blockProps }>
-				<div className="theabd--vendor-query-looping-filter-wrap">
-					<div className="theabd--store-filter-row">
-						<div className="theabd--store-filter-row-inner">
-							<div className="theabd--store-filter-left">
-								<p className="theabd--item theabd--store-count">
+				<div className="tanbfd--vendor-query-looping-filter-wrap">
+					<div className="tanbfd--store-filter-row">
+						<div className="tanbfd--store-filter-row-inner">
+							<div className="tanbfd--store-filter-left">
+								<p className="tanbfd--item tanbfd--store-count">
 									{ storeCountLabel.includes( '%s' )
 										? storeCountLabel.replace( '%s', '1' )
 										: storeCountLabel + ' 1' }
@@ -232,17 +232,17 @@ function Edit( { attributes, setAttributes } ) {
 							</div>
 
 							{ enableSearch && (
-								<div className="theabd--store-filter-right-item">
-									<div className="theabd--item">
-										<div className="theabd--icons">
-											<div className="theabd--icon-div"></div>
-											<div className="theabd--icon-div"></div>
-											<div className="theabd--icon-div"></div>
+								<div className="tanbfd--store-filter-right-item">
+									<div className="tanbfd--item">
+										<div className="tanbfd--icons">
+											<div className="tanbfd--icon-div"></div>
+											<div className="tanbfd--icon-div"></div>
+											<div className="tanbfd--icon-div"></div>
 										</div>
 										<button
 											type="button"
 											className={
-												'theabd--vendor-query-loop-filter-button ' +
+												'tanbfd--vendor-query-loop-filter-button ' +
 												buttonClasses.join( ' ' )
 											}
 											style={
@@ -253,7 +253,7 @@ function Edit( { attributes, setAttributes } ) {
 											}
 											disabled
 										>
-											<span className="theabd--btn-text">
+											<span className="tanbfd--btn-text">
 												{ __(
 													'Filter',
 													'dokan-blocks'
@@ -266,10 +266,10 @@ function Edit( { attributes, setAttributes } ) {
 						</div>
 
 						{ enableSortBy && (
-							<div className="theabd--store-filter-row-inner theabd--store-filter-row-sort">
+							<div className="tanbfd--store-filter-row-inner tanbfd--store-filter-row-sort">
 								<form
 									name="stores_sorting"
-									className="theabd--sort-by theabd--item"
+									className="tanbfd--sort-by tanbfd--item"
 								>
 									<label htmlFor="stores_orderby">
 										{ sortByLabel }
@@ -307,21 +307,21 @@ function Edit( { attributes, setAttributes } ) {
 						method="get"
 						name="dokan_store_lists_filter_form"
 						id="dokan-vendor-query-looping-filter-form-wrap"
-						className="theabd--vendor-search-filter-form"
+						className="tanbfd--vendor-search-filter-form"
 						style={ { display: 'block' } }
 					>
-						<div className="theabd--vendor-search-filter-row">
-							<div className="theabd--vendor-search theabd--grid-item">
+						<div className="tanbfd--vendor-search-filter-row">
+							<div className="tanbfd--vendor-search tanbfd--grid-item">
 								<input
 									type="search"
-									className="theabd--form-control theabd--vendor-search-input"
+									className="tanbfd--form-control tanbfd--vendor-search-input"
 									name="dokan_seller_search"
 									placeholder={ searchPlaceholder }
 									disabled
 								/>
 							</div>
 
-							<div className="theabd--apply-filter">
+							<div className="tanbfd--apply-filter">
 								<button
 									id="cancel-filter-btn"
 									type="button"
@@ -333,7 +333,7 @@ function Edit( { attributes, setAttributes } ) {
 									}
 									disabled
 								>
-									<span className="theabd--btn-text">
+									<span className="tanbfd--btn-text">
 										{ __( 'Cancel', 'dokan-blocks' ) }
 									</span>
 								</button>
@@ -348,7 +348,7 @@ function Edit( { attributes, setAttributes } ) {
 									}
 									disabled
 								>
-									<span className="theabd--btn-text">
+									<span className="tanbfd--btn-text">
 										{ buttonText }
 									</span>
 								</button>
@@ -358,9 +358,9 @@ function Edit( { attributes, setAttributes } ) {
 						{ ( enableLocationFilter ||
 							enableRatingFilter ||
 							enableCategoryFilter ) && (
-							<div className="theabd--store-advanced-filters">
+							<div className="tanbfd--store-advanced-filters">
 								{ enableLocationFilter && (
-									<div className="theabd--store-filter-field">
+									<div className="tanbfd--store-filter-field">
 										<label htmlFor="dokan_store_location">
 											{ __(
 												'Location:',
@@ -370,7 +370,7 @@ function Edit( { attributes, setAttributes } ) {
 										<select
 											name="dokan_store_location"
 											id="dokan_store_location"
-											className="theabd--form-control theabd--store-filter-select"
+											className="tanbfd--form-control tanbfd--store-filter-select"
 											disabled
 										>
 											<option value="">
@@ -384,7 +384,7 @@ function Edit( { attributes, setAttributes } ) {
 								) }
 
 								{ enableRatingFilter && (
-									<div className="theabd--store-filter-field">
+									<div className="tanbfd--store-filter-field">
 										<label htmlFor="dokan_store_rating">
 											{ __(
 												'Minimum Rating:',
@@ -394,7 +394,7 @@ function Edit( { attributes, setAttributes } ) {
 										<select
 											name="dokan_store_rating"
 											id="dokan_store_rating"
-											className="theabd--form-control theabd--store-filter-select"
+											className="tanbfd--form-control tanbfd--store-filter-select"
 											disabled
 										>
 											<option value="">
@@ -429,7 +429,7 @@ function Edit( { attributes, setAttributes } ) {
 								) }
 
 								{ enableCategoryFilter && (
-									<div className="theabd--store-filter-field">
+									<div className="tanbfd--store-filter-field">
 										<label htmlFor="dokan_store_category">
 											{ __(
 												'Category:',
@@ -439,7 +439,7 @@ function Edit( { attributes, setAttributes } ) {
 										<select
 											name="dokan_store_category"
 											id="dokan_store_category"
-											className="theabd--form-control theabd--store-filter-select"
+											className="tanbfd--form-control tanbfd--store-filter-select"
 											disabled
 										>
 											<option value="">

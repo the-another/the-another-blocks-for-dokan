@@ -7,7 +7,7 @@
 	"icon": "store",
 	"description": "Display vendor store header with banner, avatar, and key information.",
 	"keywords": [ "dokan", "vendor", "store", "header" ],
-	"textdomain": "theanother-blocks-for-dokan",
+	"textdomain": "the-another-blocks-for-dokan",
 	"supports": {
 		"html": false,
 		"align": [ "wide", "full" ],

@@ -19,9 +19,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param WP_Block             $block      Block instance.
  * @return string Rendered HTML.
  */
-function theabd_render_vendor_store_name_block( array $attributes, string $content, WP_Block $block ): string {
+function tanbfd_render_vendor_store_name_block( array $attributes, string $content, WP_Block $block ): string {
 	// Get vendor data from context, falling back to page context detection.
-	$vendor = \The_Another\Plugin\Blocks_Dokan\Renderers\Vendor_Renderer::resolve_vendor_from_context(
+	$vendor = \The_Another\Plugin\Blocks_For_Dokan\Renderers\Vendor_Renderer::resolve_vendor_from_context(
 		$block->context['dokan/vendor'] ?? null,
 		array(
 			'store_name' => 'shop_name',
@@ -30,7 +30,7 @@ function theabd_render_vendor_store_name_block( array $attributes, string $conte
 	);
 
 	if ( empty( $vendor ) || empty( $vendor['id'] ) ) {
-		return '<p>' . esc_html__( 'Store Name', 'theanother-blocks-for-dokan' ) . '</p>';
+		return '<p>' . esc_html__( 'Store Name', 'the-another-blocks-for-dokan' ) . '</p>';
 	}
 
 	$shop_name = $vendor['store_name'] ?? $vendor['shop_name'] ?? '';
@@ -47,13 +47,13 @@ function theabd_render_vendor_store_name_block( array $attributes, string $conte
 	// WordPress handles color, typography, and spacing styles automatically via block.json supports.
 	$wrapper_attributes = get_block_wrapper_attributes(
 		array(
-			'class' => 'theabd--vendor-store-name',
+			'class' => 'tanbfd--vendor-store-name',
 		)
 	);
 
 	ob_start();
 	?>
-	<<?php echo esc_attr( $tag_name ); ?> <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+	<<?php echo esc_attr( $tag_name ); ?> <?php echo wp_kses_post( $wrapper_attributes ); ?>>
 		<?php if ( $is_link && ! empty( $shop_url ) ) : ?>
 			<a href="<?php echo esc_url( $shop_url ); ?>">
 				<?php echo esc_html( $shop_name ); ?>

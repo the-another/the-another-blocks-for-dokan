@@ -153,14 +153,48 @@ if ( file_exists( dirname( __DIR__ ) . '/vendor/autoload.php' ) ) {
 }
 
 // Define plugin constants for tests
-if ( ! defined( 'ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_FILE' ) ) {
-	define( 'ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_FILE', dirname( __DIR__ ) . '/another-blocks-for-dokan.php' );
+if ( ! defined( 'THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_FILE' ) ) {
+	define( 'THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_FILE', dirname( __DIR__ ) . '/the-another-blocks-for-dokan.php' );
 }
 
-if ( ! defined( 'ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR' ) ) {
-	define( 'ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR', dirname( __DIR__ ) . '/' );
+if ( ! defined( 'THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR' ) ) {
+	define( 'THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR', dirname( __DIR__ ) . '/' );
 }
 
-if ( ! defined( 'ANOTHER_BLOCKS_FOR_DOKAN_VERSION' ) ) {
-	define( 'ANOTHER_BLOCKS_FOR_DOKAN_VERSION', '1.0.3' );
+if ( ! defined( 'THE_ANOTHER_BLOCKS_FOR_DOKAN_VERSION' ) ) {
+	define( 'THE_ANOTHER_BLOCKS_FOR_DOKAN_VERSION', '1.0.3' );
+}
+
+// Provide lightweight stubs for the public API functions used by internal
+// classes. In production these go through the container; in tests we
+// instantiate Context_Detector directly to avoid the full container chain.
+// phpcs:disable Squiz.Commenting.FunctionComment.Missing, Squiz.Commenting.FunctionComment.MissingParamComment
+if ( ! function_exists( 'tanbfd_get_vendor_id' ) ) {
+	function tanbfd_get_vendor_id(): ?int {
+		return ( new \The_Another\Plugin\Blocks_For_Dokan\Helpers\Context_Detector() )->get_vendor_id();
+	}
+}
+
+if ( ! function_exists( 'tanbfd_get_product_id' ) ) {
+	function tanbfd_get_product_id(): ?int {
+		return ( new \The_Another\Plugin\Blocks_For_Dokan\Helpers\Context_Detector() )->get_product_id();
+	}
+}
+
+if ( ! function_exists( 'tanbfd_is_store_page' ) ) {
+	function tanbfd_is_store_page(): bool {
+		return ( new \The_Another\Plugin\Blocks_For_Dokan\Helpers\Context_Detector() )->is_store_page();
+	}
+}
+
+if ( ! function_exists( 'tanbfd_is_product_page' ) ) {
+	function tanbfd_is_product_page(): bool {
+		return ( new \The_Another\Plugin\Blocks_For_Dokan\Helpers\Context_Detector() )->is_product_page();
+	}
+}
+
+if ( ! function_exists( 'tanbfd_is_store_list_page' ) ) {
+	function tanbfd_is_store_list_page(): bool {
+		return ( new \The_Another\Plugin\Blocks_For_Dokan\Helpers\Context_Detector() )->is_store_list_page();
+	}
 }

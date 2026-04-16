@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param array $address Address array.
  * @return string Formatted address.
  */
-function theabd_format_address( array $address ): string {
+function tanbfd_format_address( array $address ): string {
 	$parts = array();
 
 	if ( ! empty( $address['street_1'] ) ) {
@@ -57,9 +57,9 @@ function theabd_format_address( array $address ): string {
  * @param WP_Block             $block      Block instance.
  * @return string Rendered HTML.
  */
-function theabd_render_vendor_store_address_block( array $attributes, string $content, WP_Block $block ): string {
+function tanbfd_render_vendor_store_address_block( array $attributes, string $content, WP_Block $block ): string {
 	// Get vendor data from context, falling back to page context detection.
-	$vendor = \The_Another\Plugin\Blocks_Dokan\Renderers\Vendor_Renderer::resolve_vendor_from_context(
+	$vendor = \The_Another\Plugin\Blocks_For_Dokan\Renderers\Vendor_Renderer::resolve_vendor_from_context(
 		$block->context['dokan/vendor'] ?? null,
 		array(
 			'address' => 'address',
@@ -67,7 +67,7 @@ function theabd_render_vendor_store_address_block( array $attributes, string $co
 	);
 
 	if ( empty( $vendor ) || empty( $vendor['id'] ) ) {
-		return '<p class="theabd--vendor-store-address">123 Main St, City, Country</p>';
+		return '<p class="tanbfd--vendor-store-address">123 Main St, City, Country</p>';
 	}
 
 	$address   = $vendor['address'] ?? array();
@@ -76,7 +76,7 @@ function theabd_render_vendor_store_address_block( array $attributes, string $co
 	// Format the address.
 	$formatted_address = '';
 	if ( is_array( $address ) ) {
-		$formatted_address = theabd_format_address( $address );
+		$formatted_address = tanbfd_format_address( $address );
 	} elseif ( is_string( $address ) ) {
 		$formatted_address = $address;
 	}
@@ -89,13 +89,13 @@ function theabd_render_vendor_store_address_block( array $attributes, string $co
 	// Get wrapper attributes.
 	$wrapper_attributes = get_block_wrapper_attributes(
 		array(
-			'class' => 'theabd--vendor-store-address',
+			'class' => 'tanbfd--vendor-store-address',
 		)
 	);
 
 	ob_start();
 	?>
-	<p <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+	<p <?php echo wp_kses_post( $wrapper_attributes ); ?>>
 		<?php if ( $show_icon ) : ?>
 			<span class="dashicons dashicons-location" aria-hidden="true"></span>
 		<?php endif; ?>

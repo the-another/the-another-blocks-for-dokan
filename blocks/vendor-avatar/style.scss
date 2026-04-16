@@ -6,7 +6,7 @@
  */
 
 .wp-block-the-another-blocks-for-dokan-vendor-avatar,
-.theabd--vendor-avatar {
+.tanbfd--vendor-avatar {
 	display: inline-block;
 	position: relative;
 
@@ -24,14 +24,14 @@
 	}
 
 	// Link wrapper
-	.theabd--vendor-avatar-link {
+	.tanbfd--vendor-avatar-link {
 		display: block;
 		line-height: 0;
 		overflow: hidden;
 	}
 
 	// Image styles
-	.theabd--vendor-avatar-image {
+	.tanbfd--vendor-avatar-image {
 		display: block;
 		max-width: 100%;
 		height: auto;
@@ -40,7 +40,7 @@
 
 	// Support for border radius (round logos) - cascade to all images
 	img,
-	img.theabd--vendor-avatar-image {
+	img.tanbfd--vendor-avatar-image {
 		display: block;
 	}
 
@@ -64,11 +64,11 @@
 		display: block;
 		text-align: center;
 
-		.theabd--vendor-avatar-link {
+		.tanbfd--vendor-avatar-link {
 			display: block;
 		}
 
-		.theabd--vendor-avatar-image {
+		.tanbfd--vendor-avatar-image {
 			display: block;
 			margin: 0 auto;
 		}

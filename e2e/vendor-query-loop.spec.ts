@@ -64,7 +64,7 @@ test.describe( 'Vendor Query Loop – frontend rendering', () => {
 		await expect( searchBlock ).toBeVisible();
 
 		// Vendor cards on page 1: should be exactly PER_PAGE (3).
-		const cardsPage1 = page.locator( '.theabd--single-vendor' );
+		const cardsPage1 = page.locator( '.tanbfd--single-vendor' );
 		await expect( cardsPage1 ).toHaveCount( PER_PAGE );
 
 		// Pagination: should be visible.
@@ -87,7 +87,7 @@ test.describe( 'Vendor Query Loop – frontend rendering', () => {
 
 		expect( page.url() ).toMatch( /paged=|\/page\/\d+/ );
 
-		const cardsLastPage = page.locator( '.theabd--single-vendor' );
+		const cardsLastPage = page.locator( '.tanbfd--single-vendor' );
 		await expect( cardsLastPage ).toHaveCount(
 			VENDOR_COUNT % PER_PAGE || PER_PAGE
 		);

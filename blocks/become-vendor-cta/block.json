@@ -7,7 +7,7 @@
 	"icon": "megaphone",
 	"description": "Call-to-action to become a vendor.",
 	"keywords": [ "dokan", "vendor", "become", "cta", "registration" ],
-	"textdomain": "theanother-blocks-for-dokan",
+	"textdomain": "the-another-blocks-for-dokan",
 	"supports": {
 		"html": false,
 		"align": true,

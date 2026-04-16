@@ -6,10 +6,10 @@
  */
 
 .wp-block-the-another-blocks-for-dokan-vendor-query-loop,
-.theabd--vendor-query-loop {
+.tanbfd--vendor-query-loop {
 	// Remove bullets from list items
-	.theabd--vendor-wrap,
-	.theabd--vendor-query-loop-wrap {
+	.tanbfd--vendor-wrap,
+	.tanbfd--vendor-query-loop-wrap {
 		list-style: none;
 		margin: 0;
 		padding: 0;
@@ -22,13 +22,13 @@
 	}
 
 	// Store list wrapper
-	.theabd--vendor-wrap.theabd--vendor-query-loop-wrap {
+	.tanbfd--vendor-wrap.tanbfd--vendor-query-loop-wrap {
 		display: grid;
 		gap: 1.5rem;
 		width: 100%;
 
 		// Grid layout - responsive columns
-		&.theabd--vendor-query-loop-grid {
+		&.tanbfd--vendor-query-loop-grid {
 			display: grid;
 			// Mobile: 1 column (default)
 			grid-template-columns: 1fr;
@@ -36,11 +36,11 @@
 			// Tablet: 2 columns
 			@media (min-width: 600px) {
 
-				&.theabd--vendor-query-loop-columns-2,
-				&.theabd--vendor-query-loop-columns-3,
-				&.theabd--vendor-query-loop-columns-4,
-				&.theabd--vendor-query-loop-columns-5,
-				&.theabd--vendor-query-loop-columns-6 {
+				&.tanbfd--vendor-query-loop-columns-2,
+				&.tanbfd--vendor-query-loop-columns-3,
+				&.tanbfd--vendor-query-loop-columns-4,
+				&.tanbfd--vendor-query-loop-columns-5,
+				&.tanbfd--vendor-query-loop-columns-6 {
 					grid-template-columns: repeat(2, 1fr);
 				}
 			}
@@ -48,46 +48,46 @@
 			// Desktop: use configured columns
 			@media (min-width: 782px) {
 
-				&.theabd--vendor-query-loop-columns-1 {
+				&.tanbfd--vendor-query-loop-columns-1 {
 					grid-template-columns: repeat(1, 1fr);
 				}
 
-				&.theabd--vendor-query-loop-columns-2 {
+				&.tanbfd--vendor-query-loop-columns-2 {
 					grid-template-columns: repeat(2, 1fr);
 				}
 
-				&.theabd--vendor-query-loop-columns-3 {
+				&.tanbfd--vendor-query-loop-columns-3 {
 					grid-template-columns: repeat(3, 1fr);
 				}
 
-				&.theabd--vendor-query-loop-columns-4 {
+				&.tanbfd--vendor-query-loop-columns-4 {
 					grid-template-columns: repeat(4, 1fr);
 				}
 
-				&.theabd--vendor-query-loop-columns-5 {
+				&.tanbfd--vendor-query-loop-columns-5 {
 					grid-template-columns: repeat(5, 1fr);
 				}
 
-				&.theabd--vendor-query-loop-columns-6 {
+				&.tanbfd--vendor-query-loop-columns-6 {
 					grid-template-columns: repeat(6, 1fr);
 				}
 			}
 		}
 
-		&.theabd--vendor-query-loop-list {
+		&.tanbfd--vendor-query-loop-list {
 			display: flex;
 			flex-direction: column;
 		}
 	}
 
 	// Pagination styles
-	.theabd--vendor-query-loop-pagination {
+	.tanbfd--vendor-query-loop-pagination {
 		margin-top: 2rem;
 		padding-top: 2rem;
 		border-top: 1px solid #e0e0e0;
 		text-align: center;
 
-		.theabd--page-numbers {
+		.tanbfd--page-numbers {
 			display: inline-flex;
 			align-items: center;
 			gap: 0.5rem;
@@ -131,9 +131,9 @@
 			}
 
 			// WordPress paginate_links() outputs .current on active page span.
-			// Also keep .theabd--current for backward compat.
+			// Also keep .tanbfd--current for backward compat.
 			.current,
-			.theabd--current {
+			.tanbfd--current {
 				color: #fff;
 				background: #333;
 				border-color: #333;
@@ -157,7 +157,7 @@
 	}
 
 	// Empty state
-	.theabd--vendor-query-loop-empty {
+	.tanbfd--vendor-query-loop-empty {
 		padding: 2rem;
 		text-align: center;
 		color: #666;
@@ -166,13 +166,13 @@
 	}
 
 	// Infinite-scroll sentinel (intersected to trigger the next page fetch).
-	.theabd--vendor-query-loop-sentinel {
+	.tanbfd--vendor-query-loop-sentinel {
 		height: 1px;
 		width: 100%;
 	}
 
 	// Infinite-scroll loading indicator. Hidden when empty.
-	.theabd--vendor-query-loop-status {
+	.tanbfd--vendor-query-loop-status {
 		display: block;
 		text-align: center;
 		padding: 1rem 0;
@@ -188,12 +188,12 @@
 			display: inline-block;
 			width: 1em;
 			text-align: left;
-			animation: theabd-vendor-query-loop-dots 1.4s steps(4, end) infinite;
+			animation: tanbfd-vendor-query-loop-dots 1.4s steps(4, end) infinite;
 		}
 	}
 }
 
-@keyframes theabd-vendor-query-loop-dots {
+@keyframes tanbfd-vendor-query-loop-dots {
 
 	0% {
 		content: "";

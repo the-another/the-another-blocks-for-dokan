@@ -17,7 +17,7 @@ add_action(
 	'rest_api_init',
 	function () {
 		register_rest_route(
-			'theabd-playground/v1',
+			'tanbfd-playground/v1',
 			'/ensure-vendor',
 			array(
 				'methods'             => 'POST',

@@ -6,9 +6,7 @@
  * @since 1.0.0
  */
 
-namespace The_Another\Plugin\Blocks_Dokan\Templates;
-
-use The_Another\Plugin\Blocks_Dokan\Helpers\Context_Detector;
+namespace The_Another\Plugin\Blocks_For_Dokan\Templates;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -45,7 +43,7 @@ class Store_List_Template extends Abstract_Dokan_Template {
 	 * @return array Modified template hierarchy array.
 	 */
 	public function add_template_to_hierarchy( array $templates ): array {
-		if ( ! Context_Detector::is_store_list_page() ) {
+		if ( ! tanbfd_is_store_list_page() ) {
 			return $templates;
 		}
 
@@ -61,7 +59,7 @@ class Store_List_Template extends Abstract_Dokan_Template {
 	 * @return bool
 	 */
 	protected function should_render_template(): bool {
-		return Context_Detector::is_store_list_page();
+		return tanbfd_is_store_list_page();
 	}
 
 	/**
@@ -70,7 +68,7 @@ class Store_List_Template extends Abstract_Dokan_Template {
 	 * @return string
 	 */
 	public function get_template_title(): string {
-		return __( 'Vendor Listing', 'theanother-blocks-for-dokan' );
+		return __( 'Vendor Listing', 'the-another-blocks-for-dokan' );
 	}
 
 	/**
@@ -79,6 +77,6 @@ class Store_List_Template extends Abstract_Dokan_Template {
 	 * @return string
 	 */
 	public function get_template_description(): string {
-		return __( 'Displays a listing of all vendor stores.', 'theanother-blocks-for-dokan' );
+		return __( 'Displays a listing of all vendor stores.', 'the-another-blocks-for-dokan' );
 	}
 }

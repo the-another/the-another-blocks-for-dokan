@@ -6,18 +6,25 @@
  * @since 1.0.0
  */
 
-namespace The_Another\Plugin\Blocks_Dokan\Blocks\Tests\Unit\Helpers;
+namespace The_Another\Plugin\Blocks_For_Dokan\Blocks\Tests\Unit\Helpers;
 
 use PHPUnit\Framework\TestCase;
 use Brain\Monkey;
 use Brain\Monkey\Functions;
 use Mockery;
-use The_Another\Plugin\Blocks_Dokan\Helpers\Context_Detector;
+use The_Another\Plugin\Blocks_For_Dokan\Helpers\Context_Detector;
 
 /**
  * Context detector test class.
  */
 class ContextDetectorTest extends TestCase {
+
+	/**
+	 * The context detector instance.
+	 *
+	 * @var Context_Detector
+	 */
+	private Context_Detector $detector;
 
 	/**
 	 * Set up test.
@@ -27,6 +34,7 @@ class ContextDetectorTest extends TestCase {
 	protected function setUp(): void {
 		parent::setUp();
 		Monkey\setUp();
+		$this->detector = new Context_Detector();
 	}
 
 	/**
@@ -65,7 +73,7 @@ class ContextDetectorTest extends TestCase {
 			}
 		);
 
-		$vendor_id = Context_Detector::get_vendor_id();
+		$vendor_id = $this->detector->get_vendor_id();
 
 		$this->assertEquals( 123, $vendor_id );
 	}
@@ -102,7 +110,7 @@ class ContextDetectorTest extends TestCase {
 			}
 		);
 
-		$vendor_id = Context_Detector::get_vendor_id();
+		$vendor_id = $this->detector->get_vendor_id();
 
 		$this->assertEquals( 456, $vendor_id );
 	}
@@ -142,7 +150,7 @@ class ContextDetectorTest extends TestCase {
 			}
 		);
 
-		$vendor_id = Context_Detector::get_vendor_id();
+		$vendor_id = $this->detector->get_vendor_id();
 
 		$this->assertEquals( 456, $vendor_id );
 	}
@@ -176,7 +184,7 @@ class ContextDetectorTest extends TestCase {
 		global $post;
 		$post = null;
 
-		$vendor_id = Context_Detector::get_vendor_id();
+		$vendor_id = $this->detector->get_vendor_id();
 
 		$this->assertNull( $vendor_id );
 	}
@@ -190,7 +198,7 @@ class ContextDetectorTest extends TestCase {
 		Functions\when( 'is_singular' )->justReturn( false );
 		Functions\when( 'dokan_is_store_page' )->justReturn( true );
 
-		$this->assertTrue( Context_Detector::is_store_page() );
+		$this->assertTrue( $this->detector->is_store_page() );
 	}
 
 	/**
@@ -201,6 +209,6 @@ class ContextDetectorTest extends TestCase {
 	public function test_is_product_page(): void {
 		Functions\when( 'is_singular' )->justReturn( true );
 
-		$this->assertTrue( Context_Detector::is_product_page() );
+		$this->assertTrue( $this->detector->is_product_page() );
 	}
 }

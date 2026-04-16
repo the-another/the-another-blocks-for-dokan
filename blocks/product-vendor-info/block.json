@@ -7,7 +7,7 @@
 	"icon": "admin-users",
 	"description": "Display vendor information on product pages with customizable field blocks.",
 	"keywords": [ "dokan", "vendor", "product", "info", "container" ],
-	"textdomain": "theanother-blocks-for-dokan",
+	"textdomain": "the-another-blocks-for-dokan",
 	"providesContext": {
 		"dokan/vendor": "vendorData"
 	},

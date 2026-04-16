@@ -29,8 +29,8 @@ function Edit( { context } ) {
 	return (
 		<div { ...blockProps }>
 			{ hasLocation ? (
-				<div className="theabd--vendor-store-location">
-					<div className="theabd--vendor-store-location-address">
+				<div className="tanbfd--vendor-store-location">
+					<div className="tanbfd--vendor-store-location-address">
 						<span className="dashicons dashicons-location"></span>
 						<span>
 							{ [
@@ -46,7 +46,7 @@ function Edit( { context } ) {
 						</span>
 					</div>
 					<div
-						className="theabd--vendor-store-location-map-placeholder"
+						className="tanbfd--vendor-store-location-map-placeholder"
 						style={ {
 							background: '#f0f0f0',
 							padding: '2rem',

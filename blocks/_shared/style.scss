@@ -8,19 +8,23 @@
  * @since 1.0.4
  */
 
+.tanbfd--hidden {
+	display: none !important;
+}
+
 // ---------------------------------------------------------------------------
 // Mixin: form-control base styles
-// Used by .theabd--form-control below. Other blocks that can't add classes
+// Used by .tanbfd--form-control below. Other blocks that can't add classes
 // to their HTML (e.g., Dokan templates) duplicate these values directly
 // since each block's style.scss compiles in its own SCSS context.
 // ---------------------------------------------------------------------------
-@mixin theabd-form-control-styles {
-	padding: var(--theabd-input-padding);
+@mixin tanbfd-form-control-styles {
+	padding: var(--tanbfd-input-padding);
 	border: 1px solid rgba(0, 0, 0, 0.25);
-	border-radius: var(--theabd-input-radius);
+	border-radius: var(--tanbfd-input-radius);
 	transition:
-		border-color var(--theabd-transition-duration) ease,
-		box-shadow var(--theabd-transition-duration) ease;
+		border-color var(--tanbfd-transition-duration) ease,
+		box-shadow var(--tanbfd-transition-duration) ease;
 	box-sizing: border-box;
 
 	@supports (color: color-mix(in srgb, red, blue)) {
@@ -29,10 +33,10 @@
 
 	&:focus {
 		outline: none;
-		box-shadow: 0 0 0 var(--theabd-focus-ring-width) rgba(0, 0, 0, var(--theabd-focus-ring-opacity));
+		box-shadow: 0 0 0 var(--tanbfd-focus-ring-width) rgba(0, 0, 0, var(--tanbfd-focus-ring-opacity));
 
 		@supports (color: color-mix(in srgb, red, blue)) {
-			box-shadow: 0 0 0 var(--theabd-focus-ring-width) color-mix(in srgb, currentcolor 15%, transparent);
+			box-shadow: 0 0 0 var(--tanbfd-focus-ring-width) color-mix(in srgb, currentcolor 15%, transparent);
 		}
 	}
 
@@ -48,55 +52,55 @@
 // ---------------------------------------------------------------------------
 // Custom properties (scoped to form elements, not :root)
 // ---------------------------------------------------------------------------
-.theabd--form-control,
-.theabd--btn {
-	--theabd-input-padding: 0.625rem 0.75rem;
-	--theabd-input-radius: 6px;
-	--theabd-focus-ring-width: 3px;
-	--theabd-focus-ring-opacity: 0.15;
-	--theabd-transition-duration: 0.2s;
-	--theabd-btn-radius: 6px;
+.tanbfd--form-control,
+.tanbfd--btn {
+	--tanbfd-input-padding: 0.625rem 0.75rem;
+	--tanbfd-input-radius: 6px;
+	--tanbfd-focus-ring-width: 3px;
+	--tanbfd-focus-ring-opacity: 0.15;
+	--tanbfd-transition-duration: 0.2s;
+	--tanbfd-btn-radius: 6px;
 }
 
 // ---------------------------------------------------------------------------
-// .theabd--form-control (inputs, selects, textareas)
+// .tanbfd--form-control (inputs, selects, textareas)
 // ---------------------------------------------------------------------------
-.theabd--form-control {
+.tanbfd--form-control {
 
-	@include theabd-form-control-styles;
+	@include tanbfd-form-control-styles;
 }
 
 // ---------------------------------------------------------------------------
-// .theabd--btn (layered on wp-element-button)
+// .tanbfd--btn (layered on wp-element-button)
 // No colors — inherited from wp-element-button / theme.
 // ---------------------------------------------------------------------------
-.theabd--btn {
+.tanbfd--btn {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	gap: 0.5rem;
 	border: none;
-	border-radius: var(--theabd-btn-radius);
+	border-radius: var(--tanbfd-btn-radius);
 	cursor: pointer;
 	transition:
-		opacity var(--theabd-transition-duration) ease,
-		box-shadow var(--theabd-transition-duration) ease;
+		opacity var(--tanbfd-transition-duration) ease,
+		box-shadow var(--tanbfd-transition-duration) ease;
 	text-decoration: none;
 	white-space: nowrap;
 	line-height: 1.5;
 
 	// Size variants.
-	&.theabd--btn-small {
+	&.tanbfd--btn-small {
 		padding: 0.375rem 1rem;
 		font-size: 0.8125rem;
 	}
 
-	&.theabd--btn-medium {
+	&.tanbfd--btn-medium {
 		padding: 0.625rem 1.25rem;
 		font-size: 0.875rem;
 	}
 
-	&.theabd--btn-large {
+	&.tanbfd--btn-large {
 		padding: 0.75rem 1.75rem;
 		font-size: 1rem;
 	}
@@ -106,7 +110,7 @@
 		cursor: not-allowed;
 	}
 
-	.theabd--btn-text {
+	.tanbfd--btn-text {
 		display: inline-block;
 		line-height: 1;
 	}

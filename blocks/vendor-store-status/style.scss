@@ -5,10 +5,10 @@
  * @since 1.0.0
  */
 
-.theabd--vendor-store-status {
+.tanbfd--vendor-store-status {
 	display: inline-block;
 
-	.theabd--vendor-store-status-badge {
+	.tanbfd--vendor-store-status-badge {
 		display: inline-flex;
 		align-items: center;
 		gap: 0.25rem;
@@ -24,7 +24,7 @@
 		}
 	}
 
-	.theabd--vendor-store-status-open {
+	.tanbfd--vendor-store-status-open {
 		background: rgba(46, 204, 113, 0.15);
 		color: #27ae60;
 
@@ -33,7 +33,7 @@
 		}
 	}
 
-	.theabd--vendor-store-status-closed {
+	.tanbfd--vendor-store-status-closed {
 		background: rgba(231, 76, 60, 0.15);
 		color: #c0392b;
 
@@ -42,7 +42,7 @@
 		}
 	}
 
-	.theabd--vendor-store-status-disabled {
+	.tanbfd--vendor-store-status-disabled {
 		display: inline-flex;
 		align-items: center;
 		gap: 0.5rem;
@@ -53,9 +53,9 @@
 }
 
 // When inside store banner (light text on dark background)
-.theabd--vendor-store-banner .theabd--vendor-store-status {
+.tanbfd--vendor-store-banner .tanbfd--vendor-store-status {
 
-	.theabd--vendor-store-status-open {
+	.tanbfd--vendor-store-status-open {
 		background: rgba(46, 204, 113, 0.3);
 		color: #fff;
 
@@ -64,7 +64,7 @@
 		}
 	}
 
-	.theabd--vendor-store-status-closed {
+	.tanbfd--vendor-store-status-closed {
 		background: rgba(231, 76, 60, 0.3);
 		color: #fff;
 
@@ -73,7 +73,7 @@
 		}
 	}
 
-	.theabd--vendor-store-status-disabled {
+	.tanbfd--vendor-store-status-disabled {
 		color: rgba(255, 255, 255, 0.6);
 	}
 }

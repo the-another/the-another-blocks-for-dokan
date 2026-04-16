@@ -17,7 +17,7 @@ add_action(
 	'rest_api_init',
 	function () {
 		register_rest_route(
-			'theabd-test/v1',
+			'tanbfd-test/v1',
 			'/create-vendor',
 			array(
 				'methods'             => 'POST',
@@ -98,7 +98,7 @@ add_action(
 		);
 
 		register_rest_route(
-			'theabd-test/v1',
+			'tanbfd-test/v1',
 			'/delete-vendor/(?P<id>[\d]+)',
 			array(
 				'methods'             => 'DELETE',
@@ -113,7 +113,7 @@ add_action(
 		);
 
 		register_rest_route(
-			'theabd-test/v1',
+			'tanbfd-test/v1',
 			'/create-product',
 			array(
 				'methods'             => 'POST',
@@ -150,7 +150,7 @@ add_action(
 		);
 
 		register_rest_route(
-			'theabd-test/v1',
+			'tanbfd-test/v1',
 			'/delete-product/(?P<id>[\d]+)',
 			array(
 				'methods'             => 'DELETE',
@@ -166,7 +166,7 @@ add_action(
 		// Bulk endpoints — reduce sequential HTTP calls during test setup/teardown.
 
 		register_rest_route(
-			'theabd-test/v1',
+			'tanbfd-test/v1',
 			'/create-vendors',
 			array(
 				'methods'             => 'POST',
@@ -257,7 +257,7 @@ add_action(
 		);
 
 		register_rest_route(
-			'theabd-test/v1',
+			'tanbfd-test/v1',
 			'/delete-vendors',
 			array(
 				'methods'             => 'POST',
@@ -286,7 +286,7 @@ add_action(
 		);
 
 		register_rest_route(
-			'theabd-test/v1',
+			'tanbfd-test/v1',
 			'/create-products',
 			array(
 				'methods'             => 'POST',
@@ -335,7 +335,7 @@ add_action(
 		);
 
 		register_rest_route(
-			'theabd-test/v1',
+			'tanbfd-test/v1',
 			'/delete-products',
 			array(
 				'methods'             => 'POST',

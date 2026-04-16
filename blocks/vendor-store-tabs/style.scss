@@ -8,7 +8,7 @@
 .wp-block-the-another-blocks-for-dokan-vendor-store-tabs {
 	margin-bottom: 1.5rem;
 
-	.theabd--vendor-store-tabs-list {
+	.tanbfd--vendor-store-tabs-list {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 0;
@@ -18,7 +18,7 @@
 		border-bottom: 1px solid var(--wp--preset--color--contrast-3, #ddd);
 	}
 
-	.theabd--store-tab-item {
+	.tanbfd--store-tab-item {
 		margin: 0;
 		padding: 0;
 
@@ -38,7 +38,7 @@
 			}
 		}
 
-		&.theabd--active a {
+		&.tanbfd--active a {
 			color: var(--wp--preset--color--primary, #7f54b3);
 			border-bottom-color: var(--wp--preset--color--primary, #7f54b3);
 		}
@@ -46,7 +46,7 @@
 }
 
 /* Editor note styles */
-.theabd--vendor-store-tabs-editor-note {
+.tanbfd--vendor-store-tabs-editor-note {
 	margin: 0.5rem 0 0;
 	padding: 0.5rem 0.75rem;
 	background-color: #f0f0f0;

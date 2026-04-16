@@ -34,7 +34,7 @@ function Edit( { attributes, setAttributes } ) {
 	} = attributes;
 
 	const blockProps = useBlockProps( {
-		className: 'theabd--vendor-query-pagination',
+		className: 'tanbfd--vendor-query-pagination',
 	} );
 
 	// Generate preview pagination based on settings
@@ -113,24 +113,24 @@ function Edit( { attributes, setAttributes } ) {
 			</InspectorControls>
 
 			<nav { ...blockProps }>
-				<div className="theabd--vendor-query-pagination-preview">
+				<div className="tanbfd--vendor-query-pagination-preview">
 					{ paginationPreview.prevText.trim() && (
-						<span className="theabd--page-numbers theabd--prev">
+						<span className="tanbfd--page-numbers tanbfd--prev">
 							{ paginationPreview.prevText }
 						</span>
 					) }
 					{ paginationPreview.pages.map( ( page, index ) => (
 						<span
 							key={ index }
-							className={ `theabd--page-numbers${
-								page.current ? ' theabd--current' : ''
-							}${ page.num === '...' ? ' theabd--dots' : '' }` }
+							className={ `tanbfd--page-numbers${
+								page.current ? ' tanbfd--current' : ''
+							}${ page.num === '...' ? ' tanbfd--dots' : '' }` }
 						>
 							{ page.num }
 						</span>
 					) ) }
 					{ paginationPreview.nextText.trim() && (
-						<span className="theabd--page-numbers theabd--next">
+						<span className="tanbfd--page-numbers tanbfd--next">
 							{ paginationPreview.nextText }
 						</span>
 					) }

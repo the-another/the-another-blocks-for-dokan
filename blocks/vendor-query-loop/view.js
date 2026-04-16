@@ -35,12 +35,12 @@
 			return;
 		}
 
-		var list = wrapper.querySelector( 'ul.theabd--vendor-wrap' );
+		var list = wrapper.querySelector( 'ul.tanbfd--vendor-wrap' );
 		var sentinel = wrapper.querySelector(
-			'.theabd--vendor-query-loop-sentinel'
+			'.tanbfd--vendor-query-loop-sentinel'
 		);
 		var status = wrapper.querySelector(
-			'.theabd--vendor-query-loop-status'
+			'.tanbfd--vendor-query-loop-status'
 		);
 
 		if ( ! list || ! sentinel || ! totalPages || current >= totalPages ) {
@@ -129,7 +129,7 @@
 
 	function boot() {
 		var wrappers = document.querySelectorAll(
-			'.theabd--vendor-query-loop[data-infinite="1"]'
+			'.tanbfd--vendor-query-loop[data-infinite="1"]'
 		);
 		Array.prototype.forEach.call( wrappers, init );
 	}

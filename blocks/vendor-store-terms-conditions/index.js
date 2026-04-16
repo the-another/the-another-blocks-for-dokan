@@ -65,7 +65,7 @@ function Edit( { attributes, setAttributes, context } ) {
 
 			<div { ...blockProps }>
 				{ tocContent ? (
-					<div className="theabd--vendor-store-terms-conditions">
+					<div className="tanbfd--vendor-store-terms-conditions">
 						{ showTitle && (
 							<TitleTag>
 								{ __( 'Terms and Conditions', 'dokan-blocks' ) }

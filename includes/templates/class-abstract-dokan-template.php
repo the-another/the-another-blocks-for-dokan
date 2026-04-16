@@ -6,7 +6,7 @@
  * @since 1.0.0
  */
 
-namespace The_Another\Plugin\Blocks_Dokan\Templates;
+namespace The_Another\Plugin\Blocks_For_Dokan\Templates;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -23,7 +23,7 @@ abstract class Abstract_Dokan_Template {
 	 *
 	 * @var string
 	 */
-	const PLUGIN_SLUG = 'theanother-blocks-for-dokan';
+	const PLUGIN_SLUG = 'the-another-blocks-for-dokan';
 
 	/**
 	 * Template slug.
@@ -98,7 +98,7 @@ abstract class Abstract_Dokan_Template {
 			? $template_file_map[ static::SLUG ]
 			: static::SLUG . '.html';
 
-		return ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'templates/' . $template_file;
+		return THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'templates/' . $template_file;
 	}
 
 	/**

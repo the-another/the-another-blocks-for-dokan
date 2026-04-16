@@ -6,14 +6,14 @@
  * @since 1.1.0
  */
 
-namespace The_Another\Plugin\Blocks_Dokan\Blocks\Tests\Unit\VendorQueryLoop;
+namespace The_Another\Plugin\Blocks_For_Dokan\Blocks\Tests\Unit\VendorQueryLoop;
 
 use PHPUnit\Framework\TestCase;
 use Brain\Monkey;
 use Brain\Monkey\Functions;
 
 /**
- * Tests for theabd_vendor_query_loop_build_query_args().
+ * Tests for tanbfd_vendor_query_loop_build_query_args().
  */
 class QueryArgsBuilderTest extends TestCase {
 
@@ -44,7 +44,7 @@ class QueryArgsBuilderTest extends TestCase {
 	 * Default attributes should produce a seller-role query with sane defaults.
 	 */
 	public function test_default_attributes_produce_seller_role_query(): void {
-		$args = theabd_vendor_query_loop_build_query_args(
+		$args = tanbfd_vendor_query_loop_build_query_args(
 			array(
 				'perPage' => 12,
 				'orderBy' => 'name',
@@ -66,7 +66,7 @@ class QueryArgsBuilderTest extends TestCase {
 	 * Enabling showFeaturedOnly should add the dokan_feature_seller meta clause.
 	 */
 	public function test_featured_only_adds_meta_query_clause(): void {
-		$args = theabd_vendor_query_loop_build_query_args(
+		$args = tanbfd_vendor_query_loop_build_query_args(
 			array( 'showFeaturedOnly' => true ),
 			1
 		);
@@ -85,7 +85,7 @@ class QueryArgsBuilderTest extends TestCase {
 	 */
 	public function test_explicit_filters_are_applied(): void {
 		$_GET = array();
-		$args = theabd_vendor_query_loop_build_query_args(
+		$args = tanbfd_vendor_query_loop_build_query_args(
 			array( 'orderBy' => 'name' ),
 			1,
 			array(
@@ -109,8 +109,8 @@ class QueryArgsBuilderTest extends TestCase {
 			'perPage' => 12,
 			'orderBy' => 'name',
 		);
-		$a     = theabd_vendor_query_loop_compute_query_id( 42, $attrs );
-		$b     = theabd_vendor_query_loop_compute_query_id( 42, $attrs );
+		$a     = tanbfd_vendor_query_loop_compute_query_id( 42, $attrs );
+		$b     = tanbfd_vendor_query_loop_compute_query_id( 42, $attrs );
 		$this->assertSame( $a, $b );
 		$this->assertStringStartsWith( 'store-query-', $a );
 	}
@@ -119,7 +119,7 @@ class QueryArgsBuilderTest extends TestCase {
 	 * Compute_query_id should honor an explicit attrs[queryId] when present.
 	 */
 	public function test_compute_query_id_uses_explicit_attr(): void {
-		$id = theabd_vendor_query_loop_compute_query_id(
+		$id = tanbfd_vendor_query_loop_compute_query_id(
 			42,
 			array( 'queryId' => 'my-loop' )
 		);
@@ -130,7 +130,7 @@ class QueryArgsBuilderTest extends TestCase {
 	 * Selecting orderBy=date should map to dokan's "most_recent" sort.
 	 */
 	public function test_orderby_date_maps_to_most_recent(): void {
-		$args = theabd_vendor_query_loop_build_query_args(
+		$args = tanbfd_vendor_query_loop_build_query_args(
 			array( 'orderBy' => 'date' ),
 			1
 		);
