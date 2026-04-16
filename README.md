@@ -19,7 +19,7 @@ A block-based (FSE) theme is recommended to take full advantage of the included 
 
 ## Installation
 
-1. Download the latest release ZIP from the [Releases page](https://github.com/the-another/the-another-blocks-for-dokan/releases).
+1. Download the latest release ZIP from the [Releases page](https://github.com/the-another/blocks-for-dokan/releases).
 2. In WordPress admin, go to **Plugins → Add New → Upload Plugin** and upload the ZIP.
 3. Activate **Another Blocks for Dokan**.
 4. Make sure WooCommerce and Dokan Lite are installed and active.
@@ -84,7 +84,7 @@ You can edit them in **Appearance → Editor → Templates**.
 
 ## Support
 
-- Issues: https://github.com/the-another/the-another-blocks-for-dokan/issues
+- Issues: https://github.com/the-another/blocks-for-dokan/issues
 - Homepage: https://the-another.org/plugin/the-another-blocks-for-dokan/
 
 ## Contributing
