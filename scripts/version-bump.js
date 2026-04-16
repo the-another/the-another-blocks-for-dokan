@@ -6,7 +6,7 @@ const { execSync } = require('child_process');
 
 // Configuration
 const MAIN_PLUGIN_FILE = 'another-blocks-for-dokan.php';
-const VERSION_CONSTANT_NAME = 'ANOTHER_BLOCKS_DOKAN_VERSION';
+const VERSION_CONSTANT_NAME = 'THE_ANOTHER_BLOCKS_FOR_DOKAN_VERSION';
 
 // Get version type argument (patch, minor, major)
 const versionType = process.argv[2];
