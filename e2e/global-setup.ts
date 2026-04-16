@@ -68,5 +68,5 @@ export default async function globalSetup( config: FullConfig ) {
 	await installPlugin( requestUtils, 'woocommerce' );
 	await installPlugin( requestUtils, 'dokan-lite' );
 
-	await requestUtils.activatePlugin( 'another-blocks-for-dokan' );
+	await requestUtils.activatePlugin( 'the-another-blocks-for-dokan' );
 }
