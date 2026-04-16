@@ -9,9 +9,31 @@ argument-hint: "[patch|minor|major]"
 
 Prepare and deploy a versioned release of Another Blocks for Dokan.
 
+## Step 0: Quality Gate
+
+Run the full quality suite **before** anything else. All must pass to proceed.
+
+```bash
+npm run build
+composer lint
+composer test
+```
+
+If any fail, **stop immediately**. Report the exact error and ask:
+
+> **Quality gate failed.** `<tool>` reported errors:
+>
+> ```
+> <error output>
+> ```
+>
+> Should I attempt to fix this?
+
+Wait for the user's answer. If they say yes, attempt the fix, re-run the failing check, and restart this step from the top. If the fix doesn't work, stop — do not proceed to pre-flight.
+
 ## Pre-flight Checks
 
-Before anything else, verify the branch is clean and ready:
+After the quality gate passes, verify the branch is clean and ready:
 
 ```dot
 digraph preflight {
