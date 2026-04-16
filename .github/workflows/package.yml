@@ -1,8 +1,7 @@
 name: Release Plugin
 
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches: [master]
   workflow_dispatch:
 
@@ -16,26 +15,16 @@ permissions:
 jobs:
   ci:
     name: Test Gate
-    if: >-
-      github.event_name == 'workflow_dispatch' ||
-      (github.event.pull_request.merged == true)
     uses: ./.github/workflows/ci.yml
-    with:
-      ref: master
 
   release:
     name: Build & Release
     runs-on: depot-ubuntu-24.04
     needs: [ci]
-    if: >-
-      github.event_name == 'workflow_dispatch' ||
-      (github.event.pull_request.merged == true)
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          ref: master
 
       - name: Read version from package.json
         id: version
