@@ -34,6 +34,7 @@ function tanbfd_render_vendor_search_block( array $attributes, string $content, 
 	$button_size            = $attributes['buttonSize'] ?? 'medium';
 	$button_bg_color        = $attributes['buttonBackgroundColor'] ?? '';
 	$button_text_color      = $attributes['buttonTextColor'] ?? '';
+	$action_url             = ! empty( $attributes['actionUrl'] ) ? esc_url( $attributes['actionUrl'] ) : '';
 
 	// Get current search query.
 	$search_query = isset( $_GET['dokan_seller_search'] ) ? sanitize_text_field( wp_unslash( $_GET['dokan_seller_search'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -90,8 +91,26 @@ function tanbfd_render_vendor_search_block( array $attributes, string $content, 
 				<div class="tanbfd--store-filter-row-inner">
 					<div class="tanbfd--store-filter-left">
 						<?php
-						// Store count can be filtered/hooked for dynamic count.
+						// Store count: prefer parent query loop value via filter, fall back to own count.
 						$store_count = apply_filters( 'tanbfd_store_search_block_count', 0 );
+						if ( 0 === $store_count && function_exists( 'dokan_is_user_seller' ) ) {
+							$count_query = new \WP_User_Query(
+								array(
+									'role'        => 'seller',
+									'count_total' => true,
+									'number'      => 0,
+									'fields'      => 'ID',
+									'meta_query'  => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+										array(
+											'key'     => 'dokan_enable_selling',
+											'value'   => 'yes',
+											'compare' => '=',
+										),
+									),
+								)
+							);
+							$store_count = (int) $count_query->get_total();
+						}
 						if ( $store_count >= 0 ) : // Show even if 0, allows customization.
 							// Use custom label if provided, replace %s with count if placeholder exists.
 							$count_text = strpos( $store_count_label, '%s' ) !== false
@@ -122,7 +141,7 @@ function tanbfd_render_vendor_search_block( array $attributes, string $content, 
 
 				<?php if ( $enable_sort_by ) : ?>
 					<div class="tanbfd--store-filter-row-inner tanbfd--store-filter-row-sort">
-						<form name="stores_sorting" class="tanbfd--sort-by tanbfd--item" method="get">
+						<form name="stores_sorting" class="tanbfd--sort-by tanbfd--item" method="get"<?php echo ! empty( $action_url ) ? ' action="' . esc_url( $action_url ) . '"' : ''; ?>>
 							<?php
 							// Preserve current query parameters.
 							if ( ! empty( $_GET ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -156,7 +175,7 @@ function tanbfd_render_vendor_search_block( array $attributes, string $content, 
 			// Show filter form if there's an active search query.
 			$has_active_filters = ! empty( $search_query ) || ! empty( $_GET['dokan_store_location'] ) || ! empty( $_GET['dokan_store_rating'] ) || ! empty( $_GET['dokan_store_category'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			?>
-			<form role="search" method="get" name="dokan_store_lists_filter_form" id="tanbfd--vendor-query-looping-filter-form-wrap" class="tanbfd--vendor-search-filter-form<?php echo $has_active_filters ? '' : ' tanbfd--hidden'; ?>" data-testid="vendor-filter-form">
+			<form role="search" method="get" name="dokan_store_lists_filter_form" id="tanbfd--vendor-query-looping-filter-form-wrap" class="tanbfd--vendor-search-filter-form<?php echo $has_active_filters ? '' : ' tanbfd--hidden'; ?>"<?php echo ! empty( $action_url ) ? ' action="' . esc_url( $action_url ) . '"' : ''; ?> data-testid="vendor-filter-form">
 				<?php do_action( 'dokan_before_store_lists_filter_search' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Dokan core action for compatibility. ?>
 
 				<?php

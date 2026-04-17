@@ -4,12 +4,10 @@
 	"name": "the-another/blocks-for-dokan-vendor-search",
 	"title": "Vendor Search",
 	"category": "dokan",
-	"ancestor": [ "the-another/blocks-for-dokan-vendor-query-loop" ],
 	"icon": "search",
 	"description": "Search and filter vendor stores.",
 	"keywords": [ "dokan", "vendor", "store", "search" ],
 	"textdomain": "the-another-blocks-for-dokan",
-	"usesContext": [ "dokan/queryId", "dokan/query" ],
 	"supports": {
 		"html": false,
 		"align": true,
@@ -65,6 +63,10 @@
 			"default": ""
 		},
 		"buttonTextColor": {
+			"type": "string",
+			"default": ""
+		},
+		"actionUrl": {
 			"type": "string",
 			"default": ""
 		}

@@ -54,6 +54,7 @@ function Edit( { attributes, setAttributes } ) {
 		buttonSize = 'medium',
 		buttonBackgroundColor = '',
 		buttonTextColor = '',
+		actionUrl = '',
 	} = attributes;
 
 	// Button style object for preview (user-chosen color overrides only).
@@ -75,6 +76,19 @@ function Edit( { attributes, setAttributes } ) {
 		<>
 			<InspectorControls>
 				<PanelBody title={ __( 'Search Settings', 'dokan-blocks' ) }>
+					<TextControl
+						label={ __( 'Results Page URL', 'dokan-blocks' ) }
+						help={ __(
+							'Leave empty to show results on the current page. Set a URL to redirect search to a different page.',
+							'dokan-blocks'
+						) }
+						value={ actionUrl }
+						onChange={ ( value ) =>
+							setAttributes( { actionUrl: value } )
+						}
+						type="url"
+						placeholder="https://"
+					/>
 					{ /* translators: %s: store count number placeholder */ }
 					<TextControl
 						label={ __( 'Store Count Label', 'dokan-blocks' ) }

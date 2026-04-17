@@ -4,7 +4,7 @@ Tags: dokan, woocommerce, multivendor, blocks, gutenberg
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 8.3
-Stable tag: 1.0.14
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -57,6 +57,12 @@ The Vendor Store Location block can alternatively display an interactive embedde
 * [Google Privacy Policy](https://policies.google.com/privacy)
 
 == Changelog ==
+
+
+= 1.1.0 - 2026-04-17 =
+* Add: Vendor search block can now be placed in any parent block, no longer restricted to the vendor query loop
+* Add: "Results Page URL" setting to redirect search and sort forms to a different page
+* Fix: Store count displays actual number of active sellers when block is used outside the vendor query loop
 
 = 1.0.14 - 2026-04-17 =
 * Fix: `block.json` render callbacks now use the correct `tanbfd_` prefix — seven blocks previously referenced legacy `theabd_render_*` callbacks that did not match the actual function definitions
