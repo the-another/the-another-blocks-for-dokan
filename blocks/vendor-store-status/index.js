@@ -31,9 +31,7 @@ function Edit( { context } ) {
 	const openNotice =
 		storeOpenClose.open_notice || __( 'Store Open', 'dokan-blocks' );
 
-	const blockProps = useBlockProps( {
-		className: 'dokan-vendor-store-status',
-	} );
+	const blockProps = useBlockProps();
 
 	if ( ! isEnabled ) {
 		return (

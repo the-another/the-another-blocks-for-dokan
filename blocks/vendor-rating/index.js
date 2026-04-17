@@ -61,9 +61,7 @@ function Edit( { attributes, setAttributes, context } ) {
 	const rating = hasVendorData ? vendor.rating?.rating || 0 : 4.5;
 	const count = hasVendorData ? vendor.rating?.count || 0 : 24;
 
-	const blockProps = useBlockProps( {
-		className: 'dokan-vendor-rating',
-	} );
+	const blockProps = useBlockProps();
 
 	return (
 		<>

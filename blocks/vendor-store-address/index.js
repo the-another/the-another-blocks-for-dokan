@@ -71,9 +71,7 @@ function Edit( { attributes, setAttributes, context } ) {
 	const address = vendor.address || {};
 	const formattedAddress = formatAddress( address );
 
-	const blockProps = useBlockProps( {
-		className: 'dokan-vendor-store-address',
-	} );
+	const blockProps = useBlockProps();
 
 	return (
 		<>

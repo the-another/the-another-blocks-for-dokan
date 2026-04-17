@@ -3,7 +3,7 @@
 	"description": "FSE-compatible Gutenberg blocks for Dokan multi-vendor marketplace",
 	"type": "wordpress-plugin",
 	"license": "GPL-2.0-or-later",
-	"version": "1.0.13",
+	"version": "1.0.14",
 	"author": {
 		"name": "The Another",
 		"email": "hello@the-another.org",

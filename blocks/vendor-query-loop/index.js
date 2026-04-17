@@ -218,9 +218,7 @@ function Edit( { attributes, setAttributes } ) {
 		} ) );
 	}, [ vendors, selectedVendorId ] );
 
-	const blockProps = useBlockProps( {
-		className: `dokan-vendor-query-loop dokan-vendor-query-loop-${ displayLayout }`,
-	} );
+	const blockProps = useBlockProps();
 
 	// Use inner blocks for the entire query structure
 	const innerBlocksProps = useInnerBlocksProps( blockProps, {

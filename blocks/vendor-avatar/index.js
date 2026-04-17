@@ -85,9 +85,7 @@ function Edit( { attributes, setAttributes, context } ) {
 	}, [ width, height ] );
 
 	const blockProps = useBlockProps( {
-		className: `dokan-vendor-avatar${
-			align ? ` has-text-align-${ align }` : ''
-		}`,
+		className: align ? `has-text-align-${ align }` : '',
 		style: wrapperStyle,
 	} );
 

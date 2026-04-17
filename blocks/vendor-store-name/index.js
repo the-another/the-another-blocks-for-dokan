@@ -33,9 +33,7 @@ function Edit( { attributes, setAttributes, context } ) {
 	const storeName = vendor.store_name || __( 'Store Name', 'dokan-blocks' );
 	const shopUrl = vendor.shop_url || '#';
 
-	const blockProps = useBlockProps( {
-		className: 'dokan-vendor-store-name',
-	} );
+	const blockProps = useBlockProps();
 
 	// Dynamically create the tag name element
 	const TagName = tagName;

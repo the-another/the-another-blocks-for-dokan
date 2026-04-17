@@ -145,7 +145,6 @@ function Edit( { attributes, setAttributes, context } ) {
 	}, [ useBannerAsBackground, backgroundOverlay, vendorData?.banner ] );
 
 	const blockProps = useBlockProps( {
-		className: 'dokan-vendor-card',
 		style: backgroundStyle,
 	} );
 
@@ -241,9 +240,7 @@ function Edit( { attributes, setAttributes, context } ) {
  * @return {JSX.Element} InnerBlocks content.
  */
 function Save() {
-	const blockProps = useBlockProps.save( {
-		className: 'dokan-vendor-card',
-	} );
+	const blockProps = useBlockProps.save();
 
 	return (
 		<div { ...blockProps }>
@@ -252,8 +249,34 @@ function Save() {
 	);
 }
 
+/**
+ * Block deprecations.
+ *
+ * v1: Save() set a redundant `dokan-vendor-card` className on the wrapper.
+ * WP's auto-generated `wp-block-the-another-blocks-for-dokan-vendor-card`
+ * already carries that identity and no SCSS rules target the shorter form,
+ * so it was dropped. This deprecation keeps existing saved content valid.
+ */
+const deprecated = [
+	{
+		attributes: metadata.attributes,
+		supports: metadata.supports,
+		save() {
+			const blockProps = useBlockProps.save( {
+				className: 'dokan-vendor-card',
+			} );
+			return (
+				<div { ...blockProps }>
+					<InnerBlocks.Content />
+				</div>
+			);
+		},
+	},
+];
+
 registerBlockType( metadata.name, {
 	...metadata,
 	edit: Edit,
 	save: Save,
+	deprecated,
 } );

@@ -164,9 +164,7 @@ function Edit( { attributes, setAttributes } ) {
 	// Use placeholder if no vendor data
 	const displayVendorData = vendorData || PLACEHOLDER_VENDOR;
 
-	const blockProps = useBlockProps( {
-		className: 'dokan-product-vendor-info',
-	} );
+	const blockProps = useBlockProps();
 
 	// Context to provide to inner blocks
 	const blockContext = useMemo(
@@ -289,9 +287,7 @@ function Edit( { attributes, setAttributes } ) {
  * @return {JSX.Element} InnerBlocks content.
  */
 function Save() {
-	const blockProps = useBlockProps.save( {
-		className: 'dokan-product-vendor-info',
-	} );
+	const blockProps = useBlockProps.save();
 
 	return (
 		<div { ...blockProps }>
@@ -301,10 +297,31 @@ function Save() {
 }
 
 /**
- * Deprecated version 1: Old static attributes.
- * Migrates old layout/showAddress/showRating to new InnerBlocks structure.
+ * Block deprecations (newest-to-oldest — Gutenberg tries entries in order).
+ *
+ * v2 (latest): Save() set a redundant `dokan-product-vendor-info` className
+ * on the wrapper. WP's auto-generated
+ * `wp-block-the-another-blocks-for-dokan-product-vendor-info` already carries
+ * that identity and no SCSS rules target the shorter form, so it was dropped.
+ *
+ * v1: Old static attributes (layout/showAddress/showRating). Migrates to the
+ * current InnerBlocks-based structure by discarding the removed attrs.
  */
 const deprecated = [
+	{
+		attributes: metadata.attributes,
+		supports: metadata.supports,
+		save() {
+			const blockProps = useBlockProps.save( {
+				className: 'dokan-product-vendor-info',
+			} );
+			return (
+				<div { ...blockProps }>
+					<InnerBlocks.Content />
+				</div>
+			);
+		},
+	},
 	{
 		attributes: {
 			productId: {

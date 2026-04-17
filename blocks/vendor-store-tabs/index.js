@@ -32,9 +32,7 @@ const DEFAULT_TABS = [
  * @return {JSX.Element} Block edit component.
  */
 function Edit( { context } ) {
-	const blockProps = useBlockProps( {
-		className: 'dokan-vendor-store-tabs',
-	} );
+	const blockProps = useBlockProps();
 
 	const vendor = context[ 'dokan/vendor' ] || {};
 	const hasVendor = !! vendor.id;

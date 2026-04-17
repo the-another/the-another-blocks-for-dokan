@@ -305,7 +305,6 @@ function Edit( { attributes, setAttributes, context } ) {
 	] );
 
 	const blockProps = useBlockProps( {
-		className: 'dokan-vendor-store-banner',
 		style: backgroundStyle,
 	} );
 
@@ -600,12 +599,14 @@ function Edit( { attributes, setAttributes, context } ) {
 /**
  * Store banner block save component.
  *
+ * The wrapper uses only WP's auto-generated `wp-block-...` class; the
+ * plugin-specific styling hook (`tanbfd--vendor-store-banner`) is applied
+ * by the server render (`render.php`). The Edit preview mirrors this.
+ *
  * @return {JSX.Element} InnerBlocks content.
  */
 function Save() {
-	const blockProps = useBlockProps.save( {
-		className: 'dokan-vendor-store-banner',
-	} );
+	const blockProps = useBlockProps.save();
 
 	return (
 		<div { ...blockProps }>
@@ -614,8 +615,35 @@ function Save() {
 	);
 }
 
+/**
+ * Block deprecations.
+ *
+ * v1: Save() set a redundant `dokan-vendor-store-banner` className on the
+ * wrapper. WP's auto-generated `wp-block-the-another-blocks-for-dokan-vendor-store-banner`
+ * already carries that identity and no SCSS rules target the shorter form,
+ * so it was dropped. This deprecation keeps existing saved content valid and
+ * lets Gutenberg migrate it silently on next save.
+ */
+const deprecated = [
+	{
+		attributes: metadata.attributes,
+		supports: metadata.supports,
+		save() {
+			const blockProps = useBlockProps.save( {
+				className: 'dokan-vendor-store-banner',
+			} );
+			return (
+				<div { ...blockProps }>
+					<InnerBlocks.Content />
+				</div>
+			);
+		},
+	},
+];
+
 registerBlockType( metadata.name, {
 	...metadata,
 	edit: Edit,
 	save: Save,
+	deprecated,
 } );

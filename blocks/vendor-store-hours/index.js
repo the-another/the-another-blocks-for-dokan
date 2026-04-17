@@ -92,9 +92,7 @@ function Edit( { attributes, setAttributes, context } ) {
 	const { layout = 'compact', showCurrentStatus = true } = attributes;
 	const vendor = context[ 'dokan/vendor' ] || {};
 
-	const blockProps = useBlockProps( {
-		className: `dokan-vendor-store-hours dokan-vendor-store-hours-${ layout }`,
-	} );
+	const blockProps = useBlockProps();
 
 	// Get store hours from vendor data or use mock data for preview
 	const storeHours = useMemo( () => {

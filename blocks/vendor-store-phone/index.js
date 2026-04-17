@@ -27,9 +27,7 @@ function Edit( { attributes, setAttributes, context } ) {
 	const phone = vendor.phone || __( 'No phone number', 'dokan-blocks' );
 	const hasPhone = Boolean( vendor.phone );
 
-	const blockProps = useBlockProps( {
-		className: 'dokan-vendor-store-phone',
-	} );
+	const blockProps = useBlockProps();
 
 	const phoneContent = (
 		<>

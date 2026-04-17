@@ -25,9 +25,7 @@ import './style.scss';
  * @return {JSX.Element} Block edit component.
  */
 function Edit( { context } ) {
-	const blockProps = useBlockProps( {
-		className: 'dokan-vendor-contact-form',
-	} );
+	const blockProps = useBlockProps();
 
 	const vendor = context[ 'dokan/vendor' ] || {};
 	const hasVendor = !! vendor.id;
