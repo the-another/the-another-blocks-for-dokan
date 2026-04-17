@@ -121,4 +121,28 @@ class StoreTemplateTest extends TestCase {
 
 		$this->assertTrue( $method->invoke( $template ) );
 	}
+
+	/**
+	 * Assert that override_store_template() no longer dereferences WordPress
+	 * core's internal canvas path via ABSPATH . WPINC.
+	 *
+	 * Canvas resolution is now delegated to WordPress core via the
+	 * pre_get_block_file_template filter (wp.org review requirement).
+	 *
+	 * @return void
+	 */
+	public function test_override_store_template_does_not_reference_canvas_path(): void {
+		$reflection = new \ReflectionMethod( Store_Template::class, 'override_store_template' );
+		$source     = file_get_contents( $reflection->getFileName() ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Reading local source file in test.
+		$start      = $reflection->getStartLine();
+		$end        = $reflection->getEndLine();
+
+		$method_source = implode(
+			"\n",
+			array_slice( explode( "\n", $source ), $start - 1, $end - $start + 1 )
+		);
+
+		$this->assertStringNotContainsString( 'template-canvas.php', $method_source );
+		$this->assertStringNotContainsString( 'ABSPATH . WPINC', $method_source );
+	}
 }
