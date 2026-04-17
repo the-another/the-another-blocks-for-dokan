@@ -75,9 +75,9 @@ class Store_Template extends Abstract_Dokan_Template {
 		// Hook into template_include at priority 100 (after Dokan's priority 99).
 		add_filter( 'template_include', array( $this, 'override_store_template' ), 100, 1 );
 
-		// Inject our block template via WP core's block template loader so we
-		// never have to resolve wp-includes/template-canvas.php ourselves.
-		add_filter( 'pre_get_block_file_template', array( $this, 'inject_store_block_template' ), 10, 3 );
+		// Feed our plugin-provided templates into WP core's block template registry
+		// so locate_block_template() can resolve them via the normal flow.
+		add_filter( 'get_block_templates', array( $this, 'provide_store_block_templates' ), 10, 3 );
 	}
 
 	/**
@@ -111,57 +111,23 @@ class Store_Template extends Abstract_Dokan_Template {
 	}
 
 	/**
-	 * Gate template_include for store pages under block themes.
+	 * Override Dokan's store template with our block template under block themes.
 	 *
-	 * This method intentionally returns the incoming template unchanged after
-	 * gatekeeping. The actual override happens via {@see self::inject_store_block_template()}
-	 * on the pre_get_block_file_template filter, which lets WP core's own block
-	 * template loader (wp-includes/template-loader.php) resolve the canvas path
-	 * for us. That avoids dereferencing WordPress internal constants to locate
-	 * template-canvas.php, which wp.org review flagged as a violation.
+	 * Delegates the actual resolution (and the canvas path) to WordPress core's
+	 * public {@see locate_block_template()} helper, which in turn calls
+	 * {@see get_block_templates()} — fed by {@see self::provide_store_block_templates()}
+	 * — to find our plugin template, sets the `$_wp_current_template_*` globals,
+	 * and returns wp-includes/template-canvas.php itself. Our code stays free of
+	 * direct references to ABSPATH or WPINC, which wp.org review flagged as a
+	 * violation.
+	 *
+	 * Only overrides templates for tabs we explicitly support. Unknown tabs
+	 * (from Pro, extensions) fall back to Dokan's native templates.
 	 *
 	 * @param string $template Template path.
-	 * @return string Template path (unchanged; block template injection is handled elsewhere).
+	 * @return string Modified template path.
 	 */
 	public function override_store_template( string $template ): string {
-		if ( ! tanbfd_is_store_page() ) {
-			return $template;
-		}
-
-		// Check if we're in a block theme.
-		if ( ! function_exists( 'wp_is_block_theme' ) || ! wp_is_block_theme() ) {
-			return $template;
-		}
-
-		// Block template injection is handled by inject_store_block_template()
-		// on the pre_get_block_file_template filter. Return the template as-is
-		// so WP core's locate_block_template() can pick up our injected template.
-		return $template;
-	}
-
-	/**
-	 * Inject the store block template via WP core's block template loader.
-	 *
-	 * Hooked on `pre_get_block_file_template`. When WordPress resolves the
-	 * current request's block template for a store page, this callback returns
-	 * our plugin-provided WP_Block_Template so core can render it through
-	 * locate_block_template()/template-canvas.php without us touching
-	 * ABSPATH . WPINC ourselves.
-	 *
-	 * @param \WP_Block_Template|null $template      The block template (null if not yet resolved).
-	 * @param string                  $id            Template unique identifier, e.g. 'theme//slug'.
-	 * @param string                  $template_type Either 'wp_template' or 'wp_template_part'.
-	 * @return \WP_Block_Template|null The store block template, or the original value when not applicable.
-	 */
-	public function inject_store_block_template( $template, string $id, string $template_type ) {
-		if ( null !== $template ) {
-			return $template;
-		}
-
-		if ( 'wp_template' !== $template_type ) {
-			return $template;
-		}
-
 		if ( ! tanbfd_is_store_page() ) {
 			return $template;
 		}
@@ -178,20 +144,73 @@ class Store_Template extends Abstract_Dokan_Template {
 
 		$template_slug = self::TAB_TEMPLATE_MAP[ $current_tab ];
 
-		// Allow other plugins to override the template.
-		$override_template = apply_filters( 'tanbfd_store_template_override', null, $template_slug, $current_tab );
-
-		if ( $override_template instanceof \WP_Block_Template ) {
-			return $override_template;
-		}
-
-		$block_template = $this->get_block_template_for_slug( $template_slug );
-
-		if ( ! $block_template ) {
+		if ( ! function_exists( 'locate_block_template' ) ) {
 			return $template;
 		}
 
-		return $block_template;
+		return locate_block_template( $template, 'wp_template', array( $template_slug ) );
+	}
+
+	/**
+	 * Feed our plugin templates into WP core's block template query results.
+	 *
+	 * Hooked on `get_block_templates`. When WordPress queries the block template
+	 * registry with a `slug__in` filter that matches one of our supported slugs,
+	 * we append the plugin-provided {@see \WP_Block_Template} so
+	 * {@see locate_block_template()} can resolve it without requiring our
+	 * templates to live in the active theme.
+	 *
+	 * Honors the `tanbfd_store_template_override` filter so third parties can
+	 * swap in a custom {@see \WP_Block_Template} for a given slug/tab.
+	 *
+	 * @param \WP_Block_Template[] $query_result  Current list of resolved templates.
+	 * @param array<string,mixed>  $query         The query being processed.
+	 * @param string               $template_type Either 'wp_template' or 'wp_template_part'.
+	 * @return \WP_Block_Template[] Possibly-augmented list of templates.
+	 */
+	public function provide_store_block_templates( $query_result, $query, $template_type ) {
+		if ( 'wp_template' !== $template_type ) {
+			return $query_result;
+		}
+
+		if ( ! is_array( $query_result ) ) {
+			$query_result = array();
+		}
+
+		$requested_slugs = is_array( $query ) && isset( $query['slug__in'] ) && is_array( $query['slug__in'] )
+			? $query['slug__in']
+			: array();
+
+		if ( empty( $requested_slugs ) ) {
+			return $query_result;
+		}
+
+		foreach ( self::TAB_TEMPLATE_MAP as $tab => $slug ) {
+			if ( ! in_array( $slug, $requested_slugs, true ) ) {
+				continue;
+			}
+
+			/**
+			 * Filter the block template used for a given store tab.
+			 *
+			 * @since 1.0.0
+			 *
+			 * @param \WP_Block_Template|null $template       Override template, or null to use the plugin default.
+			 * @param string                  $template_slug  Internal slug (dokan-store / dokan-store-toc).
+			 * @param string                  $current_tab    Store tab identifier (products / toc).
+			 */
+			$override = apply_filters( 'tanbfd_store_template_override', null, $slug, $tab );
+
+			$template = $override instanceof \WP_Block_Template
+				? $override
+				: $this->get_block_template_for_slug( $slug );
+
+			if ( $template instanceof \WP_Block_Template ) {
+				$query_result[] = $template;
+			}
+		}
+
+		return $query_result;
 	}
 
 	/**

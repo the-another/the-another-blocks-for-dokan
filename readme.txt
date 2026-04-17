@@ -60,7 +60,7 @@ The Vendor Store Location block can alternatively display an interactive embedde
 
 = 1.0.14 - 2026-04-17 =
 * Fix: `block.json` render callbacks now use the correct `tanbfd_` prefix — seven blocks previously referenced legacy `theabd_render_*` callbacks that did not match the actual function definitions
-* Refactor: Store template override no longer dereferences WordPress core's `wp-includes/template-canvas.php`; now hooks `pre_get_block_file_template` and lets WP core's own block template loader resolve the canvas
+* Refactor: Store template override now delegates to WordPress core's public `locate_block_template()` helper (available since WP 5.9) instead of dereferencing `wp-includes/template-canvas.php` directly; plugin templates surface via a new `get_block_templates` filter
 
 = 1.0.13 - 2026-04-16 =
 * Version bump

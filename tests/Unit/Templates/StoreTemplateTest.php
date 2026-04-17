@@ -126,8 +126,11 @@ class StoreTemplateTest extends TestCase {
 	 * Assert that override_store_template() no longer dereferences WordPress
 	 * core's internal canvas path via ABSPATH . WPINC.
 	 *
-	 * Canvas resolution is now delegated to WordPress core via the
-	 * pre_get_block_file_template filter (wp.org review requirement).
+	 * Canvas resolution is now delegated to WordPress core's public
+	 * locate_block_template() helper (since WP 5.9), which sets the required
+	 * globals and returns wp-includes/template-canvas.php itself. Plugin
+	 * templates surface via our provide_store_block_templates() hook on
+	 * get_block_templates. This is the wp.org review-compliant path.
 	 *
 	 * @return void
 	 */
