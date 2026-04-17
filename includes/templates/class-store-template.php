@@ -76,33 +76,60 @@ class Store_Template extends Abstract_Dokan_Template {
 	/**
 	 * Initialization method.
 	 *
-	 * Intentionally does NOT call `parent::init()`. The abstract parent class
-	 * registers the current template via `register_block_template()` (WP 6.7+),
-	 * which puts it into WP core's block-template registry. That registry is
-	 * consumed by `get_block_templates()` BEFORE our `provide_store_block_templates`
-	 * filter fires — so our own default would pre-populate the query result and
-	 * silently out-precede any `tanbfd_store_template_override` substitution.
+	 * Registers both store templates with WP core's block-template registry
+	 * (via `parent::init()` for `dokan-store` and `register_toc_template()` for
+	 * `dokan-store-toc`) so the Site Editor auto-lists them for user
+	 * customization. The resulting precedence when `get_block_templates()` runs:
 	 *
-	 * Instead, we provide both `dokan-store` and `dokan-store-toc` exclusively
-	 * through the `get_block_templates` filter, where we can arbitrate precedence
-	 * correctly (request-scoped override → theme / DB / registry / other plugins →
-	 * plugin default as last-resort).
+	 *   theme file > Site Editor DB customization > plugin registry > plugin default
 	 *
-	 * Trade-off: our templates are not auto-listed in the Site Editor template
-	 * browser. Users wanting to customize can still create a theme file at
-	 * `templates/dokan-store.html`, or create a custom template in the Site
-	 * Editor with the matching slug — both will be resolved by our filter and
-	 * take precedence over the plugin default.
+	 * `provide_store_block_templates()` layers in the request-scoped override
+	 * from `tanbfd_store_template_override`: when set, the override replaces our
+	 * own registry entry (but NOT a user customization or a theme file, which
+	 * always reflect explicit user/theme intent).
 	 *
 	 * @return void
 	 */
 	public function init(): void {
+		parent::init();
+		$this->register_toc_template();
+
 		// Hook into template_include at priority 100 (after Dokan's priority 99).
 		add_filter( 'template_include', array( $this, 'override_store_template' ), 100, 1 );
 
-		// Provide the store templates on demand instead of via the block-template
-		// registry. See class docblock above for the reasoning.
+		// Layer the request-scoped override and plugin-default fallback into
+		// WP core's block-template query results.
 		add_filter( 'get_block_templates', array( $this, 'provide_store_block_templates' ), 10, 3 );
+	}
+
+	/**
+	 * Register the Terms & Conditions template with WP core.
+	 *
+	 * @return void
+	 */
+	protected function register_toc_template(): void {
+		if ( ! function_exists( 'register_block_template' ) ) {
+			return;
+		}
+
+		$template_name = self::PLUGIN_SLUG . '//' . self::SLUG_TOC;
+		$template_path = THE_ANOTHER_BLOCKS_FOR_DOKAN_PLUGIN_DIR . 'templates/store-toc.html';
+
+		if ( ! file_exists( $template_path ) ) {
+			return;
+		}
+
+		$content = file_get_contents( $template_path ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Reading local template file.
+
+		register_block_template(
+			$template_name,
+			array(
+				'title'       => __( 'Vendor Terms & Conditions', 'the-another-blocks-for-dokan' ),
+				'description' => __( 'Displays a vendor\'s terms and conditions page.', 'the-another-blocks-for-dokan' ),
+				'plugin'      => self::PLUGIN_SLUG,
+				'content'     => false !== $content ? $content : '',
+			)
+		);
 	}
 
 	/**
@@ -207,41 +234,86 @@ class Store_Template extends Abstract_Dokan_Template {
 			return $query_result;
 		}
 
-		$existing_slugs = array();
-		foreach ( $query_result as $existing ) {
-			if ( $existing instanceof \WP_Block_Template && is_string( $existing->slug ) ) {
-				$existing_slugs[ $existing->slug ] = true;
+		// Bucket existing results by provenance: our own registry entries (the
+		// plugin default from register_block_template()) are preempted by the
+		// request-scoped override, while external entries (theme file, Site
+		// Editor DB customization, another plugin) always win.
+		$external_slugs           = array();
+		$our_registry_idx_by_slug = array();
+		foreach ( $query_result as $idx => $existing ) {
+			if ( ! $existing instanceof \WP_Block_Template ) {
+				continue;
 			}
+			if ( ! is_string( $existing->slug ) ) {
+				continue;
+			}
+			if ( $this->is_own_registered_template( $existing ) ) {
+				$our_registry_idx_by_slug[ $existing->slug ] = $idx;
+				continue;
+			}
+			$external_slugs[ $existing->slug ] = true;
 		}
 
 		// (1) Request-scoped override from tanbfd_store_template_override.
+		// Injected only when no external (theme / DB / other-plugin) entry
+		// already claims the slug — those always reflect explicit user/theme
+		// intent and take precedence over a programmatic substitution.
 		if ( $this->request_override instanceof \WP_Block_Template
 			&& is_string( $this->request_override->slug )
 			&& in_array( $this->request_override->slug, $requested_slugs, true )
-			&& ! isset( $existing_slugs[ $this->request_override->slug ] )
+			&& ! isset( $external_slugs[ $this->request_override->slug ] )
 		) {
-			$override_slug                    = $this->request_override->slug;
+			$override_slug = $this->request_override->slug;
+
+			if ( isset( $our_registry_idx_by_slug[ $override_slug ] ) ) {
+				unset( $query_result[ $our_registry_idx_by_slug[ $override_slug ] ] );
+				$query_result = array_values( $query_result );
+				unset( $our_registry_idx_by_slug[ $override_slug ] );
+			}
+
 			$query_result[]                   = $this->request_override;
-			$existing_slugs[ $override_slug ] = true;
+			$external_slugs[ $override_slug ] = true;
 		}
 
-		// (2) Plugin default as last-resort fallback.
+		// (2) Plugin default as last-resort fallback — only when neither an
+		// external source nor our own registry entry already provides the slug.
+		// This path matters on WP < 6.7 (where register_block_template() is
+		// unavailable) or if registration was skipped for any reason.
 		foreach ( self::TAB_TEMPLATE_MAP as $slug ) {
 			if ( ! in_array( $slug, $requested_slugs, true ) ) {
 				continue;
 			}
-			if ( isset( $existing_slugs[ $slug ] ) ) {
+			if ( isset( $external_slugs[ $slug ] ) ) {
+				continue;
+			}
+			if ( isset( $our_registry_idx_by_slug[ $slug ] ) ) {
 				continue;
 			}
 
 			$default = $this->get_block_template_for_slug( $slug );
 			if ( $default instanceof \WP_Block_Template ) {
-				$query_result[]          = $default;
-				$existing_slugs[ $slug ] = true;
+				$query_result[] = $default;
 			}
 		}
 
 		return $query_result;
+	}
+
+	/**
+	 * Determine whether a block template originated from this plugin's call to
+	 * {@see register_block_template()}.
+	 *
+	 * The registry sets `$template->source = 'plugin'` and `$template->plugin`
+	 * to the namespace passed in (our PLUGIN_SLUG). Note: `$template->theme` is
+	 * set to the active theme's stylesheet, NOT the plugin slug, so it cannot
+	 * be used for provenance checks.
+	 *
+	 * @param \WP_Block_Template $template Template to inspect.
+	 * @return bool True if the template came from this plugin's registry registration.
+	 */
+	private function is_own_registered_template( \WP_Block_Template $template ): bool {
+		return 'plugin' === $template->source
+			&& self::PLUGIN_SLUG === $template->plugin;
 	}
 
 	/**
